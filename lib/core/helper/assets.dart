@@ -13,6 +13,8 @@ class Assets {
 
   static const iconsSearch = "assets/icons/search.svg";
 
+  static const imagesAndroid12Splash = "assets/images/android_12_splash.png";
+
   static const imagesLamp = "assets/images/lamp.jpeg";
 
   static const imagesOnBoardingOne = "assets/images/on_boarding_one.svg";
