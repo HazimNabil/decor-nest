@@ -7,3 +7,9 @@ extension ThemeExtension on BuildContext {
   Color get surfaceColor => Theme.of(this).colorScheme.surface;
   Color get subTextColor => Theme.of(this).hintColor;
 }
+
+extension MediaQueryExtension on BuildContext {
+  double get screenHeight => MediaQuery.sizeOf(this).height;
+  double get screenWidth => MediaQuery.sizeOf(this).width;
+  double get scaleFactor => screenWidth / 375;
+}
