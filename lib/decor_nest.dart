@@ -10,7 +10,6 @@ class DecorNest extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppThemes.light,
       darkTheme: AppThemes.dark,
-      themeMode: ThemeMode.system,
     );
   }
 }
