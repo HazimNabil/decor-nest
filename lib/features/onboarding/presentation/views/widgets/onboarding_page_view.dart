@@ -24,14 +24,16 @@ class OnboardingPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      itemCount: _pagesData.length,
-      itemBuilder: (_, index) {
-        return OnboardingPage(
-          image: _pagesData[index].image,
-          description: _pagesData[index].description,
-        );
-      },
+    return Expanded(
+      child: PageView.builder(
+        itemCount: _pagesData.length,
+        itemBuilder: (_, index) {
+          return OnboardingPage(
+            image: _pagesData[index].image,
+            description: _pagesData[index].description,
+          );
+        },
+      ),
     );
   }
 }
