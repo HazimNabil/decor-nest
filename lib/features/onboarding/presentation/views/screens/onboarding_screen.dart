@@ -1,5 +1,4 @@
-import 'package:decor_nest/core/helper/assets.dart';
-import 'package:decor_nest/features/onboarding/presentation/views/widgets/onboarding_page.dart';
+import 'package:decor_nest/features/onboarding/presentation/views/widgets/onboarding_page_view.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -11,11 +10,7 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: OnboardingPage(
-          image: Assets.imagesOnBoardingOne,
-          description:
-              'View And Experience Furniture With The Help Of Augmented Reality',
-        ),
+        child: OnboardingPageView(),
       ),
     );
   }
