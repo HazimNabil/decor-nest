@@ -16,7 +16,7 @@ class OnboardingPageView extends StatelessWidget {
     (
       image: Assets.imagesOnBoardingThree,
       description:
-          'Explore World Top Class Furniture As Per Your Requirements & Choice',
+          'Explore Top Class Furniture As Per Your Requirements & Choice',
     ),
   ];
 
@@ -24,16 +24,14 @@ class OnboardingPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: PageView.builder(
-        itemCount: _pagesData.length,
-        itemBuilder: (_, index) {
-          return OnboardingPage(
-            image: _pagesData[index].image,
-            description: _pagesData[index].description,
-          );
-        },
-      ),
+    return PageView.builder(
+      itemCount: _pagesData.length,
+      itemBuilder: (_, index) {
+        return OnboardingPage(
+          image: _pagesData[index].image,
+          description: _pagesData[index].description,
+        );
+      },
     );
   }
 }

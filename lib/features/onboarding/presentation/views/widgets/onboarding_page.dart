@@ -1,3 +1,4 @@
+import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -15,16 +16,18 @@ class OnboardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       spacing: 40,
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(image, fit: BoxFit.scaleDown),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 52),
-          child: Text(
-            description,
-            style: AppStyles.medium24(context),
-            textAlign: TextAlign.center,
-          ),
+        Image.asset(
+          image,
+          height: 350 * context.heightRatio,
+          fit: BoxFit.scaleDown,
+        ),
+        Text(
+          description,
+          style: AppStyles.medium24(context),
+          textAlign: TextAlign.center,
         ),
       ],
     );
