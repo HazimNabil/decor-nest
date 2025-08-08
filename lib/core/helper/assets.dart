@@ -17,11 +17,11 @@ class Assets {
 
   static const imagesLamp = "assets/images/lamp.jpeg";
 
-  static const imagesOnBoardingOne = "assets/images/on_boarding_one.svg";
+  static const imagesOnBoardingOne = "assets/images/on_boarding_one.png";
 
-  static const imagesOnBoardingThree = "assets/images/on_boarding_three.svg";
+  static const imagesOnBoardingThree = "assets/images/on_boarding_three.png";
 
-  static const imagesOnBoardingTwo = "assets/images/on_boarding_two.svg";
+  static const imagesOnBoardingTwo = "assets/images/on_boarding_two.png";
 
   static const imagesSplash = "assets/images/splash.png";
 }
