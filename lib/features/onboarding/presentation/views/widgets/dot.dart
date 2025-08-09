@@ -10,7 +10,7 @@ class Dot extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       opacity: isSelected ? 1 : 0.3,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       child: CircleAvatar(radius: 6, backgroundColor: context.primaryColor),
     );
   }
