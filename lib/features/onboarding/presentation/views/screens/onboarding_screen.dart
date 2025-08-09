@@ -1,9 +1,11 @@
 import 'package:decor_nest/core/widgets/custom_button.dart';
+import 'package:decor_nest/features/auth/presentation/views/screens/login_screen.dart';
 import 'package:decor_nest/features/onboarding/presentation/views/widgets/dot_indicator.dart';
 import 'package:decor_nest/features/onboarding/presentation/views/widgets/onboarding_buttons.dart';
 import 'package:decor_nest/features/onboarding/presentation/views/widgets/onboarding_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:go_router/go_router.dart';
 
 class OnboardingScreen extends StatefulWidget {
   static const path = '/';
@@ -70,11 +72,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _onboardingButtonsBuilder(_, value, _) {
-    if (value) {
+  Widget _onboardingButtonsBuilder(_, isLastPage, _) {
+    if (isLastPage) {
       return SizedBox(
         width: double.infinity,
-        child: CustomButton(text: 'Get Started', onPressed: () {}),
+        child: CustomButton(
+          text: 'Get Started',
+          onPressed: () => context.pushReplacement(LoginScreen.path),
+        ),
       );
     } else {
       return OnboardingButtons(pageController: _pageController);
