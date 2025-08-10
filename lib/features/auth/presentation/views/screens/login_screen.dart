@@ -1,4 +1,5 @@
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/auth/presentation/views/widgets/login_form.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -22,6 +23,8 @@ class LoginScreen extends StatelessWidget {
                   'Welcome Back! Please Enter Your Details.',
                   style: AppStyles.regular16(context),
                 ),
+                const SizedBox(height: 32),
+                const LoginForm(),
               ],
             ),
           ),
