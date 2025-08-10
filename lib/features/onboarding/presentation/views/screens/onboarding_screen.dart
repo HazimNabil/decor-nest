@@ -1,3 +1,5 @@
+import 'package:decor_nest/core/constants/cache_constants.dart';
+import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/features/auth/presentation/views/screens/login_screen.dart';
 import 'package:decor_nest/features/onboarding/presentation/views/widgets/dot_indicator.dart';
@@ -8,7 +10,7 @@ import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:go_router/go_router.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  static const path = '/';
+  static const path = '/onboarding';
 
   const OnboardingScreen({super.key});
 
@@ -78,7 +80,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         width: double.infinity,
         child: CustomButton(
           text: 'Get Started',
-          onPressed: () => context.pushReplacement(LoginScreen.path),
+          onPressed: () async {
+            await CacheHelper.setData<bool>(CacheConstants.isFirstTime, false);
+            if (mounted) context.pushReplacement(LoginScreen.path);
+          },
         ),
       );
     } else {
