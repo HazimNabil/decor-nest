@@ -1,3 +1,4 @@
+import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -7,9 +8,24 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Login'),
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Welcome Back', style: AppStyles.semiBold32(context)),
+                const SizedBox(height: 8),
+                Text(
+                  'Welcome Back! Please Enter Your Details.',
+                  style: AppStyles.regular16(context),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
