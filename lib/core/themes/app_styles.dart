@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 class AppStyles {
   static TextStyle medium12(BuildContext context) {
     return TextStyle(
-      fontSize: 12 * context.scaleFactor,
+      fontSize: 12 * context.widthRatio,
       fontWeight: FontWeight.w500,
       color: context.subTextColor,
     );
@@ -12,7 +12,7 @@ class AppStyles {
 
   static TextStyle regular13(BuildContext context) {
     return TextStyle(
-      fontSize: 13 * context.scaleFactor,
+      fontSize: 13 * context.widthRatio,
       fontWeight: FontWeight.w400,
       color: context.subTextColor,
     );
@@ -20,7 +20,7 @@ class AppStyles {
 
   static TextStyle regular14(BuildContext context) {
     return TextStyle(
-      fontSize: 14 * context.scaleFactor,
+      fontSize: 14 * context.widthRatio,
       fontWeight: FontWeight.w400,
       color: context.subTextColor,
     );
@@ -28,7 +28,7 @@ class AppStyles {
 
   static TextStyle medium14(BuildContext context) {
     return TextStyle(
-      fontSize: 14 * context.scaleFactor,
+      fontSize: 14 * context.widthRatio,
       fontWeight: FontWeight.w500,
       color: context.textColor,
     );
@@ -36,7 +36,7 @@ class AppStyles {
 
   static TextStyle regular16(BuildContext context) {
     return TextStyle(
-      fontSize: 16 * context.scaleFactor,
+      fontSize: 16 * context.widthRatio,
       fontWeight: FontWeight.w400,
       color: context.subTextColor,
     );
@@ -44,7 +44,7 @@ class AppStyles {
 
   static TextStyle medium16(BuildContext context) {
     return TextStyle(
-      fontSize: 16 * context.scaleFactor,
+      fontSize: 16 * context.widthRatio,
       fontWeight: FontWeight.w500,
       color: context.textColor,
     );
@@ -52,7 +52,7 @@ class AppStyles {
 
   static TextStyle semiBold16(BuildContext context) {
     return TextStyle(
-      fontSize: 16 * context.scaleFactor,
+      fontSize: 16 * context.widthRatio,
       fontWeight: FontWeight.w600,
       color: context.surfaceColor,
     );
@@ -60,7 +60,7 @@ class AppStyles {
 
   static TextStyle medium20(BuildContext context) {
     return TextStyle(
-      fontSize: 20 * context.scaleFactor,
+      fontSize: 20 * context.widthRatio,
       fontWeight: FontWeight.w500,
       color: context.textColor,
     );
@@ -68,7 +68,7 @@ class AppStyles {
 
   static TextStyle medium24(BuildContext context) {
     return TextStyle(
-      fontSize: 24 * context.scaleFactor,
+      fontSize: 24 * context.widthRatio,
       fontWeight: FontWeight.w500,
       color: context.textColor,
     );
@@ -76,7 +76,7 @@ class AppStyles {
 
   static TextStyle semiBold32(BuildContext context) {
     return TextStyle(
-      fontSize: 32 * context.scaleFactor,
+      fontSize: 32 * context.widthRatio,
       fontWeight: FontWeight.w600,
       color: context.textColor,
     );

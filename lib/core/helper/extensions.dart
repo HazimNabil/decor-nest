@@ -11,5 +11,6 @@ extension ThemeExtension on BuildContext {
 extension MediaQueryExtension on BuildContext {
   double get screenHeight => MediaQuery.sizeOf(this).height;
   double get screenWidth => MediaQuery.sizeOf(this).width;
-  double get scaleFactor => screenWidth / 375;
+  double get heightRatio => screenHeight / 812;
+  double get widthRatio => screenWidth / 375;
 }
