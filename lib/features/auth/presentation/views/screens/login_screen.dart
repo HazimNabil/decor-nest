@@ -1,5 +1,6 @@
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
+import 'package:decor_nest/features/auth/presentation/views/widgets/forgot_password_option.dart';
 import 'package:decor_nest/features/auth/presentation/views/widgets/login_form.dart';
 import 'package:flutter/material.dart';
 
@@ -28,12 +29,7 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(height: 32),
                 const LoginForm(),
                 const SizedBox(height: 16),
-                GestureDetector(
-                  child: Text(
-                    'Forgot Password?',
-                    style: AppStyles.regular14(context),
-                  ),
-                ),
+                const ForgotPasswordOption(),
                 const SizedBox(height: 24),
                 CustomButton(text: 'Login', onPressed: () {}),
               ],
