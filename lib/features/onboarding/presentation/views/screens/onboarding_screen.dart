@@ -76,15 +76,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _onboardingButtonsBuilder(_, isLastPage, _) {
     if (isLastPage) {
-      return SizedBox(
-        width: double.infinity,
-        child: CustomButton(
-          text: 'Get Started',
-          onPressed: () async {
-            await CacheHelper.setData<bool>(CacheConstants.isFirstTime, false);
-            if (mounted) context.pushReplacement(LoginScreen.path);
-          },
-        ),
+      return CustomButton(
+        text: 'Get Started',
+        onPressed: () async {
+          await CacheHelper.setData<bool>(CacheConstants.isFirstTime, false);
+          if (mounted) context.pushReplacement(LoginScreen.path);
+        },
       );
     } else {
       return OnboardingButtons(pageController: _pageController);

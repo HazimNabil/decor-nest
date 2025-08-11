@@ -10,16 +10,19 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton(
-      style: FilledButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        backgroundColor: context.primaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
+    return SizedBox(
+      width: double.infinity,
+      child: FilledButton(
+        style: FilledButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          backgroundColor: context.primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
         ),
+        onPressed: onPressed,
+        child: Text(text, style: AppStyles.semiBold16(context)),
       ),
-      onPressed: onPressed,
-      child: Text(text, style: AppStyles.semiBold16(context)),
     );
   }
 }
