@@ -78,6 +78,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (isLastPage) {
       return CustomButton(
         text: 'Get Started',
+        color: context.primaryColor,
         onPressed: () async {
           await CacheHelper.setData<bool>(CacheConstants.isFirstTime, false);
           if (mounted) context.pushReplacement(LoginScreen.path);
