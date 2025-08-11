@@ -2,6 +2,7 @@ import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/features/auth/presentation/views/widgets/forgot_password_option.dart';
 import 'package:decor_nest/features/auth/presentation/views/widgets/login_form.dart';
+import 'package:decor_nest/features/auth/presentation/views/widgets/sign_up_option.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -32,6 +33,8 @@ class LoginScreen extends StatelessWidget {
                 const ForgotPasswordOption(),
                 const SizedBox(height: 24),
                 CustomButton(text: 'Login', onPressed: () {}),
+                const SizedBox(height: 24),
+                const SignUpOption(),
               ],
             ),
           ),
