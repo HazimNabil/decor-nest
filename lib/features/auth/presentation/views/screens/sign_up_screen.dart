@@ -1,3 +1,4 @@
+import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -7,9 +8,24 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Sign Up'),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Create Account', style: AppStyles.semiBold32(context)),
+                const SizedBox(height: 8),
+                Text(
+                  'Welcome Back! Please Enter Your Details.',
+                  style: AppStyles.regular16(context),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
