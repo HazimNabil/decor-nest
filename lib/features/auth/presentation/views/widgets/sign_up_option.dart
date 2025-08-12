@@ -1,6 +1,9 @@
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/auth/presentation/views/screens/sign_up_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class SignUpOption extends StatelessWidget {
   const SignUpOption({super.key});
@@ -18,6 +21,8 @@ class SignUpOption extends StatelessWidget {
               style: AppStyles.medium14(
                 context,
               ).copyWith(color: context.primaryColor),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => context.push(SignUpScreen.path),
             ),
           ],
         ),
