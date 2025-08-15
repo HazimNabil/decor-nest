@@ -5,7 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class AuthService {
   final _supabaseAuth = Supabase.instance.client.auth;
 
-  User? get getCurrentUser => _supabaseAuth.currentUser;
+  User? get currentUser => _supabaseAuth.currentUser;
 
   Future<User?> logIn(LoginInputData loginInputData) async {
     final response = await _supabaseAuth.signInWithPassword(

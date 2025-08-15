@@ -5,6 +5,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 
 abstract interface class AuthRepo {
+  bool get isLoggedIn;
+  bool get isAdmin;
   FutureEither<User> logIn(LoginInputData loginInputData);
   FutureEither<Unit> signUp(SignUpInputData signUpInputData);
   FutureEither<Unit> logOut();
