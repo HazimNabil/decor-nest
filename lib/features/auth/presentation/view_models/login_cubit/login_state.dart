@@ -8,14 +8,17 @@ sealed class LoginState extends Equatable {
   List<Object> get props => [];
 }
 
+@immutable
 final class LoginInitial extends LoginState {
   const LoginInitial();
 }
 
+@immutable
 final class LoginLoading extends LoginState {
   const LoginLoading();
 }
 
+@immutable
 final class LoginSuccess extends LoginState {
   final User user;
 
@@ -25,6 +28,7 @@ final class LoginSuccess extends LoginState {
   List<Object> get props => [user];
 }
 
+@immutable
 final class LoginFailure extends LoginState {
   final String message;
 
