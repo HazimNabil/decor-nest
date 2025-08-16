@@ -5,11 +5,17 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatefulWidget {
   final String hint;
   final bool isPassword;
+  final FormFieldValidator<String>? validator;
+  final FormFieldSetter<String>? onSaved;
+  final ValueChanged<String>? onChanged;
 
   const CustomTextField({
     super.key,
     required this.hint,
     this.isPassword = false,
+    this.validator,
+    this.onSaved,
+    this.onChanged,
   });
 
   @override
@@ -21,10 +27,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       cursorColor: context.primaryColor,
       obscureText: widget.isPassword && !_isPasswordVisible,
       autofillHints: const [AutofillHints.email, AutofillHints.username],
+      validator: widget.validator,
+      onSaved: widget.onSaved,
+      onChanged: widget.onChanged,
       decoration: InputDecoration(
         filled: true,
         fillColor: context.surfaceColor,

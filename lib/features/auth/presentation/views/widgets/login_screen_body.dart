@@ -1,13 +1,37 @@
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
+import 'package:decor_nest/features/auth/data/models/login_input_data.dart';
 import 'package:decor_nest/features/auth/presentation/views/widgets/login_form.dart';
 import 'package:decor_nest/features/auth/presentation/views/widgets/forgot_password_option.dart';
 import 'package:decor_nest/features/auth/presentation/views/widgets/sign_up_option.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreenBody extends StatelessWidget {
+class LoginScreenBody extends StatefulWidget {
   const LoginScreenBody({super.key});
+
+  @override
+  State<LoginScreenBody> createState() => _LoginScreenBodyState();
+}
+
+class _LoginScreenBodyState extends State<LoginScreenBody> {
+  late final GlobalKey<FormState> _formKey;
+  late final ValueNotifier<AutovalidateMode> _autovalidateMode;
+  late final LoginInputData _loginInputData;
+
+  @override
+  void initState() {
+    super.initState();
+    _formKey = GlobalKey<FormState>();
+    _autovalidateMode = ValueNotifier(AutovalidateMode.disabled);
+    _loginInputData = LoginInputData();
+  }
+
+  @override
+  void dispose() {
+    _autovalidateMode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +49,14 @@ class LoginScreenBody extends StatelessWidget {
                 style: AppStyles.regular16(context),
               ),
               const SizedBox(height: 48),
-              const LoginForm(),
+              ValueListenableBuilder(
+                valueListenable: _autovalidateMode,
+                builder: (_, value, _) => LoginForm(
+                  formKey: _formKey,
+                  autovalidateMode: value,
+                  loginInputData: _loginInputData,
+                ),
+              ),
               const SizedBox(height: 16),
               const ForgotPasswordOption(),
               const SizedBox(height: 48),
