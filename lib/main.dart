@@ -1,3 +1,4 @@
+import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:flutter/material.dart' show runApp, WidgetsFlutterBinding;
 import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:decor_nest/decor_nest.dart';
@@ -15,6 +16,7 @@ Future<void> main() async {
       anonKey: AppSecrets.supabaseAnonKey,
     ),
   ]);
+  setupServiceLocator();
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,
