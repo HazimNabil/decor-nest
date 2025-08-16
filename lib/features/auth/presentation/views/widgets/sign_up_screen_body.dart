@@ -62,7 +62,7 @@ class _SignUpScreenBodyState extends State<SignUpScreenBody> {
                 color: context.primaryColor,
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // Sign up
+                    _formKey.currentState!.save();
                   } else {
                     _autovalidateMode.value = AutovalidateMode.always;
                   }
