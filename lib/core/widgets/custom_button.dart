@@ -8,6 +8,7 @@ class CustomButton extends StatelessWidget {
   final Color color;
   final Color textColor;
   final VoidCallback onPressed;
+  final bool isLoading;
 
   const CustomButton({
     super.key,
@@ -16,6 +17,7 @@ class CustomButton extends StatelessWidget {
     required this.color,
     this.textColor = Colors.white,
     required this.onPressed,
+    this.isLoading = false,
   });
 
   @override
@@ -23,11 +25,8 @@ class CustomButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: FilledButton.icon(
-        icon: icon != null ? SvgPicture.asset(icon!) : null,
-        label: Text(
-          text,
-          style: AppStyles.semiBold16(context).copyWith(color: textColor),
-        ),
+        icon: icon != null && !isLoading ? SvgPicture.asset(icon!) : null,
+        label: handleLoading(context),
         style: FilledButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
           backgroundColor: color,
@@ -37,8 +36,22 @@ class CustomButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(14),
           ),
         ),
-        onPressed: onPressed,
+        onPressed: isLoading ? null : onPressed,
       ),
+    );
+  }
+
+  Widget handleLoading(BuildContext context) {
+    if (isLoading) {
+      return const SizedBox(
+        width: 20,
+        height: 20,
+        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+      );
+    }
+    return Text(
+      text,
+      style: AppStyles.semiBold16(context).copyWith(color: textColor),
     );
   }
 }

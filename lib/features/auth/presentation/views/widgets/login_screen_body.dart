@@ -6,6 +6,10 @@ import 'package:decor_nest/features/auth/presentation/views/widgets/login_form.d
 import 'package:decor_nest/features/auth/presentation/views/widgets/forgot_password_option.dart';
 import 'package:decor_nest/features/auth/presentation/views/widgets/sign_up_option.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:decor_nest/features/auth/presentation/view_models/login_cubit/login_cubit.dart';
+import 'package:go_router/go_router.dart';
+import 'package:toastification/toastification.dart';
 
 class LoginScreenBody extends StatefulWidget {
   const LoginScreenBody({super.key});
@@ -60,15 +64,28 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
               const SizedBox(height: 16),
               const ForgotPasswordOption(),
               const SizedBox(height: 48),
-              CustomButton(
-                text: 'Sign In',
-                color: context.primaryColor,
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                  } else {
-                    _autovalidateMode.value = AutovalidateMode.onUserInteraction;
+              BlocConsumer<LoginCubit, LoginState>(
+                listener: (context, state) {
+                  if (state is LoginSuccess) {
+                    context.showToast(
+                      message: 'Login Success',
+                      type: ToastificationType.success,
+                    );
+                    context.go('/home');
+                  } else if (state is LoginFailure) {
+                    context.showToast(
+                      message: state.message,
+                      type: ToastificationType.error,
+                    );
                   }
+                },
+                builder: (context, state) {
+                  return CustomButton(
+                    text: 'Sign In',
+                    color: context.primaryColor,
+                    isLoading: state is LoginLoading,
+                    onPressed: () async => await _logIn(),
+                  );
                 },
               ),
               const SizedBox(height: 16),
@@ -85,5 +102,14 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
         ),
       ),
     );
+  }
+
+  Future<void> _logIn() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      await context.read<LoginCubit>().logIn(_loginInputData);
+    } else {
+      _autovalidateMode.value = AutovalidateMode.always;
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:decor_nest/features/auth/presentation/views/screens/login_screen.dart';
 import 'package:decor_nest/features/auth/presentation/views/screens/sign_up_screen.dart';
+import 'package:decor_nest/features/home/presentation/views/screens/home_screen.dart';
 import 'package:decor_nest/features/onboarding/presentation/views/screens/onboarding_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:decor_nest/core/constants/cache_constants.dart';
@@ -20,6 +21,10 @@ class AppRouter {
       GoRoute(
         path: SignUpScreen.path,
         builder: (context, state) => const SignUpScreen(),
+      ),
+      GoRoute(
+        path: HomeScreen.path,
+        builder: (context, state) => const HomeScreen(),
       ),
     ],
     redirect: (context, state) async {
