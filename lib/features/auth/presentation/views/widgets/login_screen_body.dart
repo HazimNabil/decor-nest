@@ -63,7 +63,13 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
               CustomButton(
                 text: 'Sign In',
                 color: context.primaryColor,
-                onPressed: () {},
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                  } else {
+                    _autovalidateMode.value = AutovalidateMode.onUserInteraction;
+                  }
+                },
               ),
               const SizedBox(height: 16),
               CustomButton(

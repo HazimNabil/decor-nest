@@ -25,7 +25,11 @@ class LoginForm extends StatelessWidget {
         children: [
           Text('Email', style: AppStyles.medium14(context)),
           const SizedBox(height: 8),
-          CustomTextField(hint: 'Enter your email', validator: _emailValidator),
+          CustomTextField(
+            hint: 'Enter your email',
+            validator: _emailValidator,
+            onSaved: (email) => loginInputData.email = email!,
+          ),
           const SizedBox(height: 16),
           Text('Password', style: AppStyles.medium14(context)),
           const SizedBox(height: 8),
@@ -33,6 +37,7 @@ class LoginForm extends StatelessWidget {
             hint: 'Enter your password',
             isPassword: true,
             validator: _passwordValidator,
+            onSaved: (password) => loginInputData.password = password!,
           ),
         ],
       ),
