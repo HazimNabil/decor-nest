@@ -9,6 +9,8 @@ class Assets {
 
   static const iconsHome = "assets/icons/home.svg";
 
+  static const iconsGoogle = "assets/icons/google.svg";
+
   static const iconsProfile = "assets/icons/profile.svg";
 
   static const iconsSearch = "assets/icons/search.svg";

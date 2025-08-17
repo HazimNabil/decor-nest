@@ -1,3 +1,4 @@
+import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
@@ -91,6 +92,7 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
               const SizedBox(height: 16),
               CustomButton(
                 text: 'Sign In With Google',
+                icon: Assets.iconsGoogle,
                 color: context.surfaceColor,
                 textColor: context.textColor,
                 onPressed: () {},
