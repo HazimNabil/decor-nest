@@ -28,7 +28,7 @@ extension ToastExtension on BuildContext {
       type: type,
       style: ToastificationStyle.fillColored,
       alignment: Alignment.topCenter,
-      autoCloseDuration: const Duration(seconds: 3),
+      autoCloseDuration: const Duration(seconds: 4),
       animationDuration: const Duration(milliseconds: 500),
     );
   }
