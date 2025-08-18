@@ -1,5 +1,4 @@
 import 'package:decor_nest/features/auth/data/repos/auth_repo.dart';
-import 'package:flutter/foundation.dart' show immutable;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show User;
