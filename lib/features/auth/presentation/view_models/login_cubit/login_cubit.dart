@@ -8,12 +8,23 @@ part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   final AuthRepo _authRepo;
+
   LoginCubit(this._authRepo) : super(const LoginInitial());
 
   Future<void> logIn(LoginInputData loginInputData) async {
     emit(const LoginLoading());
 
     final result = await _authRepo.logIn(loginInputData);
+    result.fold(
+      (failure) => emit(LoginFailure(failure.message)),
+      (user) => emit(LoginSuccess(user)),
+    );
+  }
+
+  Future<void> logInWithGoogle() async {
+    emit(const LoginLoading());
+
+    final result = await _authRepo.logInWithGoogle();
     result.fold(
       (failure) => emit(LoginFailure(failure.message)),
       (user) => emit(LoginSuccess(user)),
