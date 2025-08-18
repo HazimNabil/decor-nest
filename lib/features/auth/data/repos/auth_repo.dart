@@ -8,6 +8,7 @@ abstract interface class AuthRepo {
   bool get isLoggedIn;
   bool get isAdmin;
   FutureEither<User> logIn(LoginInputData loginInputData);
+  FutureEither<User> logInWithGoogle();
   FutureEither<Unit> signUp(SignUpInputData signUpInputData);
   FutureEither<Unit> logOut();
   FutureEither<Unit> resetPassword(String email);

@@ -43,6 +43,18 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
+  FutureEither<User> logInWithGoogle() async {
+    try {
+      final user = await _authService.logInWithGoogle();
+      return right(user!);
+    } on AuthException catch (e) {
+      return left(AuthFailure.fromException(e));
+    } catch (e) {
+      return left(AuthFailure(e.toString()));
+    }
+  }
+
+  @override
   FutureEither<Unit> logOut() async {
     try {
       await _authService.logOut();
