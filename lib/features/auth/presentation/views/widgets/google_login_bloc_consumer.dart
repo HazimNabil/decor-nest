@@ -1,6 +1,7 @@
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
+import 'package:decor_nest/features/admin/presentation/views/screens/admin_dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:decor_nest/features/auth/presentation/view_models/login_cubit/login_cubit.dart';
@@ -22,7 +23,8 @@ class GoogleLoginBlocConsumer extends StatelessWidget {
             message: 'Login Success',
             type: ToastificationType.success,
           );
-          context.go(HomeScreen.path);
+          final isAdmin = state.user.userMetadata?['role'] == 'admin';
+          context.go(isAdmin ? AdminDashboardScreen.path : HomeScreen.path);
         } else if (state is LoginFailure) {
           context.showToast(
             message: state.message,

@@ -1,3 +1,4 @@
+import 'package:decor_nest/features/admin/presentation/views/screens/admin_dashboard_screen.dart';
 import 'package:decor_nest/features/auth/data/models/login_input_data.dart';
 import 'package:decor_nest/features/auth/presentation/view_models/login_cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,8 @@ class LoginBlocConsumer extends StatelessWidget {
             message: 'Login Success',
             type: ToastificationType.success,
           );
-          context.go(HomeScreen.path);
+          final isAdmin = state.user.userMetadata?['role'] == 'admin';
+          context.go(isAdmin ? AdminDashboardScreen.path : HomeScreen.path);
         } else if (state is LoginFailure) {
           context.showToast(
             message: state.message,
