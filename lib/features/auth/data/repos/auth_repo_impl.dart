@@ -13,12 +13,12 @@ class AuthRepoImpl implements AuthRepo {
   const AuthRepoImpl(this._authService);
 
   @override
-  bool get isLoggedIn => _authService.currentUser != null;
+  bool get isLoggedIn => (_authService.currentUser != null);
 
   @override
   bool get isAdmin {
-    final role = _authService.currentUser!.userMetadata!['role'];
-    return role == 'admin';
+    if (!isLoggedIn) return false;
+    return (_authService.currentUser!.userMetadata?['role'] == 'admin');
   }
 
   @override
