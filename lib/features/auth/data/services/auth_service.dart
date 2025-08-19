@@ -1,3 +1,4 @@
+import 'package:decor_nest/core/helper/app_secrets.dart';
 import 'package:decor_nest/features/auth/data/models/login_input_data.dart';
 import 'package:decor_nest/features/auth/data/models/sign_up_input_data.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -5,7 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   final _supabaseAuth = Supabase.instance.client.auth;
-  final _googleSignIn = GoogleSignIn();
+  final _googleSignIn = GoogleSignIn(serverClientId: AppSecrets.webClientId);
 
   User? get currentUser => _supabaseAuth.currentUser;
 
@@ -27,10 +28,13 @@ class AuthService {
 
   Future<User?> logInWithGoogle() async {
     final googleUser = await _googleSignIn.signIn();
+    if (googleUser == null) {
+      throw 'You did not choose an account.';
+    }
 
-    final googleAuth = await googleUser?.authentication;
-    final accessToken = googleAuth?.accessToken;
-    final idToken = googleAuth?.idToken;
+    final googleAuth = await googleUser.authentication;
+    final accessToken = googleAuth.accessToken;
+    final idToken = googleAuth.idToken;
 
     if (accessToken == null) {
       throw 'No Access Token found.';
