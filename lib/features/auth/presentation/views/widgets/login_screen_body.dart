@@ -1,16 +1,10 @@
-import 'package:decor_nest/core/helper/assets.dart';
-import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
-import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/features/auth/data/models/login_input_data.dart';
+import 'package:decor_nest/features/auth/presentation/views/widgets/google_login_bloc_consumer.dart';
+import 'package:decor_nest/features/auth/presentation/views/widgets/login_bloc_consumer.dart';
 import 'package:decor_nest/features/auth/presentation/views/widgets/login_form.dart';
 import 'package:decor_nest/features/auth/presentation/views/widgets/sign_up_option.dart';
-import 'package:decor_nest/features/home/presentation/views/screens/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:decor_nest/features/auth/presentation/view_models/login_cubit/login_cubit.dart';
-import 'package:go_router/go_router.dart';
-import 'package:toastification/toastification.dart';
 
 class LoginScreenBody extends StatefulWidget {
   const LoginScreenBody({super.key});
@@ -63,62 +57,13 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                 ),
               ),
               const SizedBox(height: 48),
-              BlocConsumer<LoginCubit, LoginState>(
-                listenWhen: (_, current) => current.flow == LoginFlow.email,
-                buildWhen: (_, current) => current.flow == LoginFlow.email,
-                listener: (context, state) {
-                  if (state is LoginSuccess) {
-                    context.showToast(
-                      message: 'Login Success',
-                      type: ToastificationType.success,
-                    );
-                    context.go(HomeScreen.path);
-                  } else if (state is LoginFailure) {
-                    context.showToast(
-                      message: state.message,
-                      type: ToastificationType.error,
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return CustomButton(
-                    text: 'Sign In',
-                    color: context.primaryColor,
-                    isLoading: state is LoginLoading,
-                    onPressed: () async => await _logIn(),
-                  );
-                },
+              LoginBlocConsumer(
+                formKey: _formKey,
+                autovalidateMode: _autovalidateMode,
+                loginInputData: _loginInputData,
               ),
               const SizedBox(height: 16),
-              BlocConsumer<LoginCubit, LoginState>(
-                listenWhen: (_, current) => current.flow == LoginFlow.google,
-                buildWhen: (_, current) => current.flow == LoginFlow.google,
-                listener: (context, state) {
-                  if (state is LoginSuccess) {
-                    context.showToast(
-                      message: 'Login Success',
-                      type: ToastificationType.success,
-                    );
-                    context.go(HomeScreen.path);
-                  } else if (state is LoginFailure) {
-                    context.showToast(
-                      message: state.message,
-                      type: ToastificationType.error,
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return CustomButton(
-                    text: 'Sign In With Google',
-                    icon: Assets.iconsGoogle,
-                    color: context.surfaceColor,
-                    textColor: context.textColor,
-                    isLoading: state is LoginLoading,
-                    onPressed: () async =>
-                        await context.read<LoginCubit>().logInWithGoogle(),
-                  );
-                },
-              ),
+              const GoogleLoginBlocConsumer(),
               const SizedBox(height: 24),
               const SignUpOption(),
             ],
@@ -126,14 +71,5 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
         ),
       ),
     );
-  }
-
-  Future<void> _logIn() async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      await context.read<LoginCubit>().logIn(_loginInputData);
-    } else {
-      _autovalidateMode.value = AutovalidateMode.always;
-    }
   }
 }
