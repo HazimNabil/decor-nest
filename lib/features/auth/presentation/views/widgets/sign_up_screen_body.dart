@@ -1,14 +1,9 @@
-import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
-import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/features/auth/data/models/sign_up_input_data.dart';
-import 'package:decor_nest/features/auth/presentation/view_models/sign_up_cubit/sign_up_cubit.dart';
 import 'package:decor_nest/features/auth/presentation/views/widgets/login_option.dart';
+import 'package:decor_nest/features/auth/presentation/views/widgets/sign_up_bloc_consumer.dart';
 import 'package:decor_nest/features/auth/presentation/views/widgets/sign_up_form.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:toastification/toastification.dart' show ToastificationType;
 
 class SignUpScreenBody extends StatefulWidget {
   const SignUpScreenBody({super.key});
@@ -61,30 +56,10 @@ class _SignUpScreenBodyState extends State<SignUpScreenBody> {
                 ),
               ),
               const SizedBox(height: 24),
-              BlocConsumer<SignUpCubit, SignUpState>(
-                listener: (context, state) {
-                  if (state is SignUpSuccess) {
-                    context.showToast(
-                      message:
-                          'Sign Up Success, Check your email for verification',
-                      type: ToastificationType.success,
-                    );
-                    context.pop();
-                  } else if (state is SignUpFailure) {
-                    context.showToast(
-                      message: state.message,
-                      type: ToastificationType.error,
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return CustomButton(
-                    text: 'Sign Up',
-                    color: context.primaryColor,
-                    isLoading: state is SignUpLoading,
-                    onPressed: () async => await _signUp(),
-                  );
-                },
+              SignUpBlocConsumer(
+                formKey: _formKey,
+                autovalidateMode: _autovalidateMode,
+                signUpInputData: _signUpInputData,
               ),
               const SizedBox(height: 24),
               const LoginOption(),
@@ -93,14 +68,5 @@ class _SignUpScreenBodyState extends State<SignUpScreenBody> {
         ),
       ),
     );
-  }
-
-  Future<void> _signUp() async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      await context.read<SignUpCubit>().signUp(_signUpInputData);
-    } else {
-      _autovalidateMode.value = AutovalidateMode.always;
-    }
   }
 }
