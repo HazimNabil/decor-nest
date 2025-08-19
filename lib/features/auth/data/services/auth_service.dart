@@ -22,7 +22,7 @@ class AuthService {
     await _supabaseAuth.signUp(
       email: signUpInputData.email!,
       password: signUpInputData.password!,
-      data: {'username': signUpInputData.username!},
+      data: {'username': signUpInputData.username!, 'role': 'user'},
     );
   }
 
