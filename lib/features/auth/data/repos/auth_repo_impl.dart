@@ -16,7 +16,10 @@ class AuthRepoImpl implements AuthRepo {
   bool get isLoggedIn => _authService.currentUser != null;
 
   @override
-  bool get isAdmin => _authService.currentUser?.email == 'admin@gmail.com';
+  bool get isAdmin {
+    final role = _authService.currentUser!.userMetadata!['role'];
+    return role == 'admin';
+  }
 
   @override
   FutureEither<User> logIn(LoginInputData loginInputData) async {
