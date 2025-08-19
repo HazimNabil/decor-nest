@@ -5,6 +5,7 @@ import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/features/auth/data/models/login_input_data.dart';
 import 'package:decor_nest/features/auth/presentation/views/widgets/login_form.dart';
 import 'package:decor_nest/features/auth/presentation/views/widgets/sign_up_option.dart';
+import 'package:decor_nest/features/home/presentation/views/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:decor_nest/features/auth/presentation/view_models/login_cubit/login_cubit.dart';
@@ -61,16 +62,17 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                   loginInputData: _loginInputData,
                 ),
               ),
-              const SizedBox(height: 16),
               const SizedBox(height: 48),
               BlocConsumer<LoginCubit, LoginState>(
+                listenWhen: (_, current) => current.flow == LoginFlow.email,
+                buildWhen: (_, current) => current.flow == LoginFlow.email,
                 listener: (context, state) {
                   if (state is LoginSuccess) {
                     context.showToast(
                       message: 'Login Success',
                       type: ToastificationType.success,
                     );
-                    context.go('/home');
+                    context.go(HomeScreen.path);
                   } else if (state is LoginFailure) {
                     context.showToast(
                       message: state.message,
@@ -88,12 +90,34 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                 },
               ),
               const SizedBox(height: 16),
-              CustomButton(
-                text: 'Sign In With Google',
-                icon: Assets.iconsGoogle,
-                color: context.surfaceColor,
-                textColor: context.textColor,
-                onPressed: () {},
+              BlocConsumer<LoginCubit, LoginState>(
+                listenWhen: (_, current) => current.flow == LoginFlow.google,
+                buildWhen: (_, current) => current.flow == LoginFlow.google,
+                listener: (context, state) {
+                  if (state is LoginSuccess) {
+                    context.showToast(
+                      message: 'Login Success',
+                      type: ToastificationType.success,
+                    );
+                    context.go(HomeScreen.path);
+                  } else if (state is LoginFailure) {
+                    context.showToast(
+                      message: state.message,
+                      type: ToastificationType.error,
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  return CustomButton(
+                    text: 'Sign In With Google',
+                    icon: Assets.iconsGoogle,
+                    color: context.surfaceColor,
+                    textColor: context.textColor,
+                    isLoading: state is LoginLoading,
+                    onPressed: () async =>
+                        await context.read<LoginCubit>().logInWithGoogle(),
+                  );
+                },
               ),
               const SizedBox(height: 24),
               const SignUpOption(),

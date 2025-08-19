@@ -12,22 +12,22 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._authRepo) : super(const LoginInitial());
 
   Future<void> logIn(LoginInputData loginInputData) async {
-    emit(const LoginLoading());
+    emit(const LoginLoading(LoginFlow.email));
 
     final result = await _authRepo.logIn(loginInputData);
     result.fold(
-      (failure) => emit(LoginFailure(failure.message)),
-      (user) => emit(LoginSuccess(user)),
+      (failure) => emit(LoginFailure(failure.message, LoginFlow.email)),
+      (user) => emit(LoginSuccess(user, LoginFlow.email)),
     );
   }
 
   Future<void> logInWithGoogle() async {
-    emit(const LoginLoading());
+    emit(const LoginLoading(LoginFlow.google));
 
     final result = await _authRepo.logInWithGoogle();
     result.fold(
-      (failure) => emit(LoginFailure(failure.message)),
-      (user) => emit(LoginSuccess(user)),
+      (failure) => emit(LoginFailure(failure.message, LoginFlow.google)),
+      (user) => emit(LoginSuccess(user, LoginFlow.google)),
     );
   }
 }

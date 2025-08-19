@@ -1,10 +1,14 @@
 part of 'login_cubit.dart';
 
+enum LoginFlow { email, google }
+
 sealed class LoginState extends Equatable {
-  const LoginState();
+  final LoginFlow? flow;
+
+  const LoginState([this.flow]);
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [flow];
 }
 
 final class LoginInitial extends LoginState {
@@ -12,23 +16,23 @@ final class LoginInitial extends LoginState {
 }
 
 final class LoginLoading extends LoginState {
-  const LoginLoading();
+  const LoginLoading(super.flow);
 }
 
 final class LoginSuccess extends LoginState {
   final User user;
 
-  const LoginSuccess(this.user);
+  const LoginSuccess(this.user, super.flow);
 
   @override
-  List<Object> get props => [user];
+  List<Object?> get props => [flow, user];
 }
 
 final class LoginFailure extends LoginState {
   final String message;
 
-  const LoginFailure(this.message);
+  const LoginFailure(this.message, super.flow);
 
   @override
-  List<Object> get props => [message];
+  List<Object?> get props => [flow, message];
 }
