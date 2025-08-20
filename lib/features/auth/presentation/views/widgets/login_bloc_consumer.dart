@@ -32,8 +32,10 @@ class LoginBlocConsumer extends StatelessWidget {
             message: 'Login Success',
             type: ToastificationType.success,
           );
-          final isAdmin = state.user.userMetadata?['role'] == 'admin';
-          context.go(isAdmin ? AdminDashboardScreen.path : HomeScreen.path);
+
+          context.go(
+            state.isAdmin ? AdminDashboardScreen.path : HomeScreen.path,
+          );
         } else if (state is LoginFailure) {
           context.showToast(
             message: state.message,

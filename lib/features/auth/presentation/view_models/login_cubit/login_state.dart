@@ -20,12 +20,12 @@ final class LoginLoading extends LoginState {
 }
 
 final class LoginSuccess extends LoginState {
-  final User user;
+  final bool isAdmin;
 
-  const LoginSuccess(this.user, super.flow);
+  const LoginSuccess(this.isAdmin, super.flow);
 
   @override
-  List<Object?> get props => [flow, user];
+  List<Object?> get props => [isAdmin, flow];
 }
 
 final class LoginFailure extends LoginState {
@@ -34,5 +34,5 @@ final class LoginFailure extends LoginState {
   const LoginFailure(this.message, super.flow);
 
   @override
-  List<Object?> get props => [flow, message];
+  List<Object?> get props => [message, flow];
 }
