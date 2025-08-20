@@ -1,6 +1,7 @@
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
+import 'package:decor_nest/features/admin/presentation/views/widgets/admin_product_card.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/search_field.dart';
 import 'package:flutter/material.dart';
 
@@ -29,6 +30,8 @@ class AdminDashboardScreen extends StatelessWidget {
                 color: context.primaryColor,
                 onPressed: () {},
               ),
+              const SizedBox(height: 16),
+              const AdminProductCard(),
             ],
           ),
         ),
