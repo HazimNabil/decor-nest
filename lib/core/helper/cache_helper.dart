@@ -1,9 +1,11 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper {
   CacheHelper._();
 
   static late final SharedPreferences _prefs;
+  static const _secureStorage = FlutterSecureStorage();
 
   static Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -20,7 +22,9 @@ class CacheHelper {
       case bool():
         await _prefs.setBool(key, value);
       default:
-        throw UnimplementedError('setData for type ${value.runtimeType} is not implemented');
+        throw UnimplementedError(
+          'setData for type ${value.runtimeType} is not implemented',
+        );
     }
   }
 
@@ -45,5 +49,24 @@ class CacheHelper {
 
   static Future<void> clearData() async {
     await _prefs.clear();
+  }
+
+  static Future<void> setSecureData(String key, String value) async {
+    await _secureStorage.write(key: key, value: value);
+  }
+
+  static Future<String> getSecureData(
+    String key, {
+    String defaultValue = '',
+  }) async {
+    return await _secureStorage.read(key: key) ?? defaultValue;
+  }
+
+  static Future<void> removeSecureData(String key) async {
+    await _secureStorage.delete(key: key);
+  }
+
+  static Future<void> clearSecureData() async {
+    await _secureStorage.deleteAll();
   }
 }
