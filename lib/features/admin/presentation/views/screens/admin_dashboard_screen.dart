@@ -1,4 +1,6 @@
+import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/search_field.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +23,12 @@ class AdminDashboardScreen extends StatelessWidget {
               Text('Manage your products', style: AppStyles.regular16(context)),
               const SizedBox(height: 24),
               const SearchField(),
+              const SizedBox(height: 16),
+              CustomButton(
+                text: 'Add Product',
+                color: context.primaryColor,
+                onPressed: () {},
+              ),
             ],
           ),
         ),
