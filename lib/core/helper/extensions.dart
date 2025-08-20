@@ -33,3 +33,43 @@ extension ToastExtension on BuildContext {
     );
   }
 }
+
+extension ValidationExtension on String? {
+  String? validateEmail() {
+    if (this?.isEmpty ?? true) {
+      return 'Please enter your email';
+    }
+    final emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
+    if (!emailRegex.hasMatch(this!)) {
+      return 'Please enter a valid email';
+    }
+    return null;
+  }
+
+  String? validatePassword() {
+    if (this?.isEmpty ?? true) {
+      return 'Please enter your password';
+    } else if (this!.length < 8) {
+      return 'Password must be at least 8 characters long';
+    }
+    return null;
+  }
+
+  String? validateConfirmPassword(String? password) {
+    if (this?.isEmpty ?? true) {
+      return 'Please enter your confirm password';
+    } else if (this != password) {
+      return 'Passwords do not match';
+    }
+    return null;
+  }
+
+  String? validateRequired(String fieldName) {
+    if (this?.isEmpty ?? true) {
+      return 'Please enter your $fieldName';
+    }
+    return null;
+  }
+}
