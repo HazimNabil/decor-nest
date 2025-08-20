@@ -47,10 +47,8 @@ class AppRouter {
         return isFirstTime ? OnboardingScreen.path : LoginScreen.path;
       }
 
-      if (state.matchedLocation == LoginScreen.path) {
-        if (isLoggedIn) {
-          return isAdmin ? AdminDashboardScreen.path : HomeScreen.path;
-        }
+      if (state.matchedLocation == LoginScreen.path && isLoggedIn) {
+        return isAdmin ? AdminDashboardScreen.path : HomeScreen.path;
       }
 
       return null;
