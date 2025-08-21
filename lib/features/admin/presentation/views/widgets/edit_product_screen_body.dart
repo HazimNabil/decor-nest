@@ -42,13 +42,19 @@ class EditProductScreenBody extends StatelessWidget {
                 Expanded(
                   child: LabeledField(
                     label: 'Price',
-                    widget: CustomTextField(hint: '120.00'),
+                    widget: CustomTextField(
+                      hint: '120.00',
+                      keyboardType: TextInputType.number,
+                    ),
                   ),
                 ),
                 Expanded(
                   child: LabeledField(
                     label: 'Stock',
-                    widget: CustomTextField(hint: '10'),
+                    widget: CustomTextField(
+                      hint: '10',
+                      keyboardType: TextInputType.number,
+                    ),
                   ),
                 ),
               ],
