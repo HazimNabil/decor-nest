@@ -9,20 +9,21 @@ class ProductCardInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      spacing: 12,
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(6),
           child: Image.asset(
             Assets.imagesLamp,
-            width: 88,
-            height: 88,
+            width: 80,
+            height: 80,
             fit: BoxFit.fill,
           ),
         ),
-        const SizedBox(width: 12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 8,
             children: [
               Text(
                 'Mid-century Modern Table Lamp',
@@ -30,14 +31,12 @@ class ProductCardInfo extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              const SizedBox(height: 4),
               Text(
                 r'$120.00 • Stock: 10',
                 style: AppStyles.medium14(
                   context,
                 ).copyWith(color: context.actionColor),
               ),
-              const SizedBox(height: 4),
               Text('Wood Type: Oak', style: AppStyles.regular14(context)),
             ],
           ),
