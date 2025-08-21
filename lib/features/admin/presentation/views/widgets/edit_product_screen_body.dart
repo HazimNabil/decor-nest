@@ -2,6 +2,7 @@ import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_text_field.dart';
 import 'package:decor_nest/core/widgets/labeled_field.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/custom_drop_down_button.dart';
+import 'package:decor_nest/features/admin/presentation/views/widgets/update_image_placeholder.dart';
 import 'package:flutter/material.dart';
 
 class EditProductScreenBody extends StatelessWidget {
@@ -74,6 +75,8 @@ class EditProductScreenBody extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: 16),
+            const UpdateImagePlaceholder(),
           ],
         ),
       ),
