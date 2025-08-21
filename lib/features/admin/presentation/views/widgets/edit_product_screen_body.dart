@@ -1,4 +1,6 @@
+import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/core/widgets/custom_text_field.dart';
 import 'package:decor_nest/core/widgets/labeled_field.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/custom_drop_down_button.dart';
@@ -77,6 +79,12 @@ class EditProductScreenBody extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const UpdateImagePlaceholder(),
+            const SizedBox(height: 24),
+            CustomButton(
+              text: 'Update Product',
+              color: context.primaryColor,
+              onPressed: () {},
+            ),
           ],
         ),
       ),
