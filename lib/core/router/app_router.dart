@@ -1,5 +1,6 @@
 import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:decor_nest/features/admin/presentation/views/screens/admin_dashboard_screen.dart';
+import 'package:decor_nest/features/admin/presentation/views/screens/edit_product_screen.dart';
 import 'package:decor_nest/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:decor_nest/features/auth/presentation/views/screens/login_screen.dart';
 import 'package:decor_nest/features/auth/presentation/views/screens/sign_up_screen.dart';
@@ -32,6 +33,10 @@ class AppRouter {
       GoRoute(
         path: AdminDashboardScreen.path,
         builder: (context, state) => const AdminDashboardScreen(),
+      ),
+      GoRoute(
+        path: EditProductScreen.path,
+        builder: (context, state) => const EditProductScreen(),
       ),
     ],
     redirect: (context, state) async {

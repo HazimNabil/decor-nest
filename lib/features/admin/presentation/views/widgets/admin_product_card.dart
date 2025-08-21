@@ -1,8 +1,10 @@
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:decor_nest/features/admin/presentation/views/screens/edit_product_screen.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/delete_dialog.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/product_card_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:go_router/go_router.dart';
 
 class AdminProductCard extends StatelessWidget {
   const AdminProductCard({super.key});
@@ -14,7 +16,7 @@ class AdminProductCard extends StatelessWidget {
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
-            onPressed: (context) {},
+            onPressed: (context) => context.push(EditProductScreen.path),
             backgroundColor: context.primaryColor,
             foregroundColor: context.surfaceColor,
             icon: Icons.edit,
