@@ -1,4 +1,5 @@
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:decor_nest/features/admin/presentation/views/widgets/delete_dialog.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/product_card_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -20,7 +21,7 @@ class AdminProductCard extends StatelessWidget {
             label: 'Edit',
           ),
           SlidableAction(
-            onPressed: (context) {},
+            onPressed: _showDeleteDialog,
             backgroundColor: Colors.red,
             foregroundColor: context.surfaceColor,
             borderRadius: const BorderRadius.only(
@@ -41,5 +42,9 @@ class AdminProductCard extends StatelessWidget {
         child: const ProductCardInfo(),
       ),
     );
+  }
+
+  void _showDeleteDialog(BuildContext context) {
+    showDialog(context: context, builder: (context) => const DeleteDialog());
   }
 }
