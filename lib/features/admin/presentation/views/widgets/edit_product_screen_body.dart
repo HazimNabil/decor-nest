@@ -1,5 +1,6 @@
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_text_field.dart';
+import 'package:decor_nest/core/widgets/labeled_field.dart';
 import 'package:flutter/material.dart';
 
 class EditProductScreenBody extends StatelessWidget {
@@ -18,15 +19,17 @@ class EditProductScreenBody extends StatelessWidget {
               style: AppStyles.regular16(context),
             ),
             const SizedBox(height: 24),
-            Text('Product Name', style: AppStyles.medium14(context)),
-            const SizedBox(height: 8),
-            const CustomTextField(hint: 'Modern Chair'),
+            const LabeledField(
+              label: 'Product Name',
+              widget: CustomTextField(hint: 'Modern Chair'),
+            ),
             const SizedBox(height: 16),
-            Text('Description', style: AppStyles.medium14(context)),
-            const SizedBox(height: 8),
-            const CustomTextField(
-              hint: 'Write a short description',
-              maxLines: 5,
+            const LabeledField(
+              label: 'Description',
+              widget: CustomTextField(
+                hint: 'Write a short description',
+                maxLines: 5,
+              ),
             ),
           ],
         ),
