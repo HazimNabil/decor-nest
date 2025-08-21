@@ -31,6 +31,24 @@ class EditProductScreenBody extends StatelessWidget {
                 maxLines: 5,
               ),
             ),
+            const SizedBox(height: 16),
+            const Row(
+              spacing: 12,
+              children: [
+                Expanded(
+                  child: LabeledField(
+                    label: 'Price',
+                    widget: CustomTextField(hint: '120.00'),
+                  ),
+                ),
+                Expanded(
+                  child: LabeledField(
+                    label: 'Stock',
+                    widget: CustomTextField(hint: '10'),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
