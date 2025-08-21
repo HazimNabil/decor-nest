@@ -1,6 +1,7 @@
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_text_field.dart';
 import 'package:decor_nest/core/widgets/labeled_field.dart';
+import 'package:decor_nest/features/admin/presentation/views/widgets/custom_drop_down_button.dart';
 import 'package:flutter/material.dart';
 
 class EditProductScreenBody extends StatelessWidget {
@@ -49,9 +50,49 @@ class EditProductScreenBody extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: 16),
+            Row(
+              spacing: 12,
+              children: [
+                Expanded(
+                  child: LabeledField(
+                    label: 'Category',
+                    widget: CustomDropDownButton(
+                      currentValue: 'chair',
+                      values: _categories,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: LabeledField(
+                    label: 'Wood Type',
+                    widget: CustomDropDownButton(
+                      currentValue: 'oak',
+                      values: _woodTypes,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
     );
+  }
+
+  List<String> get _categories {
+    return const ['chair', 'table', 'lamp', 'sofa', 'mirror', 'mattress'];
+  }
+
+  List<String> get _woodTypes {
+    return const [
+      'eucalyptus',
+      'teak',
+      'oak',
+      'pine',
+      'maple',
+      'bamboo',
+      'walnut',
+    ];
   }
 }
