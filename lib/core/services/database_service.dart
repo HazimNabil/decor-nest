@@ -1,0 +1,55 @@
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:decor_nest/core/models/product.dart';
+
+class DatabaseService {
+  final _supabase = Supabase.instance.client;
+  static const _pageSize = 10;
+
+  Future<void> add({
+    required String tableName,
+    required Product product,
+  }) async {
+    await _supabase.from(tableName).insert(product.toJson());
+  }
+
+  Future<void> update({
+    required String tableName,
+    required int id,
+    required Map<String, dynamic> fields,
+  }) async {
+    await _supabase.from(tableName).update(fields).eq('id', id);
+  }
+
+  Future<void> delete({required String tableName, required int id}) async {
+    await _supabase.from(tableName).delete().eq('id', id);
+  }
+
+  Future<List<Map<String, dynamic>>> read({
+    required String tableName,
+    required int page,
+  }) async {
+    final start = page * _pageSize;
+    final end = start + _pageSize - 1;
+
+    final data = await _supabase.from(tableName).select().range(start, end);
+
+    return data;
+  }
+
+  Future<List<Map<String, dynamic>>> search({
+    required String tableName,
+    required String query,
+    required int page,
+  }) async {
+    final start = page * _pageSize;
+    final end = start + _pageSize - 1;
+
+    final data = await _supabase
+        .from(tableName)
+        .select()
+        .ilike('name', '%$query%')
+        .range(start, end);
+
+    return data;
+  }
+}
