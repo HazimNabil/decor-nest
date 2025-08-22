@@ -18,14 +18,14 @@ class AdminProductCard extends StatelessWidget {
           SlidableAction(
             onPressed: (context) => context.push(EditProductScreen.path),
             backgroundColor: context.primaryColor,
-            foregroundColor: context.surfaceColor,
+            foregroundColor: Colors.white,
             icon: Icons.edit,
             label: 'Edit',
           ),
           SlidableAction(
             onPressed: _showDeleteDialog,
             backgroundColor: Colors.red,
-            foregroundColor: context.surfaceColor,
+            foregroundColor: Colors.white,
             borderRadius: const BorderRadius.only(
               topRight: Radius.circular(8),
               bottomRight: Radius.circular(8),
