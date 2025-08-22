@@ -15,3 +15,9 @@ class DatabaseErrors {
   static const requiredFieldMissing = 'A required field is missing.';
   static const rowNotFound = 'No matching record found.';
 }
+
+class TableNames {
+  const TableNames._();
+
+  static const products = 'products';
+}
