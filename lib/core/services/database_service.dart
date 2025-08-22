@@ -31,7 +31,11 @@ class DatabaseService {
     final start = page * _pageSize;
     final end = start + _pageSize - 1;
 
-    final data = await _supabase.from(tableName).select().range(start, end);
+    final data = await _supabase
+        .from(tableName)
+        .select()
+        .order('created_at', ascending: false)
+        .range(start, end);
 
     return data;
   }
@@ -48,6 +52,7 @@ class DatabaseService {
         .from(tableName)
         .select()
         .ilike('name', '%$query%')
+        .order('created_at', ascending: false)
         .range(start, end);
 
     return data;
