@@ -1,9 +1,11 @@
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
+import 'package:decor_nest/features/admin/presentation/views/screens/add_product_screen.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/admin_product_sliver_list.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/search_field.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AdminDashboardScreen extends StatelessWidget {
   static const path = '/admin_dashboard';
@@ -35,7 +37,7 @@ class AdminDashboardScreen extends StatelessWidget {
                     CustomButton(
                       text: 'Add Product',
                       color: context.primaryColor,
-                      onPressed: () {},
+                      onPressed: () => context.push(AddProductScreen.path),
                     ),
                     const SizedBox(height: 16),
                   ],
