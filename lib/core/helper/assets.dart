@@ -17,6 +17,8 @@ class Assets {
 
   static const imagesAndroid12Splash = "assets/images/android_12_splash.png";
 
+  static const imagesFailure = "assets/images/failure.svg";
+
   static const imagesLamp = "assets/images/lamp.jpeg";
 
   static const imagesOnBoardingOne = "assets/images/on_boarding_one.png";
