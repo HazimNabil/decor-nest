@@ -1,3 +1,4 @@
+import 'package:decor_nest/core/helper/app_secrets.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'product.g.dart';
@@ -34,4 +35,18 @@ class Product {
   }
 
   Map<String, dynamic> toJson() => _$ProductToJson(this);
+
+  factory Product.dummy() {
+    return Product(
+      name: 'Product Name',
+      description: 'Product Description',
+      price: 100,
+      stock: 10,
+      category: 'Category',
+      woodType: 'Wood Type',
+      imageUrl:
+          '${AppSecrets.supabaseUrl}/storage/v1/object/public/images/products/19e543b8-d1c8-483c-8331-c999ff0c5ee3.jpeg',
+      imagePath: '19e543b8-d1c8-483c-8331-c999ff0c5ee3.jpeg',
+    );
+  }
 }

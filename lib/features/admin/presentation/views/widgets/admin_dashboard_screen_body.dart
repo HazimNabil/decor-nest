@@ -1,4 +1,5 @@
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/features/admin/presentation/view_models/read_products_bloc/read_products_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:decor_nest/features/admin/presentation/views/widgets/search_fiel
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class AdminDashboardScreenBody extends StatefulWidget {
   const AdminDashboardScreenBody({super.key});
@@ -75,8 +77,11 @@ class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
           BlocBuilder<ReadProductsBloc, ReadProductsState>(
             builder: (_, state) {
               return switch (state.status) {
-                ReadProductsStatus.loading => const SliverToBoxAdapter(
-                  child: Center(child: CircularProgressIndicator()),
+                ReadProductsStatus.loading => Skeletonizer.sliver(
+                  child: AdminProductSliverList(
+                    products: List.filled(20, Product.dummy()),
+                    isFinalPage: state.hasReachedMax,
+                  ),
                 ),
                 ReadProductsStatus.success => AdminProductSliverList(
                   products: state.products,
