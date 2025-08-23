@@ -1,26 +1,43 @@
+import 'dart:io' show File;
+
 import 'package:decor_nest/core/constants/database_constants.dart';
 import 'package:decor_nest/core/errors/database_failure.dart';
+import 'package:decor_nest/core/errors/storage_failure.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/services/database_service.dart';
+import 'package:decor_nest/features/admin/data/services/storage_service.dart';
 import 'package:decor_nest/features/admin/data/repos/admin_repo.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
+import 'package:supabase_flutter/supabase_flutter.dart'
+    show PostgrestException, StorageException;
 
 class AdminRepoImpl implements AdminRepo {
   final DatabaseService _databaseService;
+  final StorageService _storageService;
 
-  const AdminRepoImpl(this._databaseService);
+  const AdminRepoImpl(this._databaseService, this._storageService);
 
   @override
-  FutureEither<Unit> addProduct(Product product) async {
+  FutureEither<Unit> addProduct({
+    required Product product,
+    required File image,
+  }) async {
     try {
+      final imagePath = DateTime.now().millisecondsSinceEpoch.toString();
+      await _storageService.uploadImage(imagePath, image);
+
+      product.imageUrl = _storageService.getImageUrl(imagePath);
+      product.imagePath = imagePath;
+
       await _databaseService.add(
         tableName: TableNames.products,
         product: product,
       );
 
       return right(unit);
+    } on StorageException catch (e) {
+      return left(StorageFailure.fromException(e));
     } on PostgrestException catch (e) {
       return left(DatabaseFailure.fromException(e));
     } catch (e) {
@@ -29,10 +46,18 @@ class AdminRepoImpl implements AdminRepo {
   }
 
   @override
-  FutureEither<Unit> deleteProduct(int id) async {
+  FutureEither<Unit> deleteProduct({required Product product}) async {
     try {
-      await _databaseService.delete(tableName: TableNames.products, id: id);
+      await _databaseService.delete(
+        tableName: TableNames.products,
+        id: product.id!,
+      );
+
+      await _storageService.deleteImage(product.imagePath!);
+
       return right(unit);
+    } on StorageException catch (e) {
+      return left(StorageFailure.fromException(e));
     } on PostgrestException catch (e) {
       return left(DatabaseFailure.fromException(e));
     } catch (e) {
@@ -41,7 +66,7 @@ class AdminRepoImpl implements AdminRepo {
   }
 
   @override
-  FutureEither<List<Product>> readProducts(int page) async {
+  FutureEither<List<Product>> readProducts({required int page}) async {
     try {
       final jsonProducts = await _databaseService.read(
         tableName: TableNames.products,
@@ -61,7 +86,10 @@ class AdminRepoImpl implements AdminRepo {
   }
 
   @override
-  FutureEither<List<Product>> searchProducts(String query, int page) async {
+  FutureEither<List<Product>> searchProducts({
+    required String query,
+    required int page,
+  }) async {
     try {
       final jsonProducts = await _databaseService.search(
         tableName: TableNames.products,
@@ -82,15 +110,27 @@ class AdminRepoImpl implements AdminRepo {
   }
 
   @override
-  FutureEither<Unit> updateProduct(int id, Map<String, dynamic> fields) async {
+  FutureEither<Unit> updateProduct({
+    required Product product,
+    File? image,
+    required Map<String, dynamic> fields,
+  }) async {
     try {
+      if (image != null) {
+        await _storageService.updateImage(product.imagePath!, image);
+        fields['image_path'] = product.imagePath;
+        fields['image_url'] = _storageService.getImageUrl(product.imagePath!);
+      }
+
       await _databaseService.update(
         tableName: TableNames.products,
-        id: id,
+        id: product.id!,
         fields: fields,
       );
 
       return right(unit);
+    } on StorageException catch (e) {
+      return left(StorageFailure.fromException(e));
     } on PostgrestException catch (e) {
       return left(DatabaseFailure.fromException(e));
     } catch (e) {

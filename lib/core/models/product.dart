@@ -13,11 +13,11 @@ class Product {
   @JsonKey(name: 'wood_type')
   final String? woodType;
   @JsonKey(name: 'image_url')
-  final String? imageUrl;
+  String? imageUrl;
   @JsonKey(name: 'image_path')
-  final String? imagePath;
+  String? imagePath;
 
-  const Product({
+  Product({
     this.id,
     required this.name,
     required this.description,
