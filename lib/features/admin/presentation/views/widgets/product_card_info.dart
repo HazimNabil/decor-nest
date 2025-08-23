@@ -1,10 +1,12 @@
+import 'package:decor_nest/core/models/product.dart';
 import 'package:flutter/material.dart';
-import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 
 class ProductCardInfo extends StatelessWidget {
-  const ProductCardInfo({super.key});
+  final Product product;
+
+  const ProductCardInfo({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +15,8 @@ class ProductCardInfo extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(6),
-          child: Image.asset(
-            Assets.imagesLamp,
+          child: Image.network(
+            product.imageUrl!,
             width: 80,
             height: 80,
             fit: BoxFit.fill,
@@ -26,18 +28,18 @@ class ProductCardInfo extends StatelessWidget {
             spacing: 8,
             children: [
               Text(
-                'Mid-century Modern Table Lamp',
+                product.name,
                 style: AppStyles.medium16(context),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                r'$120.00 • Stock: 10',
+                '${product.price.toStringAsFixed(2)} • Stock: ${product.stock}',
                 style: AppStyles.medium14(
                   context,
                 ).copyWith(color: context.actionColor),
               ),
-              Text('Wood Type: Oak', style: AppStyles.regular14(context)),
+              Text(product.category, style: AppStyles.regular14(context)),
             ],
           ),
         ),

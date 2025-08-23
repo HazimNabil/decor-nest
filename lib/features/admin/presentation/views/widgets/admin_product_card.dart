@@ -1,4 +1,5 @@
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/features/admin/presentation/views/screens/edit_product_screen.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/delete_dialog.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/product_card_info.dart';
@@ -7,7 +8,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 
 class AdminProductCard extends StatelessWidget {
-  const AdminProductCard({super.key});
+  final Product product;
+
+  const AdminProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class AdminProductCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         padding: const EdgeInsets.all(14),
-        child: const ProductCardInfo(),
+        child: ProductCardInfo(product: product),
       ),
     );
   }
