@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:decor_nest/core/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
@@ -15,11 +16,12 @@ class ProductCardInfo extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(6),
-          child: Image.network(
-            product.imageUrl!,
+          child: CachedNetworkImage(
+            imageUrl: product.imageUrl!,
             width: 80,
             height: 80,
             fit: BoxFit.fill,
+            errorWidget: (_, _, _) => const Icon(Icons.error),
           ),
         ),
         Expanded(
