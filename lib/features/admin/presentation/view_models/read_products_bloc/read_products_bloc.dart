@@ -12,6 +12,7 @@ class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
 
   ReadProductsBloc(this._adminRepo) : super(const ReadProductsState()) {
     on<ProductsFetched>(_readProducts, transformer: droppable());
+    on<ProductsRefreshed>(_refreshProducts, transformer: droppable());
   }
 
   Future<void> _readProducts(
@@ -44,5 +45,13 @@ class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
         );
       },
     );
+  }
+
+  void _refreshProducts(
+    ProductsRefreshed event,
+    Emitter<ReadProductsState> emit,
+  ) {
+    emit(const ReadProductsState());
+    add(const ProductsFetched());
   }
 }

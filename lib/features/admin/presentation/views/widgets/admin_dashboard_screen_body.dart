@@ -49,54 +49,61 @@ class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(24),
-      child: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          SliverToBoxAdapter(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Products', style: AppStyles.semiBold32(context)),
-                const SizedBox(height: 8),
-                Text(
-                  'Manage your products',
-                  style: AppStyles.regular16(context),
-                ),
-                const SizedBox(height: 24),
-                const SearchField(),
-                const SizedBox(height: 16),
-                CustomButton(
-                  text: 'Add Product',
-                  color: context.primaryColor,
-                  onPressed: () => context.push(AddProductScreen.path),
-                ),
-                const SizedBox(height: 16),
-              ],
+      child: RefreshIndicator(
+        backgroundColor: context.surfaceColor,
+        color: context.primaryColor,
+        onRefresh: () async {
+          context.read<ReadProductsBloc>().add(const ProductsRefreshed());
+        },
+        child: CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Products', style: AppStyles.semiBold32(context)),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Manage your products',
+                    style: AppStyles.regular16(context),
+                  ),
+                  const SizedBox(height: 24),
+                  const SearchField(),
+                  const SizedBox(height: 16),
+                  CustomButton(
+                    text: 'Add Product',
+                    color: context.primaryColor,
+                    onPressed: () => context.push(AddProductScreen.path),
+                  ),
+                  const SizedBox(height: 16),
+                ],
+              ),
             ),
-          ),
-          BlocBuilder<ReadProductsBloc, ReadProductsState>(
-            builder: (_, state) {
-              return switch (state.status) {
-                ReadProductsStatus.loading => Skeletonizer.sliver(
-                  child: AdminProductSliverList(
-                    products: List.filled(20, Product.dummy()),
+            BlocBuilder<ReadProductsBloc, ReadProductsState>(
+              builder: (_, state) {
+                return switch (state.status) {
+                  ReadProductsStatus.loading => Skeletonizer.sliver(
+                    child: AdminProductSliverList(
+                      products: List.filled(20, Product.dummy()),
+                      isFinalPage: state.hasReachedMax,
+                    ),
+                  ),
+                  ReadProductsStatus.success => AdminProductSliverList(
+                    products: state.products,
                     isFinalPage: state.hasReachedMax,
                   ),
-                ),
-                ReadProductsStatus.success => AdminProductSliverList(
-                  products: state.products,
-                  isFinalPage: state.hasReachedMax,
-                ),
-                ReadProductsStatus.failure => SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: FailureIndicator(message: state.errorMessage!),
-                ),
-                _ => const SliverToBoxAdapter(child: SizedBox.shrink()),
-              };
-            },
-          ),
-        ],
+                  ReadProductsStatus.failure => SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: FailureIndicator(message: state.errorMessage!),
+                  ),
+                  _ => const SliverToBoxAdapter(child: SizedBox.shrink()),
+                };
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

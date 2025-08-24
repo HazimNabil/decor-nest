@@ -13,3 +13,10 @@ final class ProductsFetched extends ReadProductsEvent {
   @override
   List<Object> get props => [];
 }
+
+final class ProductsRefreshed extends ReadProductsEvent {
+  const ProductsRefreshed();
+
+  @override
+  List<Object> get props => [];
+}
