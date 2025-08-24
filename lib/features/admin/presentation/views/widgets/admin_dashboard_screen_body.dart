@@ -2,6 +2,7 @@ import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
+import 'package:decor_nest/core/widgets/failure_indicator.dart';
 import 'package:decor_nest/features/admin/presentation/view_models/read_products_bloc/read_products_bloc.dart';
 import 'package:decor_nest/features/admin/presentation/views/screens/add_product_screen.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/admin_product_sliver_list.dart';
@@ -87,8 +88,9 @@ class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
                   products: state.products,
                   isFinalPage: state.hasReachedMax,
                 ),
-                ReadProductsStatus.failure => SliverToBoxAdapter(
-                  child: Center(child: Text(state.errorMessage!)),
+                ReadProductsStatus.failure => SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: FailureIndicator(message: state.errorMessage!),
                 ),
                 _ => const SliverToBoxAdapter(child: SizedBox.shrink()),
               };

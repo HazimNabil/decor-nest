@@ -18,7 +18,7 @@ class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
     ProductsFetched event,
     Emitter<ReadProductsState> emit,
   ) async {
-    if (state.hasReachedMax) return;
+    if (state.hasReachedMax || state.status.isFailure) return;
 
     if (state.page == 0) {
       emit(state.copyWith(status: ReadProductsStatus.loading));

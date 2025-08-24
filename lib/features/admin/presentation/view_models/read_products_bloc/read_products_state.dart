@@ -2,6 +2,12 @@ part of 'read_products_bloc.dart';
 
 enum ReadProductsStatus { initial, loading, success, failure }
 
+extension ReadProductsStatusExtension on ReadProductsStatus {
+  bool get isLoading => this == ReadProductsStatus.loading;
+  bool get isSuccess => this == ReadProductsStatus.success;
+  bool get isFailure => this == ReadProductsStatus.failure;
+}
+
 class ReadProductsState extends Equatable {
   final ReadProductsStatus status;
   final List<Product> products;
