@@ -4,32 +4,32 @@ import 'package:decor_nest/features/admin/data/repos/admin_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
-part 'read_products_event.dart';
-part 'read_products_state.dart';
+part 'products_query_event.dart';
+part 'products_query_state.dart';
 
-class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
+class ProductsQueryBloc extends Bloc<ProductsQueryEvent, ProductsQueryState> {
   final AdminRepo _adminRepo;
 
-  ReadProductsBloc(this._adminRepo) : super(const ReadProductsState()) {
+  ProductsQueryBloc(this._adminRepo) : super(const ProductsQueryState()) {
     on<ProductsFetched>(_readProducts, transformer: droppable());
     on<ProductsRefreshed>(_refreshProducts, transformer: droppable());
   }
 
   Future<void> _readProducts(
     ProductsFetched event,
-    Emitter<ReadProductsState> emit,
+    Emitter<ProductsQueryState> emit,
   ) async {
     if (state.hasReachedMax || state.status.isFailure) return;
 
     if (state.page == 0) {
-      emit(state.copyWith(status: ReadProductsStatus.loading));
+      emit(state.copyWith(status: ProductsQueryStatus.loading));
     }
 
     final result = await _adminRepo.readProducts(page: state.page);
     result.fold(
       (failure) => emit(
         state.copyWith(
-          status: ReadProductsStatus.failure,
+          status: ProductsQueryStatus.failure,
           errorMessage: failure.message,
         ),
       ),
@@ -37,7 +37,7 @@ class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
         final oldProducts = state.products;
         emit(
           state.copyWith(
-            status: ReadProductsStatus.success,
+            status: ProductsQueryStatus.success,
             products: oldProducts + products,
             hasReachedMax: products.length < 10,
             page: state.page + 1,
@@ -49,9 +49,9 @@ class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
 
   void _refreshProducts(
     ProductsRefreshed event,
-    Emitter<ReadProductsState> emit,
+    Emitter<ProductsQueryState> emit,
   ) {
-    emit(const ReadProductsState());
+    emit(const ProductsQueryState());
     add(const ProductsFetched());
   }
 }

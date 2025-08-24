@@ -1,36 +1,36 @@
-part of 'read_products_bloc.dart';
+part of 'products_query_bloc.dart';
 
-enum ReadProductsStatus { initial, loading, success, failure }
+enum ProductsQueryStatus { initial, loading, success, failure }
 
-extension ReadProductsStatusExtension on ReadProductsStatus {
-  bool get isLoading => this == ReadProductsStatus.loading;
-  bool get isSuccess => this == ReadProductsStatus.success;
-  bool get isFailure => this == ReadProductsStatus.failure;
+extension ProductsQueryStatusExtension on ProductsQueryStatus {
+  bool get isLoading => this == ProductsQueryStatus.loading;
+  bool get isSuccess => this == ProductsQueryStatus.success;
+  bool get isFailure => this == ProductsQueryStatus.failure;
 }
 
-class ReadProductsState extends Equatable {
-  final ReadProductsStatus status;
+class ProductsQueryState extends Equatable {
+  final ProductsQueryStatus status;
   final List<Product> products;
   final String? errorMessage;
   final int page;
   final bool hasReachedMax;
 
-  const ReadProductsState({
-    this.status = ReadProductsStatus.initial,
+  const ProductsQueryState({
+    this.status = ProductsQueryStatus.initial,
     this.products = const [],
     this.errorMessage,
     this.page = 0,
     this.hasReachedMax = false,
   });
 
-  ReadProductsState copyWith({
+  ProductsQueryState copyWith({
     int? page,
     bool? hasReachedMax,
-    ReadProductsStatus? status,
+    ProductsQueryStatus? status,
     List<Product>? products,
     String? errorMessage,
   }) {
-    return ReadProductsState(
+    return ProductsQueryState(
       page: page ?? this.page,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
       status: status ?? this.status,

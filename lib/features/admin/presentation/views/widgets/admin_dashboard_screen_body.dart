@@ -3,7 +3,7 @@ import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/core/widgets/failure_indicator.dart';
-import 'package:decor_nest/features/admin/presentation/view_models/read_products_bloc/read_products_bloc.dart';
+import 'package:decor_nest/features/admin/presentation/view_models/products_query_bloc/products_query_bloc.dart';
 import 'package:decor_nest/features/admin/presentation/views/screens/add_product_screen.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/admin_product_sliver_list.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/search_field.dart';
@@ -41,7 +41,7 @@ class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
     final maxPosition = _scrollController.position.maxScrollExtent;
 
     if (currentPosition >= maxPosition * 0.7) {
-      context.read<ReadProductsBloc>().add(const ProductsFetched());
+      context.read<ProductsQueryBloc>().add(const ProductsFetched());
     }
   }
 
@@ -53,7 +53,7 @@ class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
         backgroundColor: context.surfaceColor,
         color: context.primaryColor,
         onRefresh: () async {
-          context.read<ReadProductsBloc>().add(const ProductsRefreshed());
+          context.read<ProductsQueryBloc>().add(const ProductsRefreshed());
         },
         child: CustomScrollView(
           controller: _scrollController,
@@ -81,20 +81,20 @@ class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
                 ],
               ),
             ),
-            BlocBuilder<ReadProductsBloc, ReadProductsState>(
+            BlocBuilder<ProductsQueryBloc, ProductsQueryState>(
               builder: (_, state) {
                 return switch (state.status) {
-                  ReadProductsStatus.loading => Skeletonizer.sliver(
+                  ProductsQueryStatus.loading => Skeletonizer.sliver(
                     child: AdminProductSliverList(
                       products: List.filled(20, Product.dummy()),
                       isFinalPage: state.hasReachedMax,
                     ),
                   ),
-                  ReadProductsStatus.success => AdminProductSliverList(
+                  ProductsQueryStatus.success => AdminProductSliverList(
                     products: state.products,
                     isFinalPage: state.hasReachedMax,
                   ),
-                  ReadProductsStatus.failure => SliverFillRemaining(
+                  ProductsQueryStatus.failure => SliverFillRemaining(
                     hasScrollBody: false,
                     child: FailureIndicator(message: state.errorMessage!),
                   ),
