@@ -1,6 +1,7 @@
 import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/core/widgets/labeled_field.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:decor_nest/features/admin/data/models/product_input_data.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/add_image_placeholder.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/add_product_form.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/custom_drop_down_button.dart';
@@ -16,12 +17,14 @@ class AddProductScreenBody extends StatefulWidget {
 class _AddProductScreenBodyState extends State<AddProductScreenBody> {
   late final GlobalKey<FormState> _formKey;
   late final ValueNotifier<AutovalidateMode> _autovalidateMode;
+  late final ProductInputData _productInputData;
 
   @override
   void initState() {
     super.initState();
     _formKey = GlobalKey<FormState>();
     _autovalidateMode = ValueNotifier(AutovalidateMode.disabled);
+    _productInputData = ProductInputData();
   }
 
   @override
@@ -44,6 +47,7 @@ class _AddProductScreenBodyState extends State<AddProductScreenBody> {
                 return AddProductForm(
                   formKey: _formKey,
                   autovalidateMode: value,
+                  productInputData: _productInputData,
                 );
               },
             ),
@@ -57,6 +61,8 @@ class _AddProductScreenBodyState extends State<AddProductScreenBody> {
                     widget: CustomDropDownButton(
                       hint: 'Select category',
                       values: _categories,
+                      onChanged: (category) =>
+                          _productInputData.category = category,
                     ),
                   ),
                 ),
@@ -66,6 +72,8 @@ class _AddProductScreenBodyState extends State<AddProductScreenBody> {
                     widget: CustomDropDownButton(
                       hint: 'Select wood type',
                       values: _woodTypes,
+                      onChanged: (woodType) =>
+                          _productInputData.woodType = woodType,
                     ),
                   ),
                 ),

@@ -6,12 +6,14 @@ class CustomDropDownButton extends StatefulWidget {
   final String? currentValue;
   final String? hint;
   final List<String> values;
+  final ValueChanged<String> onChanged;
 
   const CustomDropDownButton({
     super.key,
     this.currentValue,
     required this.values,
     this.hint,
+    required this.onChanged,
   });
 
   @override
@@ -51,7 +53,10 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
             child: Text(widget.values[index]),
           ),
         ),
-        onChanged: (value) => setState(() => _selectedValue = value),
+        onChanged: (value) {
+          setState(() => _selectedValue = value);
+          widget.onChanged(value!);
+        },
       ),
     );
   }

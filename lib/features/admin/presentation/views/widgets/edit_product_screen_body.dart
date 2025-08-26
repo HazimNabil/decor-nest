@@ -69,6 +69,7 @@ class EditProductScreenBody extends StatelessWidget {
                     widget: CustomDropDownButton(
                       currentValue: 'chair',
                       values: _categories,
+                      onChanged: (value) {},
                     ),
                   ),
                 ),
@@ -78,6 +79,7 @@ class EditProductScreenBody extends StatelessWidget {
                     widget: CustomDropDownButton(
                       currentValue: 'oak',
                       values: _woodTypes,
+                      onChanged: (value) {},
                     ),
                   ),
                 ),
