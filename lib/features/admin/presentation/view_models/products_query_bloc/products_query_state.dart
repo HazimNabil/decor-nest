@@ -14,6 +14,7 @@ class ProductsQueryState extends Equatable {
   final String? errorMessage;
   final int page;
   final bool hasReachedMax;
+  final String? query;
 
   const ProductsQueryState({
     this.status = ProductsQueryStatus.initial,
@@ -21,6 +22,7 @@ class ProductsQueryState extends Equatable {
     this.errorMessage,
     this.page = 0,
     this.hasReachedMax = false,
+    this.query,
   });
 
   ProductsQueryState copyWith({
@@ -29,6 +31,7 @@ class ProductsQueryState extends Equatable {
     ProductsQueryStatus? status,
     List<Product>? products,
     String? errorMessage,
+    String? query,
   }) {
     return ProductsQueryState(
       page: page ?? this.page,
@@ -36,11 +39,12 @@ class ProductsQueryState extends Equatable {
       status: status ?? this.status,
       products: products ?? this.products,
       errorMessage: errorMessage ?? this.errorMessage,
+      query: query ?? this.query,
     );
   }
 
   @override
   List<Object?> get props {
-    return [status, products, errorMessage, page, hasReachedMax];
+    return [status, products, errorMessage, page, hasReachedMax, query];
   }
 }

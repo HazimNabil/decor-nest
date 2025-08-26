@@ -41,7 +41,7 @@ class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
     final maxPosition = _scrollController.position.maxScrollExtent;
 
     if (currentPosition >= maxPosition * 0.7) {
-      context.read<ProductsQueryBloc>().add(const ProductsFetched());
+      context.read<ProductsQueryBloc>().add(const ProductsMoreFetched());
     }
   }
 
