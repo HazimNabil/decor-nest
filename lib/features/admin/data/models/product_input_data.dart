@@ -1,3 +1,5 @@
+import 'dart:io' show File;
+
 class ProductInputData {
   String? name;
   String? description;
@@ -5,4 +7,5 @@ class ProductInputData {
   int? stock;
   String? category;
   String? woodType;
+  File? image;
 }
