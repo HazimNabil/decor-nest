@@ -1,11 +1,16 @@
+import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/core/widgets/labeled_field.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/features/admin/data/models/product_input_data.dart';
+import 'package:decor_nest/features/admin/presentation/view_models/add_product_cubit/add_product_cubit.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/add_image_placeholder.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/add_product_form.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/custom_drop_down_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:toastification/toastification.dart';
 
 class AddProductScreenBody extends StatefulWidget {
   const AddProductScreenBody({super.key});
@@ -80,23 +85,48 @@ class _AddProductScreenBodyState extends State<AddProductScreenBody> {
               ],
             ),
             const SizedBox(height: 16),
-            const AddImagePlaceholder(),
+            AddImagePlaceholder(productInputData: _productInputData),
             const SizedBox(height: 24),
-            CustomButton(
-              text: 'Add Product',
-              color: context.primaryColor,
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                } else {
-                  _autovalidateMode.value = AutovalidateMode.always;
+            BlocConsumer<AddProductCubit, AddProductState>(
+              listener: (context, state) {
+                if (state is AddProductSuccess) {
+                  context.showToast(
+                    message: 'Product added successfully',
+                    type: ToastificationType.success,
+                  );
+                  context.pop();
+                } else if (state is AddProductFailure) {
+                  context.showToast(
+                    message: state.message,
+                    type: ToastificationType.error,
+                  );
                 }
+              },
+              builder: (context, state) {
+                return CustomButton(
+                  text: 'Add Product',
+                  color: context.primaryColor,
+                  isLoading: state is AddProductLoading,
+                  onPressed: () async => await _addProduct(context),
+                );
               },
             ),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _addProduct(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      await context.read<AddProductCubit>().addProduct(
+        Product.fromInputData(_productInputData),
+        _productInputData.image!,
+      );
+    } else {
+      _autovalidateMode.value = AutovalidateMode.always;
+    }
   }
 
   List<String> get _categories {
