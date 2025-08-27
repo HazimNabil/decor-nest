@@ -24,11 +24,12 @@ class AdminRepoImpl implements AdminRepo {
     required File image,
   }) async {
     try {
-      final imagePath = DateTime.now().millisecondsSinceEpoch.toString();
-      await _storageService.uploadImage(imagePath, image);
+      final fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      final filePath = 'products/$fileName';
+      await _storageService.uploadImage(filePath, image);
 
-      product.imageUrl = _storageService.getImageUrl(imagePath);
-      product.imagePath = imagePath;
+      product.imageUrl = _storageService.getImageUrl(filePath);
+      product.imagePath = filePath;
 
       await _databaseService.add(
         tableName: TableNames.products,
