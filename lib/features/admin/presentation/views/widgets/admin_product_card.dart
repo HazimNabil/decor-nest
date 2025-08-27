@@ -15,6 +15,7 @@ class AdminProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Slidable(
+      key: ValueKey(product.id),
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
         children: [
