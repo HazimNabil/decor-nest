@@ -1,4 +1,5 @@
 import 'package:decor_nest/core/di/service_locator.dart';
+import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/features/admin/presentation/views/screens/add_product_screen.dart';
 import 'package:decor_nest/features/admin/presentation/views/screens/admin_dashboard_screen.dart';
 import 'package:decor_nest/features/admin/presentation/views/screens/edit_product_screen.dart';
@@ -17,34 +18,27 @@ class AppRouter {
     routes: [
       GoRoute(
         path: OnboardingScreen.path,
-        builder: (context, state) => const OnboardingScreen(),
+        builder: (_, _) => const OnboardingScreen(),
       ),
-      GoRoute(
-        path: LoginScreen.path,
-        builder: (context, state) => const LoginScreen(),
-      ),
-      GoRoute(
-        path: SignUpScreen.path,
-        builder: (context, state) => const SignUpScreen(),
-      ),
-      GoRoute(
-        path: HomeScreen.path,
-        builder: (context, state) => const HomeScreen(),
-      ),
+      GoRoute(path: LoginScreen.path, builder: (_, _) => const LoginScreen()),
+      GoRoute(path: SignUpScreen.path, builder: (_, _) => const SignUpScreen()),
+      GoRoute(path: HomeScreen.path, builder: (_, _) => const HomeScreen()),
       GoRoute(
         path: AdminDashboardScreen.path,
-        builder: (context, state) => const AdminDashboardScreen(),
+        builder: (_, _) => const AdminDashboardScreen(),
       ),
       GoRoute(
         path: EditProductScreen.path,
-        builder: (context, state) => const EditProductScreen(),
+        builder: (_, state) {
+          return EditProductScreen(product: state.extra as Product);
+        },
       ),
       GoRoute(
         path: AddProductScreen.path,
-        builder: (context, state) => const AddProductScreen(),
+        builder: (_, _) => const AddProductScreen(),
       ),
     ],
-    redirect: (context, state) async {
+    redirect: (_, state) async {
       final isFirstTime = await CacheHelper.getBool(
         CacheConstants.isFirstTime,
         defaultValue: true,

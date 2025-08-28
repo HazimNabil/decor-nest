@@ -24,7 +24,8 @@ class AdminProductCard extends StatelessWidget {
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
-            onPressed: (context) => context.push(EditProductScreen.path),
+            onPressed: (context) =>
+                context.push(EditProductScreen.path, extra: product),
             backgroundColor: context.primaryColor,
             foregroundColor: Colors.white,
             icon: Icons.edit,
