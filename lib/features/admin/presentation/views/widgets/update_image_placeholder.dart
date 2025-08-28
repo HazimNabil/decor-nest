@@ -1,9 +1,10 @@
-import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:flutter/material.dart';
 
 class UpdateImagePlaceholder extends StatelessWidget {
-  const UpdateImagePlaceholder({super.key});
+  final String? imageUrl;
+
+  const UpdateImagePlaceholder({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class UpdateImagePlaceholder extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(12),
-          child: Image.asset(Assets.imagesLamp, fit: BoxFit.cover),
+          child: Image.network(imageUrl!, fit: BoxFit.cover),
         ),
         Positioned(
           top: 8,

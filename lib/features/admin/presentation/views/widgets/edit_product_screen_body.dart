@@ -1,4 +1,5 @@
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/core/widgets/custom_text_field.dart';
@@ -8,7 +9,9 @@ import 'package:decor_nest/features/admin/presentation/views/widgets/update_imag
 import 'package:flutter/material.dart';
 
 class EditProductScreenBody extends StatelessWidget {
-  const EditProductScreenBody({super.key});
+  final Product product;
+
+  const EditProductScreenBody({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -23,27 +26,24 @@ class EditProductScreenBody extends StatelessWidget {
               style: AppStyles.regular16(context),
             ),
             const SizedBox(height: 24),
-            const LabeledField(
+            LabeledField(
               label: 'Product Name',
-              widget: CustomTextField(hint: 'Modern Chair'),
+              widget: CustomTextField(hint: product.name),
             ),
             const SizedBox(height: 16),
-            const LabeledField(
+            LabeledField(
               label: 'Description',
-              widget: CustomTextField(
-                hint: 'Write a short description',
-                maxLines: 5,
-              ),
+              widget: CustomTextField(hint: product.description, maxLines: 5),
             ),
             const SizedBox(height: 16),
-            const Row(
+            Row(
               spacing: 12,
               children: [
                 Expanded(
                   child: LabeledField(
                     label: 'Price',
                     widget: CustomTextField(
-                      hint: '120.00',
+                      hint: product.price.toStringAsFixed(2),
                       keyboardType: TextInputType.number,
                     ),
                   ),
@@ -52,7 +52,7 @@ class EditProductScreenBody extends StatelessWidget {
                   child: LabeledField(
                     label: 'Stock',
                     widget: CustomTextField(
-                      hint: '10',
+                      hint: product.stock.toString(),
                       keyboardType: TextInputType.number,
                     ),
                   ),
@@ -67,7 +67,7 @@ class EditProductScreenBody extends StatelessWidget {
                   child: LabeledField(
                     label: 'Category',
                     widget: CustomDropDownButton(
-                      currentValue: 'chair',
+                      currentValue: product.category,
                       values: _categories,
                       onChanged: (value) {},
                     ),
@@ -77,7 +77,7 @@ class EditProductScreenBody extends StatelessWidget {
                   child: LabeledField(
                     label: 'Wood Type',
                     widget: CustomDropDownButton(
-                      currentValue: 'oak',
+                      currentValue: product.woodType,
                       values: _woodTypes,
                       onChanged: (value) {},
                     ),
@@ -86,7 +86,7 @@ class EditProductScreenBody extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            const UpdateImagePlaceholder(),
+            UpdateImagePlaceholder(imageUrl: product.imageUrl),
             const SizedBox(height: 24),
             CustomButton(
               text: 'Update Product',

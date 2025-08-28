@@ -11,9 +11,9 @@ class EditProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: CustomAppBar(title: 'Edit Product'),
-      body: EditProductScreenBody(),
+    return Scaffold(
+      appBar: const CustomAppBar(title: 'Edit Product'),
+      body: EditProductScreenBody(product: product),
     );
   }
 }
