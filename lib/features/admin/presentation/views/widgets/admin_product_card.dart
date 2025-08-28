@@ -1,6 +1,6 @@
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/models/product.dart';
-import 'package:decor_nest/features/admin/data/repos/admin_repo.dart';
+import 'package:decor_nest/features/admin/data/repos/admin_repo_impl.dart';
 import 'package:decor_nest/features/admin/presentation/views/screens/edit_product_screen.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/delete_dialog.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/product_card_info.dart';
@@ -59,8 +59,8 @@ class AdminProductCard extends StatelessWidget {
       context: context,
       builder: (_) {
         return BlocProvider(
-          create: (_) => DeleteProductCubit(locator<AdminRepo>()),
-          child: const DeleteDialog(),
+          create: (_) => DeleteProductCubit(locator<AdminRepoImpl>()),
+          child: DeleteDialog(product: product),
         );
       },
     );
