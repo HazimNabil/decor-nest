@@ -1,11 +1,15 @@
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/models/product.dart';
+import 'package:decor_nest/features/admin/data/repos/admin_repo.dart';
 import 'package:decor_nest/features/admin/presentation/views/screens/edit_product_screen.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/delete_dialog.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/product_card_info.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
+import 'package:decor_nest/features/admin/presentation/view_models/delete_product_cubit/delete_product_cubit.dart';
+import 'package:decor_nest/core/di/service_locator.dart';
 
 class AdminProductCard extends StatelessWidget {
   final Product product;
@@ -51,6 +55,14 @@ class AdminProductCard extends StatelessWidget {
   }
 
   void _showDeleteDialog(BuildContext context) {
-    showDialog(context: context, builder: (context) => const DeleteDialog());
+    showDialog(
+      context: context,
+      builder: (_) {
+        return BlocProvider(
+          create: (_) => DeleteProductCubit(locator<AdminRepo>()),
+          child: const DeleteDialog(),
+        );
+      },
+    );
   }
 }
