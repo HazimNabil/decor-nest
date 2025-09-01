@@ -1,3 +1,5 @@
+import 'dart:developer' show log;
+
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:decor_nest/core/models/product.dart';
@@ -107,5 +109,18 @@ class ProductsQueryBloc extends Bloc<ProductsQueryEvent, ProductsQueryState> {
         );
       },
     );
+  }
+
+  @override
+  void onTransition(
+    Transition<ProductsQueryEvent, ProductsQueryState> transition,
+  ) {
+    super.onTransition(transition);
+
+    final eventType = transition.event.runtimeType;
+    final currentStatus = transition.currentState.status;
+    final nextStatus = transition.nextState.status;
+
+    log('[$runtimeType] $eventType\n$currentStatus → $nextStatus');
   }
 }

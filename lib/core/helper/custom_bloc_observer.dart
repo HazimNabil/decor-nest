@@ -14,16 +14,4 @@ class CustomBlocObserver extends BlocObserver {
       log('[$blocType] $currentStateType → $nextStateType');
     }
   }
-
-  @override
-  void onTransition(Bloc bloc, Transition transition) {
-    super.onTransition(bloc, transition);
-
-    final blocType = bloc.runtimeType;
-    final eventType = transition.event.runtimeType;
-    final currentStateType = transition.currentState.runtimeType;
-    final nextStateType = transition.nextState.runtimeType;
-
-    log('[$blocType] $eventType\n$currentStateType → $nextStateType');
-  }
 }
