@@ -23,7 +23,7 @@ class AdminRepoImpl implements AdminRepo {
     required Product product,
     required File image,
   }) async {
-    try {
+    return _guard<Unit>(() async {
       final fileName = DateTime.now().millisecondsSinceEpoch.toString();
       final filePath = 'products/$fileName';
       await _storageService.uploadImage(filePath, image);
@@ -36,19 +36,13 @@ class AdminRepoImpl implements AdminRepo {
         product: product,
       );
 
-      return right(unit);
-    } on StorageException catch (e) {
-      return left(StorageFailure.fromException(e));
-    } on PostgrestException catch (e) {
-      return left(DatabaseFailure.fromException(e));
-    } catch (e) {
-      return left(DatabaseFailure(e.toString()));
-    }
+      return unit;
+    });
   }
 
   @override
   FutureEither<Unit> deleteProduct({required Product product}) async {
-    try {
+    return _guard(() async {
       await _databaseService.delete(
         tableName: TableNames.products,
         id: product.id!,
@@ -56,19 +50,13 @@ class AdminRepoImpl implements AdminRepo {
 
       await _storageService.deleteImage(product.imagePath!);
 
-      return right(unit);
-    } on StorageException catch (e) {
-      return left(StorageFailure.fromException(e));
-    } on PostgrestException catch (e) {
-      return left(DatabaseFailure.fromException(e));
-    } catch (e) {
-      return left(DatabaseFailure(e.toString()));
-    }
+      return unit;
+    });
   }
 
   @override
   FutureEither<List<Product>> readProducts({required int page}) async {
-    try {
+    return _guard(() async {
       final jsonProducts = await _databaseService.read(
         tableName: TableNames.products,
         page: page,
@@ -78,12 +66,8 @@ class AdminRepoImpl implements AdminRepo {
           .map((jsonProduct) => Product.fromJson(jsonProduct))
           .toList();
 
-      return right(products);
-    } on PostgrestException catch (e) {
-      return left(DatabaseFailure.fromException(e));
-    } catch (e) {
-      return left(DatabaseFailure(e.toString()));
-    }
+      return products;
+    });
   }
 
   @override
@@ -91,7 +75,7 @@ class AdminRepoImpl implements AdminRepo {
     required String query,
     required int page,
   }) async {
-    try {
+    return _guard(() async {
       final jsonProducts = await _databaseService.search(
         tableName: TableNames.products,
         query: query,
@@ -102,21 +86,17 @@ class AdminRepoImpl implements AdminRepo {
           .map((jsonProduct) => Product.fromJson(jsonProduct))
           .toList();
 
-      return right(products);
-    } on PostgrestException catch (e) {
-      return left(DatabaseFailure.fromException(e));
-    } catch (e) {
-      return left(DatabaseFailure(e.toString()));
-    }
+      return products;
+    });
   }
 
   @override
   FutureEither<Unit> updateProduct({
+    required Map<String, dynamic> fields,
     required Product product,
     File? image,
-    required Map<String, dynamic> fields,
   }) async {
-    try {
+    return _guard(() async {
       if (image != null) {
         await _storageService.updateImage(product.imagePath!, image);
         fields['image_path'] = product.imagePath;
@@ -129,7 +109,14 @@ class AdminRepoImpl implements AdminRepo {
         fields: fields,
       );
 
-      return right(unit);
+      return unit;
+    });
+  }
+
+  FutureEither<T> _guard<T>(Future<T> Function() request) async {
+    try {
+      final response = await request();
+      return right(response);
     } on StorageException catch (e) {
       return left(StorageFailure.fromException(e));
     } on PostgrestException catch (e) {
