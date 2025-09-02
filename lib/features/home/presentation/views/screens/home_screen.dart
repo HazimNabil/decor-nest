@@ -1,4 +1,5 @@
 import 'package:decor_nest/features/home/presentation/views/widgets/home_screen_app_bar.dart';
+import 'package:decor_nest/features/home/presentation/views/widgets/home_screen_body.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,10 +11,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.symmetric(horizontal: 24),
-      child: Scaffold(
-        appBar: HomeScreenAppBar(),
-        body: Center(child: Text('Home')),
-      ),
+      child: Scaffold(appBar: HomeScreenAppBar(), body: HomeScreenBody()),
     );
   }
 }
