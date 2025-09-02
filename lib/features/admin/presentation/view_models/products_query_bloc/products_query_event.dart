@@ -14,13 +14,6 @@ final class ProductsFetched extends ProductsQueryEvent {
   List<Object> get props => [];
 }
 
-final class ProductsRefreshed extends ProductsQueryEvent {
-  const ProductsRefreshed();
-
-  @override
-  List<Object> get props => [];
-}
-
 final class ProductsSearched extends ProductsQueryEvent {
   final String query;
 

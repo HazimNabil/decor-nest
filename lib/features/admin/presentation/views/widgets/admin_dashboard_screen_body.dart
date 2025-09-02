@@ -23,16 +23,19 @@ class AdminDashboardScreenBody extends StatefulWidget {
 
 class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
   late final ScrollController _scrollController;
+  late final TextEditingController _searchController;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(_scrollListener);
+    _searchController = TextEditingController();
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -53,7 +56,8 @@ class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
         backgroundColor: context.surfaceColor,
         color: context.primaryColor,
         onRefresh: () async {
-          context.read<ProductsQueryBloc>().add(const ProductsRefreshed());
+          context.read<ProductsQueryBloc>().add(const ProductsFetched());
+          _searchController.clear();
         },
         child: CustomScrollView(
           controller: _scrollController,
@@ -70,7 +74,7 @@ class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
                     style: AppStyles.regular16(context),
                   ),
                   const SizedBox(height: 24),
-                  const SearchField(),
+                  SearchField(controller: _searchController),
                   const SizedBox(height: 16),
                   CustomButton(
                     text: 'Add Product',

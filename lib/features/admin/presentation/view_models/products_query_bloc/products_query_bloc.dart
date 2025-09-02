@@ -15,7 +15,6 @@ class ProductsQueryBloc extends Bloc<ProductsQueryEvent, ProductsQueryState> {
 
   ProductsQueryBloc(this._adminRepo) : super(const ProductsQueryState()) {
     on<ProductsFetched>(_readProducts);
-    on<ProductsRefreshed>(_refreshProducts, transformer: droppable());
     on<ProductsSearched>(_searchProducts, transformer: droppable());
     on<ProductsMoreFetched>(_fetchMoreProducts, transformer: droppable());
   }
@@ -62,19 +61,6 @@ class ProductsQueryBloc extends Bloc<ProductsQueryEvent, ProductsQueryState> {
         return await _adminRepo.readProducts(page: state.page);
       },
     );
-  }
-
-  void _refreshProducts(
-    ProductsRefreshed event,
-    Emitter<ProductsQueryState> emit,
-  ) {
-    final q = state.query;
-    emit(const ProductsQueryState());
-    if (q?.isNotEmpty ?? false) {
-      add(ProductsSearched(q!));
-    } else {
-      add(const ProductsFetched());
-    }
   }
 
   Future<void> _handlePagination({

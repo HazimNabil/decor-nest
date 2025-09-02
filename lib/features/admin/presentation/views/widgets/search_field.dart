@@ -7,11 +7,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:decor_nest/features/admin/presentation/view_models/products_query_bloc/products_query_bloc.dart';
 
 class SearchField extends StatelessWidget {
-  const SearchField({super.key});
+  final TextEditingController controller;
+
+  const SearchField({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return SearchBar(
+      controller: controller,
       leading: SvgPicture.asset(Assets.iconsSearch),
       hintText: 'Search Furniture',
       hintStyle: WidgetStatePropertyAll(AppStyles.regular14(context)),
