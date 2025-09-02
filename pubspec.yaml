@@ -48,6 +48,12 @@ dependencies:
   toastification: ^3.0.3
   google_sign_in: ^6.3.0
   flutter_secure_storage: ^9.2.4
+  flutter_slidable: ^4.0.0
+  image_picker: ^1.2.0
+  json_annotation: ^4.9.0
+  bloc_concurrency: ^0.3.0
+  skeletonizer: ^2.1.0+1
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +67,7 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   envied_generator: ^1.2.0
   build_runner: ^2.6.0
+  json_serializable: ^6.10.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

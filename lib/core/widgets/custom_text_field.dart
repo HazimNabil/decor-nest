@@ -8,6 +8,8 @@ class CustomTextField extends StatefulWidget {
   final FormFieldValidator<String>? validator;
   final FormFieldSetter<String>? onSaved;
   final ValueChanged<String>? onChanged;
+  final int maxLines;
+  final TextInputType? keyboardType;
 
   const CustomTextField({
     super.key,
@@ -16,6 +18,8 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.onSaved,
     this.onChanged,
+    this.maxLines = 1,
+    this.keyboardType,
   });
 
   @override
@@ -31,6 +35,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
       cursorColor: context.primaryColor,
       obscureText: widget.isPassword && !_isPasswordVisible,
       autofillHints: const [AutofillHints.email, AutofillHints.username],
+      maxLines: widget.maxLines,
+      keyboardType: widget.keyboardType,
       validator: widget.validator,
       onSaved: widget.onSaved,
       onChanged: widget.onChanged,
