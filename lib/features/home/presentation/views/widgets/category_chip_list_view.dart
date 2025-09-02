@@ -13,21 +13,24 @@ class _CategoryChipListViewState extends State<CategoryChipListView> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: categories.length,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (_, index) {
-        return CategoryChip(
-          category: categories[index],
-          selected: _selectedIndex == index,
-          onSelected: (selected) {
-            setState(() => _selectedIndex = selected ? index : -1);
-          },
-        );
-      },
-      separatorBuilder: (_, _) {
-        return const SizedBox(width: 12);
-      },
+    return SizedBox(
+      height: 32,
+      child: ListView.separated(
+        itemCount: categories.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (_, index) {
+          return CategoryChip(
+            category: categories[index],
+            selected: _selectedIndex == index,
+            onSelected: (selected) {
+              setState(() => _selectedIndex = selected ? index : -1);
+            },
+          );
+        },
+        separatorBuilder: (_, _) {
+          return const SizedBox(width: 12);
+        },
+      ),
     );
   }
 
