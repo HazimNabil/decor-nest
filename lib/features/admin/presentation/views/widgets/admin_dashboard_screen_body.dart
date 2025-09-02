@@ -13,7 +13,9 @@ import 'package:go_router/go_router.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class AdminDashboardScreenBody extends StatefulWidget {
-  const AdminDashboardScreenBody({super.key});
+  final ScrollController scrollController;
+
+  const AdminDashboardScreenBody({super.key, required this.scrollController});
 
   @override
   State<AdminDashboardScreenBody> createState() {
@@ -22,30 +24,18 @@ class AdminDashboardScreenBody extends StatefulWidget {
 }
 
 class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
-  late final ScrollController _scrollController;
   late final TextEditingController _searchController;
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController()..addListener(_scrollListener);
     _searchController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
     _searchController.dispose();
     super.dispose();
-  }
-
-  void _scrollListener() {
-    final currentPosition = _scrollController.position.pixels;
-    final maxPosition = _scrollController.position.maxScrollExtent;
-
-    if (currentPosition >= maxPosition * 0.7) {
-      context.read<ProductsQueryBloc>().add(const ProductsMoreFetched());
-    }
   }
 
   @override
@@ -60,7 +50,7 @@ class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
           _searchController.clear();
         },
         child: CustomScrollView(
-          controller: _scrollController,
+          controller: widget.scrollController,
           slivers: [
             SliverToBoxAdapter(
               child: Column(
