@@ -1,4 +1,4 @@
-import 'package:decor_nest/features/home/presentation/views/widgets/category_chip.dart';
+import 'package:decor_nest/features/home/presentation/views/widgets/category_chip_list_view.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenBody extends StatelessWidget {
@@ -6,6 +6,6 @@ class HomeScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CategoryChip(label: 'Chair', selected: true);
+    return const CategoryChipListView();
   }
 }

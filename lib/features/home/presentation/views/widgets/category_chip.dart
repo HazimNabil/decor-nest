@@ -3,15 +3,21 @@ import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:flutter/material.dart';
 
 class CategoryChip extends StatelessWidget {
-  final String label;
+  final String category;
   final bool selected;
+  final void Function(bool) onSelected;
 
-  const CategoryChip({super.key, required this.label, required this.selected});
+  const CategoryChip({
+    super.key,
+    required this.category,
+    required this.selected,
+    required this.onSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ChoiceChip(
-      label: Text(label),
+      label: Text(category),
       labelStyle: AppStyles.regular14(
         context,
       ).copyWith(color: selected ? Colors.white : context.subTextColor),
@@ -22,7 +28,7 @@ class CategoryChip extends StatelessWidget {
       showCheckmark: false,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       selected: selected,
-      onSelected: (value) {},
+      onSelected: onSelected,
     );
   }
 }
