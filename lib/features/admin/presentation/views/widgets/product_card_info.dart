@@ -35,12 +35,15 @@ class ProductCardInfo extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                '${product.price.toStringAsFixed(2)}\$ • Stock: ${product.stock}',
+                '${product.price.toStringAsFixed(2)}\$  •  Stock: ${product.stock}',
                 style: AppStyles.medium14(
                   context,
                 ).copyWith(color: context.actionColor),
               ),
-              Text(product.category, style: AppStyles.regular14(context)),
+              Text(
+                '${product.category}  •  ${product.woodType}',
+                style: AppStyles.regular14(context),
+              ),
             ],
           ),
         ),
