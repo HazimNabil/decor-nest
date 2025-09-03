@@ -4,6 +4,7 @@ import 'package:decor_nest/core/themes/app_styles.dart';
 
 extension ThemeExtension on BuildContext {
   Color get primaryColor => Theme.of(this).colorScheme.primary;
+  Color get backgroundColor => Theme.of(this).scaffoldBackgroundColor;
   Color get textColor => Theme.of(this).colorScheme.secondary;
   Color get actionColor => Theme.of(this).colorScheme.tertiary;
   Color get surfaceColor => Theme.of(this).colorScheme.surface;
