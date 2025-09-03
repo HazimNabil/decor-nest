@@ -1,7 +1,9 @@
 class Assets {
   Assets._();
 
-  static const iconsCart = "assets/icons/cart.svg";
+  static const iconsGreyCart = "assets/icons/grey_cart.svg";
+
+  static const iconsWhiteCart = "assets/icons/white_cart.svg";
 
   static const iconsFavorite = "assets/icons/favorite.svg";
 
