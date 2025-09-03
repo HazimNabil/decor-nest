@@ -16,15 +16,7 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
-        title: RichText(
-          text: TextSpan(
-            text: 'Welcome,\n',
-            style: AppStyles.regular13(context),
-            children: [
-              TextSpan(text: 'John Doe', style: AppStyles.medium16(context)),
-            ],
-          ),
-        ),
+        title: Text('Decor Nest', style: AppStyles.medium24(context)),
         actions: [
           CircleAvatar(
             radius: 24,
