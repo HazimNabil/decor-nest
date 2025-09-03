@@ -9,9 +9,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24),
-      child: Scaffold(appBar: HomeScreenAppBar(), body: HomeScreenBody()),
+    return const Scaffold(
+      appBar: HomeScreenAppBar(),
+      body: HomeScreenBody(),
     );
   }
 }

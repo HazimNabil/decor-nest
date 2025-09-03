@@ -9,34 +9,40 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      surfaceTintColor: Colors.transparent,
-      elevation: 0,
-      scrolledUnderElevation: 0,
-      title: RichText(
-        text: TextSpan(
-          text: 'Welcome,\n',
-          style: AppStyles.regular13(context),
-          children: [
-            TextSpan(text: 'John Doe', style: AppStyles.medium16(context)),
-          ],
-        ),
-      ),
-      actions: [
-        CircleAvatar(
-          radius: 24,
-          backgroundColor: context.surfaceColor,
-          child: IconButton(
-            icon: SvgPicture.asset(
-              Assets.iconsSearch,
-              height: 19,
-              colorFilter: ColorFilter.mode(context.textColor, BlendMode.srcIn),
-            ),
-            onPressed: () {},
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: AppBar(
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        title: RichText(
+          text: TextSpan(
+            text: 'Welcome,\n',
+            style: AppStyles.regular13(context),
+            children: [
+              TextSpan(text: 'John Doe', style: AppStyles.medium16(context)),
+            ],
           ),
         ),
-      ],
+        actions: [
+          CircleAvatar(
+            radius: 24,
+            backgroundColor: context.surfaceColor,
+            child: IconButton(
+              icon: SvgPicture.asset(
+                Assets.iconsSearch,
+                height: 19,
+                colorFilter: ColorFilter.mode(
+                  context.textColor,
+                  BlendMode.srcIn,
+                ),
+              ),
+              onPressed: () {},
+            ),
+          ),
+        ],
+      ),
     );
   }
 

@@ -16,12 +16,7 @@ class ProductCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(14),
-              child: Image.asset(
-                Assets.imagesLamp,
-                height: 165,
-                width: 160,
-                fit: BoxFit.fill,
-              ),
+              child: Image.asset(Assets.imagesLamp),
             ),
             Positioned(
               top: 10,
@@ -38,7 +33,12 @@ class ProductCard extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 10),
-        Text('Product Name', style: AppStyles.medium16(context)),
+        Text(
+          'Product Name',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppStyles.medium16(context),
+        ),
         const SizedBox(height: 4),
         Text(
           r'$100',
