@@ -1,8 +1,10 @@
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/home/presentation/views/screens/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key});
@@ -12,25 +14,28 @@ class ProductCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(14),
-              child: Image.asset(Assets.imagesLamp),
-            ),
-            Positioned(
-              top: 10,
-              right: 10,
-              child: CircleAvatar(
-                radius: 15,
-                backgroundColor: context.surfaceColor,
-                child: IconButton(
-                  icon: SvgPicture.asset(Assets.iconsFavorite),
-                  onPressed: () {},
+        GestureDetector(
+          onTap: () => context.push(DetailsScreen.path),
+          child: Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(14),
+                child: Image.asset(Assets.imagesLamp),
+              ),
+              Positioned(
+                top: 10,
+                right: 10,
+                child: CircleAvatar(
+                  radius: 15,
+                  backgroundColor: context.surfaceColor,
+                  child: IconButton(
+                    icon: SvgPicture.asset(Assets.iconsFavorite),
+                    onPressed: () {},
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(height: 10),
         Text(
