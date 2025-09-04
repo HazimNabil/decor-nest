@@ -76,6 +76,9 @@ class FetchProductsBloc extends Bloc<FetchProductsEvent, FetchProductsState> {
           state.copyWith(
             status: FetchProductsStatus.success,
             products: oldProducts + products,
+            category: event is ProductsFetched
+                ? event.category
+                : state.category,
             hasReachedMax: products.length < 10,
             page: state.page + 1,
           ),
