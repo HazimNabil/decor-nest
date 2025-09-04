@@ -10,7 +10,7 @@ class AdminProductSliverList extends StatelessWidget {
   const AdminProductSliverList({
     super.key,
     required this.products,
-    required this.isFinalPage,
+    this.isFinalPage = false,
   });
 
   @override
