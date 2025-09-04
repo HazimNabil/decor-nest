@@ -1,8 +1,11 @@
+import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/features/home/presentation/views/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 
 class ProductCardSliverGrid extends StatelessWidget {
-  const ProductCardSliverGrid({super.key});
+  final List<Product> products;
+
+  const ProductCardSliverGrid({super.key, required this.products});
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +16,9 @@ class ProductCardSliverGrid extends StatelessWidget {
         crossAxisSpacing: 16,
         childAspectRatio: 0.71,
       ),
-      itemCount: 10,
-      itemBuilder: (_, _) {
-        return const ProductCard();
+      itemCount: products.length,
+      itemBuilder: (_, index) {
+        return ProductCard(product: products[index]);
       },
     );
   }

@@ -1,5 +1,7 @@
+import 'package:decor_nest/features/home/presentation/view_models/fetch_products_bloc/fetch_products_bloc.dart';
 import 'package:decor_nest/features/home/presentation/views/widgets/category_chip.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoryChipListView extends StatefulWidget {
   const CategoryChipListView({super.key});
@@ -24,6 +26,9 @@ class _CategoryChipListViewState extends State<CategoryChipListView> {
             selected: _selectedIndex == index,
             onSelected: (selected) {
               setState(() => _selectedIndex = selected ? index : -1);
+              context.read<FetchProductsBloc>().add(
+                ProductsFetched(category: categories[_selectedIndex]),
+              );
             },
           );
         },
