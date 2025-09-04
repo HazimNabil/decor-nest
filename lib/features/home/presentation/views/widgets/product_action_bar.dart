@@ -48,7 +48,7 @@ class ProductActionBar extends StatelessWidget {
           const SizedBox(height: 24),
           CustomButton(
             text: 'Add To Cart',
-            icon: Assets.iconsWhiteCart,
+            icon: Assets.iconsAddToCart,
             color: context.primaryColor,
             onPressed: () {},
           ),

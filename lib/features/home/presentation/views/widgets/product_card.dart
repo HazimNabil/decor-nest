@@ -36,7 +36,7 @@ class ProductCard extends StatelessWidget {
                   radius: 15,
                   backgroundColor: context.surfaceColor,
                   child: IconButton(
-                    icon: SvgPicture.asset(Assets.iconsFavorite),
+                    icon: SvgPicture.asset(Assets.iconsUnselectedFavorites),
                     onPressed: () {},
                   ),
                 ),

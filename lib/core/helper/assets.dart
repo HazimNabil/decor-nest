@@ -1,33 +1,42 @@
 class Assets {
   Assets._();
 
-  static const iconsGreyCart = "assets/icons/grey_cart.svg";
+  static const iconsAddToCart = 'assets/icons/add_to_cart.svg';
 
-  static const iconsWhiteCart = "assets/icons/white_cart.svg";
+  static const iconsFilter = 'assets/icons/filter.svg';
 
-  static const iconsFavorite = "assets/icons/favorite.svg";
+  static const iconsGoogle = 'assets/icons/google.svg';
 
-  static const iconsFilter = "assets/icons/filter.svg";
+  static const iconsSearch = 'assets/icons/search.svg';
 
-  static const iconsHome = "assets/icons/home.svg";
+  static const iconsSelectedCart = 'assets/icons/selected_cart.svg';
 
-  static const iconsGoogle = "assets/icons/google.svg";
+  static const iconsSelectedFavorites = 'assets/icons/selected_favorites.svg';
 
-  static const iconsProfile = "assets/icons/profile.svg";
+  static const iconsSelectedHome = 'assets/icons/selected_home.svg';
 
-  static const iconsSearch = "assets/icons/search.svg";
+  static const iconsSelectedProfile = 'assets/icons/selected_profile.svg';
 
-  static const imagesAndroid12Splash = "assets/images/android_12_splash.png";
+  static const iconsUnselectedCart = 'assets/icons/unselected_cart.svg';
 
-  static const imagesFailure = "assets/images/failure.svg";
+  static const iconsUnselectedFavorites =
+      'assets/icons/unselected_favorites.svg';
 
-  static const imagesLamp = "assets/images/lamp.jpeg";
+  static const iconsUnselectedHome = 'assets/icons/unselected_home.svg';
 
-  static const imagesOnBoardingOne = "assets/images/on_boarding_one.png";
+  static const iconsUnselectedProfile = 'assets/icons/unselected_profile.svg';
 
-  static const imagesOnBoardingThree = "assets/images/on_boarding_three.png";
+  static const imagesAndroid12Splash = 'assets/images/android_12_splash.png';
 
-  static const imagesOnBoardingTwo = "assets/images/on_boarding_two.png";
+  static const imagesFailure = 'assets/images/failure.svg';
 
-  static const imagesSplash = "assets/images/splash.png";
+  static const imagesLamp = 'assets/images/lamp.jpeg';
+
+  static const imagesOnBoardingOne = 'assets/images/on_boarding_one.png';
+
+  static const imagesOnBoardingThree = 'assets/images/on_boarding_three.png';
+
+  static const imagesOnBoardingTwo = 'assets/images/on_boarding_two.png';
+
+  static const imagesSplash = 'assets/images/splash.png';
 }
