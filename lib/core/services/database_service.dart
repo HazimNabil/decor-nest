@@ -1,3 +1,4 @@
+import 'package:decor_nest/core/constants/database_constants.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:decor_nest/core/models/product.dart';
@@ -18,11 +19,11 @@ class DatabaseService {
     required int id,
     required Map<String, dynamic> fields,
   }) async {
-    await _supabase.from(tableName).update(fields).eq('id', id);
+    await _supabase.from(tableName).update(fields).eq(TableConstants.id, id);
   }
 
   Future<void> delete({required String tableName, required int id}) async {
-    await _supabase.from(tableName).delete().eq('id', id);
+    await _supabase.from(tableName).delete().eq(TableConstants.id, id);
   }
 
   FutureJson read({required String tableName, required int page}) async {
@@ -32,7 +33,7 @@ class DatabaseService {
     final data = await _supabase
         .from(tableName)
         .select()
-        .order('created_at', ascending: false)
+        .order(TableConstants.createdAt, ascending: false)
         .range(start, end);
 
     return data;
@@ -49,8 +50,8 @@ class DatabaseService {
     final data = await _supabase
         .from(tableName)
         .select()
-        .eq('category', category)
-        .order('created_at', ascending: false)
+        .eq(TableConstants.category, category)
+        .order(TableConstants.createdAt, ascending: false)
         .range(start, end);
 
     return data;
@@ -67,8 +68,8 @@ class DatabaseService {
     final data = await _supabase
         .from(tableName)
         .select()
-        .ilike('name', '%$query%')
-        .order('created_at', ascending: false)
+        .ilike(TableConstants.name, '%$query%')
+        .order(TableConstants.createdAt, ascending: false)
         .range(start, end);
 
     return data;

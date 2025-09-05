@@ -16,8 +16,15 @@ class DatabaseErrors {
   static const rowNotFound = 'No matching record found.';
 }
 
-class TableNames {
-  const TableNames._();
+class TableConstants {
+  const TableConstants._();
 
   static const products = 'products';
+  static const category = 'category';
+  static const id = 'id';
+  static const isFavorite = 'is_favorite';
+  static const name = 'name';
+  static const createdAt = 'created_at';
+  static const imagePath = 'image_path';
+  static const imageUrl = 'image_url';
 }
