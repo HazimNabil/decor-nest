@@ -37,14 +37,33 @@ class HomeRepoImpl implements HomeRepo {
   FutureJson _fetchFromDatabase(String? category, int page) async {
     if (category == null) {
       return await _databaseService.read(
-        tableName: TableNames.products,
+        tableName: TableConstants.products,
         page: page,
       );
     }
     return await _databaseService.filterByCategory(
-      tableName: TableNames.products,
+      tableName: TableConstants.products,
       page: page,
       category: category,
     );
+  }
+
+  @override
+  FutureEither<Unit> toggleFavorite({
+    required int productId,
+    required bool isFavorite,
+  }) async {
+    try {
+      await _databaseService.update(
+        tableName: TableConstants.products,
+        id: productId,
+        fields: {TableConstants.isFavorite: isFavorite},
+      );
+      return right(unit);
+    } on PostgrestException catch (e) {
+      return left(DatabaseFailure.fromException(e));
+    } catch (e) {
+      return left(DatabaseFailure(e.toString()));
+    }
   }
 }
