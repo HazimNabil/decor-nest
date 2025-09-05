@@ -49,7 +49,7 @@ class AppRouter {
       ),
       GoRoute(
         path: DetailsScreen.path,
-        builder: (_, _) => const DetailsScreen(),
+        builder: (_, state) => DetailsScreen(product: state.extra as Product),
       ),
     ],
     redirect: (_, state) async {

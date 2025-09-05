@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +14,12 @@ class ProductThumbnail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.asset(
-          image,
+        CachedNetworkImage(
+          imageUrl: image,
           width: double.infinity,
           height: context.screenHeight * 0.4,
           fit: BoxFit.fill,
+          errorWidget: (_, _, _) => const Icon(Icons.error),
         ),
         Positioned(
           top: 12,

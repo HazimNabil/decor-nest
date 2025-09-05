@@ -1,16 +1,19 @@
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class ProductActionBar extends StatelessWidget {
-  const ProductActionBar({super.key});
+  final Product product;
+
+  const ProductActionBar({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
       decoration: BoxDecoration(
         color: context.surfaceColor,
         borderRadius: const BorderRadius.only(
@@ -42,7 +45,10 @@ class ProductActionBar extends StatelessWidget {
                 child: const Icon(Icons.add),
               ),
               const Spacer(),
-              Text(r'Total: $100.00', style: AppStyles.medium16(context)),
+              Text(
+                'Total: \$${product.price.toStringAsFixed(2)}',
+                style: AppStyles.medium16(context),
+              ),
             ],
           ),
           const SizedBox(height: 24),

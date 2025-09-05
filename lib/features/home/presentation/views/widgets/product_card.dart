@@ -19,7 +19,7 @@ class ProductCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
-          onTap: () => context.push(DetailsScreen.path),
+          onTap: () => context.push(DetailsScreen.path, extra: product),
           child: Stack(
             children: [
               ClipRRect(
@@ -53,7 +53,7 @@ class ProductCard extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          '${product.price}',
+          '\$${product.price.toStringAsFixed(2)}',
           style: AppStyles.medium16(
             context,
           ).copyWith(color: context.actionColor),

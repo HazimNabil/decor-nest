@@ -1,9 +1,12 @@
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsHeader extends StatelessWidget {
-  const ProductDetailsHeader({super.key});
+  final Product product;
+
+  const ProductDetailsHeader({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -15,20 +18,22 @@ class ProductDetailsHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Product Name', style: AppStyles.medium24(context)),
+              Text(product.name, style: AppStyles.medium24(context)),
               Text(
-                r'$100',
+                '\$${product.price.toStringAsFixed(2)}',
                 style: AppStyles.medium24(
                   context,
                 ).copyWith(color: context.actionColor),
               ),
             ],
           ),
-          SizedBox(height: 32 * context.heightRatio),
+          SizedBox(height: 24 * context.heightRatio),
           Text('Description', style: AppStyles.medium20(context)),
           const SizedBox(height: 8),
           Text(
-            'The Swedish Designer Monica Forstar’s Style Is Characterised By her Enternal love For New Materials and Beautiful Pure Shapes.',
+            product.description,
+            maxLines: 7,
+            overflow: TextOverflow.ellipsis,
             style: AppStyles.regular14(context),
           ),
         ],
