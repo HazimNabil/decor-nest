@@ -22,6 +22,7 @@ class ProductActionBar extends StatelessWidget {
         ),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             spacing: 8,

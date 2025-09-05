@@ -18,22 +18,22 @@ class ProductDetailsHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(product.name, style: AppStyles.medium24(context)),
+              Flexible(
+                child: Text(product.name, style: AppStyles.medium20(context)),
+              ),
               Text(
                 '\$${product.price.toStringAsFixed(2)}',
-                style: AppStyles.medium24(
+                style: AppStyles.medium20(
                   context,
                 ).copyWith(color: context.actionColor),
               ),
             ],
           ),
           SizedBox(height: 24 * context.heightRatio),
-          Text('Description', style: AppStyles.medium20(context)),
+          Text('Description', style: AppStyles.medium16(context)),
           const SizedBox(height: 8),
           Text(
             product.description,
-            maxLines: 7,
-            overflow: TextOverflow.ellipsis,
             style: AppStyles.regular14(context),
           ),
         ],

@@ -14,14 +14,23 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ProductThumbnail(image: product.imageUrl!),
-            const SizedBox(height: 24),
-            ProductDetailsHeader(product: product),
-            const Spacer(),
-            ProductActionBar(product: product),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: ProductThumbnail(image: product.imageUrl!),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 24)),
+            SliverToBoxAdapter(child: ProductDetailsHeader(product: product)),
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                spacing: 24,
+                children: [
+                  const Spacer(),
+                  ProductActionBar(product: product),
+                ],
+              ),
+            ),
           ],
         ),
       ),
