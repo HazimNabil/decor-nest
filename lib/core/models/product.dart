@@ -18,6 +18,8 @@ class Product {
   String? imageUrl;
   @JsonKey(name: 'image_path')
   String? imagePath;
+  @JsonKey(name: 'is_favorite')
+  bool isFavorite;
 
   Product({
     this.id,
@@ -29,6 +31,7 @@ class Product {
     this.woodType,
     this.imageUrl,
     this.imagePath,
+    this.isFavorite = false,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
