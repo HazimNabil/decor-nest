@@ -3,6 +3,7 @@ import 'package:decor_nest/features/admin/data/repos/admin_repo_impl.dart';
 import 'package:decor_nest/features/admin/data/services/storage_service.dart';
 import 'package:decor_nest/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:decor_nest/features/auth/data/services/auth_service.dart';
+import 'package:decor_nest/features/favorites/data/repos/favorites_repo_impl.dart';
 import 'package:decor_nest/features/home/data/repos/home_repo_impl.dart';
 import 'package:get_it/get_it.dart';
 
@@ -25,5 +26,9 @@ void setupServiceLocator() {
 
   locator.registerLazySingleton<HomeRepoImpl>(
     () => HomeRepoImpl(locator<DatabaseService>()),
+  );
+
+  locator.registerLazySingleton<FavoritesRepoImpl>(
+    () => FavoritesRepoImpl(locator<DatabaseService>()),
   );
 }
