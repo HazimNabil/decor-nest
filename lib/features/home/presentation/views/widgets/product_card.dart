@@ -1,9 +1,14 @@
+import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/helper/assets.dart';
+import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/favorites/data/models/favorite_product.dart';
+import 'package:decor_nest/features/home/presentation/view_models/toggle_favorite_cubit/toggle_favorite_cubit.dart';
 import 'package:decor_nest/features/home/presentation/views/screens/details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -37,7 +42,7 @@ class ProductCard extends StatelessWidget {
                   backgroundColor: context.surfaceColor,
                   child: IconButton(
                     icon: SvgPicture.asset(Assets.iconsUnselectedFavorites),
-                    onPressed: () {},
+                    onPressed: () async => await toggleFavorite(context),
                   ),
                 ),
               ),
@@ -60,5 +65,18 @@ class ProductCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> toggleFavorite(BuildContext context) async {
+    final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+
+    final favorite = FavoriteProduct.fromProduct(product, userId);
+
+    if (context.mounted) {
+      await context.read<ToggleFavoriteCubit>().toggleFavorite(
+        favorite: favorite,
+        isFavorite: false,
+      );
+    }
   }
 }
