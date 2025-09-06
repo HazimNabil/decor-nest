@@ -1,32 +1,36 @@
+// ignore_for_file: overridden_fields
+
 import 'package:decor_nest/core/helper/app_secrets.dart';
+import 'package:decor_nest/core/models/base_product.dart';
 import 'package:decor_nest/features/admin/data/models/product_input_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'product.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class Product {
-  final int? id;
-  final String name;
-  final String description;
-  final double price;
-  final int stock;
+class Product extends BaseProduct {
   final String category;
+
   @JsonKey(name: 'wood_type')
   final String? woodType;
+
+  @override
   @JsonKey(name: 'image_url')
   String? imageUrl;
+
   @JsonKey(name: 'image_path')
   String? imagePath;
+
+  @override
   @JsonKey(name: 'is_favorite')
   bool isFavorite;
 
   Product({
-    this.id,
-    required this.name,
-    required this.description,
-    required this.price,
-    required this.stock,
+    super.id,
+    required super.name,
+    required super.description,
+    required super.price,
+    required super.stock,
     required this.category,
     this.woodType,
     this.imageUrl,
@@ -38,6 +42,7 @@ class Product {
     return _$ProductFromJson(json);
   }
 
+  @override
   Map<String, dynamic> toJson() => _$ProductToJson(this);
 
   factory Product.dummy() {
