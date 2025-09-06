@@ -1,5 +1,3 @@
-// ignore_for_file: overridden_fields
-
 import 'package:decor_nest/core/helper/app_secrets.dart';
 import 'package:decor_nest/core/models/base_product.dart';
 import 'package:decor_nest/features/admin/data/models/product_input_data.dart';
@@ -14,16 +12,14 @@ class Product extends BaseProduct {
   @JsonKey(name: 'wood_type')
   final String? woodType;
 
-  @override
   @JsonKey(name: 'image_url')
   String? imageUrl;
 
   @JsonKey(name: 'image_path')
   String? imagePath;
 
-  @override
   @JsonKey(name: 'is_favorite')
-  bool isFavorite;
+  final bool isFavorite;
 
   Product({
     super.id,

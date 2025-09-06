@@ -4,8 +4,6 @@ abstract class BaseProduct {
   final String description;
   final double price;
   final int stock;
-  String? imageUrl;
-  bool isFavorite;
 
   BaseProduct({
     this.id,
@@ -13,8 +11,6 @@ abstract class BaseProduct {
     required this.description,
     required this.price,
     required this.stock,
-    this.imageUrl,
-    this.isFavorite = false,
   });
 
   Map<String, dynamic> toJson();

@@ -1,5 +1,3 @@
-// ignore_for_file: overridden_fields
-
 import 'package:decor_nest/core/models/base_product.dart';
 import 'package:decor_nest/core/models/product.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -14,7 +12,6 @@ class FavoriteProduct extends BaseProduct {
   @JsonKey(name: 'user_id')
   final String userId;
 
-  @override
   @JsonKey(name: 'image_url')
   final String? imageUrl;
 
