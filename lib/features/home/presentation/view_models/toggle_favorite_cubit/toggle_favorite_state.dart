@@ -11,10 +11,6 @@ final class ToggleFavoriteInitial extends ToggleFavoriteState {
   const ToggleFavoriteInitial();
 }
 
-final class ToggleFavoriteLoading extends ToggleFavoriteState {
-  const ToggleFavoriteLoading();
-}
-
 final class ToggleFavoriteSuccess extends ToggleFavoriteState {
   const ToggleFavoriteSuccess();
 }

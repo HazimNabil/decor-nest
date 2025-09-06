@@ -15,8 +15,6 @@ class ToggleFavoriteCubit extends Cubit<ToggleFavoriteState> {
     required FavoriteProduct favorite,
     required bool isFavorite,
   }) async {
-    emit(const ToggleFavoriteLoading());
-
     final result = await favoritesRepo.toggleFavorite(
       favorite: favorite,
       isFavorite: isFavorite,
