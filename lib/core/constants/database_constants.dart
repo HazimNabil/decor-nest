@@ -20,6 +20,7 @@ class TableConstants {
   const TableConstants._();
 
   static const products = 'products';
+  static const favorites = 'favorites';
   static const category = 'category';
   static const id = 'id';
   static const isFavorite = 'is_favorite';

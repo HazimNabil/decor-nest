@@ -1,7 +1,7 @@
 import 'package:decor_nest/core/constants/database_constants.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
+import 'package:decor_nest/core/models/base_product.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:decor_nest/core/models/product.dart';
 
 class DatabaseService {
   final _supabase = Supabase.instance.client;
@@ -9,7 +9,7 @@ class DatabaseService {
 
   Future<void> add({
     required String tableName,
-    required Product product,
+    required BaseProduct product,
   }) async {
     await _supabase.from(tableName).insert(product.toJson());
   }
