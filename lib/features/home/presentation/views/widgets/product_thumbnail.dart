@@ -34,6 +34,7 @@ class ProductThumbnail extends StatelessWidget {
           child: BlocConsumer<ToggleFavoriteCubit, ToggleFavoriteState>(
             listener: (context, state) {
               if (state is ToggleFavoriteFailure) {
+                product.isFavorite = !product.isFavorite;
                 context.showToast(
                   message: state.message,
                   type: ToastificationType.error,
@@ -41,16 +42,20 @@ class ProductThumbnail extends StatelessWidget {
               }
             },
             builder: (context, state) {
+              final isFavorite = state is ToggleFavoriteSuccess
+                  ? state.isFavorite
+                  : product.isFavorite;
+
               return CircleAvatar(
                 radius: 20,
-                backgroundColor: product.isFavorite
+                backgroundColor: isFavorite
                     ? context.primaryColor
                     : context.surfaceColor,
                 child: IconButton(
                   icon: SvgPicture.asset(
                     Assets.iconsUnselectedFavorites,
                     colorFilter: ColorFilter.mode(
-                      product.isFavorite ? Colors.white : context.subTextColor,
+                      isFavorite ? Colors.white : context.subTextColor,
                       BlendMode.srcIn,
                     ),
                   ),
