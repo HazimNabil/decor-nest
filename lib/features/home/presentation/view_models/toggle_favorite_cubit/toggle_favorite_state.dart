@@ -12,7 +12,12 @@ final class ToggleFavoriteInitial extends ToggleFavoriteState {
 }
 
 final class ToggleFavoriteSuccess extends ToggleFavoriteState {
-  const ToggleFavoriteSuccess();
+  final bool isFavorite;
+
+  const ToggleFavoriteSuccess(this.isFavorite);
+
+  @override
+  List<Object> get props => [isFavorite];
 }
 
 final class ToggleFavoriteFailure extends ToggleFavoriteState {
