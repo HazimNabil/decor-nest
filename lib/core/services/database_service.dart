@@ -26,6 +26,19 @@ class DatabaseService {
     await _supabase.from(tableName).delete().eq(TableConstants.id, id);
   }
 
+  Future<void> deleteByFields({
+    required String tableName,
+    required Map<String, dynamic> fields,
+  }) async {
+    var query = _supabase.from(tableName).delete();
+
+    fields.forEach((key, value) {
+      query = query.eq(key, value);
+    });
+
+    await query;
+  }
+
   FutureJson read({required String tableName, required int page}) async {
     final start = page * _pageSize;
     final end = start + _pageSize - 1;
