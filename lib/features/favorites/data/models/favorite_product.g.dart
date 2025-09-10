@@ -8,6 +8,7 @@ part of 'favorite_product.dart';
 
 FavoriteProduct _$FavoriteProductFromJson(Map<String, dynamic> json) =>
     FavoriteProduct(
+      id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String,
       description: json['description'] as String,
       price: (json['price'] as num).toDouble(),
@@ -19,6 +20,7 @@ FavoriteProduct _$FavoriteProductFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$FavoriteProductToJson(FavoriteProduct instance) =>
     <String, dynamic>{
+      'id': ?instance.id,
       'name': instance.name,
       'description': instance.description,
       'price': instance.price,

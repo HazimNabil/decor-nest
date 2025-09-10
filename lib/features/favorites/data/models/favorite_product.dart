@@ -16,6 +16,7 @@ class FavoriteProduct extends BaseProduct {
   final String? imageUrl;
 
   FavoriteProduct({
+    super.id,
     required super.name,
     required super.description,
     required super.price,
