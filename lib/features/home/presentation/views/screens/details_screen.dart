@@ -16,9 +16,7 @@ class DetailsScreen extends StatelessWidget {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(
-              child: ProductThumbnail(image: product.imageUrl!),
-            ),
+            SliverToBoxAdapter(child: ProductThumbnail(product: product)),
             const SliverToBoxAdapter(child: SizedBox(height: 24)),
             SliverToBoxAdapter(child: ProductDetailsHeader(product: product)),
             SliverFillRemaining(

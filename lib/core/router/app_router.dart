@@ -9,6 +9,7 @@ import 'package:decor_nest/features/admin/presentation/views/screens/edit_produc
 import 'package:decor_nest/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:decor_nest/features/auth/presentation/views/screens/login_screen.dart';
 import 'package:decor_nest/features/auth/presentation/views/screens/sign_up_screen.dart';
+import 'package:decor_nest/features/home/presentation/view_models/toggle_favorite_cubit/toggle_favorite_cubit.dart';
 import 'package:decor_nest/features/home/presentation/views/screens/details_screen.dart';
 import 'package:decor_nest/features/onboarding/presentation/views/screens/onboarding_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,7 +50,14 @@ class AppRouter {
       ),
       GoRoute(
         path: DetailsScreen.path,
-        builder: (_, state) => DetailsScreen(product: state.extra as Product),
+        builder: (_, state) {
+          final (product, cubit) =
+              state.extra as (Product, ToggleFavoriteCubit);
+          return BlocProvider.value(
+            value: cubit,
+            child: DetailsScreen(product: product),
+          );
+        },
       ),
     ],
     redirect: (_, state) async {

@@ -1,21 +1,28 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/helper/assets.dart';
+import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:decor_nest/core/models/product.dart';
+import 'package:decor_nest/features/favorites/data/models/favorite_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:decor_nest/features/home/presentation/view_models/toggle_favorite_cubit/toggle_favorite_cubit.dart';
+import 'package:toastification/toastification.dart';
 
 class ProductThumbnail extends StatelessWidget {
-  final String image;
+  final Product product;
 
-  const ProductThumbnail({super.key, required this.image});
+  const ProductThumbnail({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         CachedNetworkImage(
-          imageUrl: image,
+          imageUrl: product.imageUrl!,
           width: double.infinity,
           height: context.screenHeight * 0.4,
           fit: BoxFit.fill,
@@ -24,13 +31,33 @@ class ProductThumbnail extends StatelessWidget {
         Positioned(
           top: 12,
           right: 12,
-          child: CircleAvatar(
-            radius: 20,
-            backgroundColor: context.surfaceColor,
-            child: IconButton(
-              icon: SvgPicture.asset(Assets.iconsUnselectedFavorites),
-              onPressed: () {},
-            ),
+          child: BlocConsumer<ToggleFavoriteCubit, ToggleFavoriteState>(
+            listener: (context, state) {
+              if (state is ToggleFavoriteFailure) {
+                context.showToast(
+                  message: state.message,
+                  type: ToastificationType.error,
+                );
+              }
+            },
+            builder: (context, state) {
+              return CircleAvatar(
+                radius: 20,
+                backgroundColor: product.isFavorite
+                    ? context.primaryColor
+                    : context.surfaceColor,
+                child: IconButton(
+                  icon: SvgPicture.asset(
+                    Assets.iconsUnselectedFavorites,
+                    colorFilter: ColorFilter.mode(
+                      product.isFavorite ? Colors.white : context.subTextColor,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  onPressed: () async => await toggleFavorite(context),
+                ),
+              );
+            },
           ),
         ),
         Positioned(
@@ -48,5 +75,19 @@ class ProductThumbnail extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> toggleFavorite(BuildContext context) async {
+    product.isFavorite = !product.isFavorite;
+    final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+
+    final favorite = FavoriteProduct.fromProduct(product, userId);
+
+    if (context.mounted) {
+      await context.read<ToggleFavoriteCubit>().toggleFavorite(
+        favorite: favorite,
+        isFavorite: product.isFavorite,
+      );
+    }
   }
 }
