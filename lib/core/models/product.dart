@@ -19,7 +19,7 @@ class Product extends BaseProduct {
   String? imagePath;
 
   @JsonKey(name: 'is_favorite')
-  final bool isFavorite;
+  bool isFavorite;
 
   Product({
     super.id,
