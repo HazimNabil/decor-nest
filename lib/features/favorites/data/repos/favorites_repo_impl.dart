@@ -24,9 +24,12 @@ class FavoritesRepoImpl implements FavoritesRepo {
           product: favorite,
         );
       } else {
-        await _databaseService.delete(
+        await _databaseService.deleteByFields(
           tableName: TableConstants.favorites,
-          id: favorite.id!,
+          fields: {
+            TableConstants.userId: favorite.userId,
+            TableConstants.productId: favorite.productId,
+          },
         );
       }
       await _databaseService.update(

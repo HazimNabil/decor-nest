@@ -28,4 +28,6 @@ class TableConstants {
   static const createdAt = 'created_at';
   static const imagePath = 'image_path';
   static const imageUrl = 'image_url';
+  static const userId = 'user_id';
+  static const productId = 'product_id';
 }
