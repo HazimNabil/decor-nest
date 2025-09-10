@@ -13,20 +13,21 @@ class ProductCardSliverGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ToggleFavoriteCubit(locator<FavoritesRepoImpl>()),
-      child: SliverGrid.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 16,
-          crossAxisSpacing: 16,
-          childAspectRatio: 0.71,
-        ),
-        itemCount: products.length,
-        itemBuilder: (_, index) {
-          return ProductCard(product: products[index]);
-        },
+    return SliverGrid.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 16,
+        childAspectRatio: 0.71,
       ),
+      itemCount: products.length,
+      itemBuilder: (_, index) {
+        return BlocProvider(
+          create: (context) =>
+              ToggleFavoriteCubit(locator<FavoritesRepoImpl>()),
+          child: ProductCard(product: products[index]),
+        );
+      },
     );
   }
 }
