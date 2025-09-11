@@ -27,7 +27,9 @@ class _CategoryChipListViewState extends State<CategoryChipListView> {
             onSelected: (selected) {
               setState(() => _selectedIndex = selected ? index : -1);
               context.read<FetchProductsBloc>().add(
-                ProductsFetched(category: categories[_selectedIndex]),
+                ProductsFetched(
+                  category: selected ? categories[_selectedIndex] : null,
+                ),
               );
             },
           );
