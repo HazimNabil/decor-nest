@@ -1,9 +1,16 @@
+import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/helper/assets.dart';
+import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
+import 'package:decor_nest/features/cart/data/models/cart_product.dart';
+import 'package:decor_nest/features/cart/presentation/views/screens/cart_screen.dart';
+import 'package:decor_nest/features/home/presentation/view_models/add_to_cart_cubit/add_to_cart_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:toastification/toastification.dart';
 
 class ProductActionBar extends StatefulWidget {
@@ -109,14 +116,53 @@ class _ProductActionBarState extends State<ProductActionBar> {
             ],
           ),
           const SizedBox(height: 24),
-          CustomButton(
-            text: 'Add To Cart',
-            icon: Assets.iconsAddToCart,
-            color: context.primaryColor,
-            onPressed: () {},
+          BlocConsumer<AddToCartCubit, AddToCartState>(
+            listener: (context, state) {
+              if (state is AddToCartFailure) {
+                context.showToast(
+                  message: state.message,
+                  type: ToastificationType.error,
+                );
+              } else if (state is AddToCartSuccess) {
+                widget.product.isInCart = true;
+                context.showToast(
+                  message: 'Product added to cart',
+                  type: ToastificationType.success,
+                );
+              }
+            },
+            builder: (context, state) {
+              return CustomButton(
+                text: widget.product.isInCart ? 'See In Cart' : 'Add To Cart',
+                icon: Assets.iconsAddToCart,
+                color: context.primaryColor,
+                isLoading: state is AddToCartLoading,
+                onPressed: () => widget.product.isInCart
+                    ? context.push(CartScreen.path)
+                    : _addToCart(context),
+              );
+            },
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _addToCart(BuildContext context) async {
+    final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+
+    final cartProduct = CartProduct(
+      name: widget.product.name,
+      imageUrl: widget.product.imageUrl,
+      price: _totalPriceNotifier.value,
+      stock: widget.product.stock,
+      quantity: _quantityNotifier.value,
+      productId: widget.product.id!,
+      userId: userId,
+    );
+
+    if (context.mounted) {
+      await context.read<AddToCartCubit>().addToCart(cartProduct);
+    }
   }
 }
