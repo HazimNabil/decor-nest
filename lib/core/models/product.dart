@@ -7,6 +7,7 @@ part 'product.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class Product extends BaseProduct {
+  final String description;
   final String category;
 
   @JsonKey(name: 'wood_type')
@@ -24,7 +25,7 @@ class Product extends BaseProduct {
   Product({
     super.id,
     required super.name,
-    required super.description,
+    required this.description,
     required super.price,
     required super.stock,
     required this.category,

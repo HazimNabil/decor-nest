@@ -6,6 +6,8 @@ part 'favorite_product.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class FavoriteProduct extends BaseProduct {
+  final String description;
+
   @JsonKey(name: 'product_id')
   final int productId;
 
@@ -18,7 +20,7 @@ class FavoriteProduct extends BaseProduct {
   FavoriteProduct({
     super.id,
     required super.name,
-    required super.description,
+    required this.description,
     required super.price,
     required super.stock,
     required this.productId,
