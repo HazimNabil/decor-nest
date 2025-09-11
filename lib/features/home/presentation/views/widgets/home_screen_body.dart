@@ -7,42 +7,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:decor_nest/features/home/presentation/view_models/fetch_products_bloc/fetch_products_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class HomeScreenBody extends StatefulWidget {
-  const HomeScreenBody({super.key});
+class HomeScreenBody extends StatelessWidget {
+  final ScrollController controller;
 
-  @override
-  State<HomeScreenBody> createState() => _HomeScreenBodyState();
-}
-
-class _HomeScreenBodyState extends State<HomeScreenBody> {
-  late final ScrollController _scrollController;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController()..addListener(_onScroll);
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void _onScroll() {
-    final currentPosition = _scrollController.position.pixels;
-    final maxPosition = _scrollController.position.maxScrollExtent;
-    if (currentPosition >= maxPosition * 0.6) {
-      context.read<FetchProductsBloc>().add(const ProductsMoreFetched());
-    }
-  }
+  const HomeScreenBody({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: CustomScrollView(
-        controller: _scrollController,
+        controller: controller,
         slivers: [
           const SliverToBoxAdapter(child: SizedBox(height: 24)),
           const SliverToBoxAdapter(child: CategoryChipListView()),
