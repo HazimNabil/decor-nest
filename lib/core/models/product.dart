@@ -22,6 +22,9 @@ class Product extends BaseProduct {
   @JsonKey(name: 'is_favorite')
   bool isFavorite;
 
+  @JsonKey(name: 'is_in_cart')
+  bool isInCart;
+
   Product({
     super.id,
     required super.name,
@@ -33,6 +36,7 @@ class Product extends BaseProduct {
     this.imageUrl,
     this.imagePath,
     this.isFavorite = false,
+    this.isInCart = false,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
