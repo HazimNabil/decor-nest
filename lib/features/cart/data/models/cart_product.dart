@@ -6,8 +6,14 @@ part 'cart_product.g.dart';
 @JsonSerializable(includeIfNull: false)
 class CartProduct extends BaseProduct {
   final int quantity;
+
+  @JsonKey(name: 'image_url')
   final String? imageUrl;
+
+  @JsonKey(name: 'product_id')
   final int productId;
+
+  @JsonKey(name: 'user_id')
   final String userId;
 
   CartProduct({
