@@ -1,9 +1,9 @@
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
-import 'package:decor_nest/features/cart/presentation/views/screens/cart_screen.dart';
 import 'package:decor_nest/features/favorites/presentation/views/screens/favorites_screen.dart';
 import 'package:decor_nest/features/home/presentation/views/screens/home_screen.dart';
 import 'package:decor_nest/features/profile/presentation/views/screens/profile_screen.dart';
+import 'package:decor_nest/features/search/presentation/views/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
@@ -46,7 +46,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
   List<Widget> get _screens => [
     const HomeScreen(),
     const FavoritesScreen(),
-    const CartScreen(),
+    const SearchScreen(),
     const ProfileScreen(),
   ];
 
@@ -66,9 +66,9 @@ class _CustomNavBarState extends State<CustomNavBar> {
       activeColorSecondary: context.primaryColor,
     ),
     PersistentBottomNavBarItem(
-      icon: SvgPicture.asset(Assets.iconsSelectedCart),
-      inactiveIcon: SvgPicture.asset(Assets.iconsUnselectedCart),
-      title: 'Cart',
+      icon: SvgPicture.asset(Assets.iconsSelectedSearch),
+      inactiveIcon: SvgPicture.asset(Assets.iconsUnselectedSearch),
+      title: 'Search',
       activeColorPrimary: context.primaryColor,
       activeColorSecondary: context.primaryColor,
     ),

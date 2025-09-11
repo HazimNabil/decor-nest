@@ -23,8 +23,8 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
             backgroundColor: context.surfaceColor,
             child: IconButton(
               icon: SvgPicture.asset(
-                Assets.iconsSearch,
-                height: 19,
+                Assets.iconsCart,
+                height: 22,
                 colorFilter: ColorFilter.mode(
                   context.textColor,
                   BlendMode.srcIn,

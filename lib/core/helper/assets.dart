@@ -3,13 +3,11 @@ class Assets {
 
   static const iconsAddToCart = 'assets/icons/add_to_cart.svg';
 
+  static const iconsCart = 'assets/icons/cart.svg';
+
   static const iconsFilter = 'assets/icons/filter.svg';
 
   static const iconsGoogle = 'assets/icons/google.svg';
-
-  static const iconsSearch = 'assets/icons/search.svg';
-
-  static const iconsSelectedCart = 'assets/icons/selected_cart.svg';
 
   static const iconsSelectedFavorites = 'assets/icons/selected_favorites.svg';
 
@@ -17,7 +15,7 @@ class Assets {
 
   static const iconsSelectedProfile = 'assets/icons/selected_profile.svg';
 
-  static const iconsUnselectedCart = 'assets/icons/unselected_cart.svg';
+  static const iconsSelectedSearch = 'assets/icons/selected_search.svg';
 
   static const iconsUnselectedFavorites =
       'assets/icons/unselected_favorites.svg';
@@ -25,6 +23,8 @@ class Assets {
   static const iconsUnselectedHome = 'assets/icons/unselected_home.svg';
 
   static const iconsUnselectedProfile = 'assets/icons/unselected_profile.svg';
+
+  static const iconsUnselectedSearch = 'assets/icons/unselected_search.svg';
 
   static const imagesAndroid12Splash = 'assets/images/android_12_splash.png';
 

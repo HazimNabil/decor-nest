@@ -15,7 +15,7 @@ class SearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SearchBar(
       controller: controller,
-      leading: SvgPicture.asset(Assets.iconsSearch),
+      leading: SvgPicture.asset(Assets.iconsUnselectedSearch),
       hintText: 'Search Furniture',
       hintStyle: WidgetStatePropertyAll(AppStyles.regular14(context)),
       textStyle: WidgetStatePropertyAll(AppStyles.medium14(context)),
