@@ -1,15 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
-import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/favorites/data/models/favorite_product.dart';
+import 'package:decor_nest/features/home/presentation/view_models/toggle_favorite_cubit/toggle_favorite_cubit.dart';
 import 'package:decor_nest/features/home/presentation/views/screens/details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class FavoriteCard extends StatelessWidget {
-  final Product product;
+  final FavoriteProduct product;
 
   const FavoriteCard({super.key, required this.product});
 
@@ -19,7 +21,10 @@ class FavoriteCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
-          onTap: () => context.push(DetailsScreen.path),
+          onTap: () => context.push(
+            DetailsScreen.path,
+            extra: (product, context.read<ToggleFavoriteCubit>()),
+          ),
           child: Stack(
             children: [
               ClipRRect(
@@ -43,7 +48,12 @@ class FavoriteCard extends StatelessWidget {
                         BlendMode.srcIn,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      await context.read<ToggleFavoriteCubit>().toggleFavorite(
+                        favorite: product,
+                        isFavorite: false,
+                      );
+                    },
                   ),
                 ),
               ),
