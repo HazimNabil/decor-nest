@@ -1,3 +1,5 @@
+import 'package:decor_nest/core/models/product.dart';
+import 'package:decor_nest/features/favorites/presentation/views/widgets/favorite_card.dart';
 import 'package:flutter/material.dart';
 
 class FavoritesScreen extends StatelessWidget {
@@ -5,6 +7,8 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Favorites')));
+    return Scaffold(
+      body: SafeArea(child: FavoriteCard(product: Product.dummy())),
+    );
   }
 }
