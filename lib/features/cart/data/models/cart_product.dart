@@ -1,28 +1,32 @@
-import 'package:decor_nest/core/models/base_product.dart';
+import 'package:decor_nest/core/models/product.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'cart_product.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class CartProduct extends BaseProduct {
+class CartProduct extends Product {
   final int quantity;
-
-  @JsonKey(name: 'image_url')
-  final String? imageUrl;
-
+  @JsonKey(name: 'total_price')
+  final double totalPrice;
   @JsonKey(name: 'product_id')
   final int productId;
-
   @JsonKey(name: 'user_id')
   final String userId;
 
   CartProduct({
     super.id,
     required super.name,
+    required super.description,
     required super.price,
     required super.stock,
+    required super.category,
+    required super.woodType,
+    required super.imageUrl,
+    required super.imagePath,
+    required super.isFavorite,
+    super.isInCart = true,
     required this.quantity,
-    this.imageUrl,
+    required this.totalPrice,
     required this.productId,
     required this.userId,
   });

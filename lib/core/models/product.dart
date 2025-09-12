@@ -1,36 +1,34 @@
 import 'package:decor_nest/core/helper/app_secrets.dart';
-import 'package:decor_nest/core/models/base_product.dart';
 import 'package:decor_nest/features/admin/data/models/product_input_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'product.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class Product extends BaseProduct {
+class Product {
+  final int? id;
+  final String name;
+  final double price;
+  final int stock;
   final String description;
   final String category;
-
   @JsonKey(name: 'wood_type')
   final String? woodType;
-
   @JsonKey(name: 'image_url')
   String? imageUrl;
-
   @JsonKey(name: 'image_path')
   String? imagePath;
-
   @JsonKey(name: 'is_favorite')
   bool isFavorite;
-
   @JsonKey(name: 'is_in_cart')
   bool isInCart;
 
   Product({
-    super.id,
-    required super.name,
+    this.id,
+    required this.name,
     required this.description,
-    required super.price,
-    required super.stock,
+    required this.price,
+    required this.stock,
     required this.category,
     this.woodType,
     this.imageUrl,
@@ -43,7 +41,6 @@ class Product extends BaseProduct {
     return _$ProductFromJson(json);
   }
 
-  @override
   Map<String, dynamic> toJson() => _$ProductToJson(this);
 
   factory Product.dummy() {

@@ -65,7 +65,13 @@ class AddToCartBlocConsumer extends StatelessWidget {
       stock: product.stock,
       quantity: quantity,
       productId: product.id!,
+      totalPrice: totalPrice,
       userId: userId,
+      description: product.description,
+      category: product.category,
+      woodType: product.woodType,
+      imagePath: product.imagePath,
+      isFavorite: product.isFavorite,
     );
 
     if (context.mounted) {
