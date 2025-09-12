@@ -64,7 +64,7 @@ class DatabaseService {
         .from(tableName)
         .select()
         .eq(TableConstants.category, category)
-        .order(TableConstants.createdAt, ascending: false)
+        .order(TableConstants.createdAt)
         .range(start, end);
 
     return data;
@@ -82,9 +82,17 @@ class DatabaseService {
         .from(tableName)
         .select()
         .ilike(TableConstants.name, '%$query%')
-        .order(TableConstants.createdAt, ascending: false)
+        .order(TableConstants.createdAt)
         .range(start, end);
 
     return data;
+  }
+
+  StreamJson stream({required String tableName, required String userId}) {
+    return _supabase
+        .from(tableName)
+        .stream(primaryKey: [TableConstants.id])
+        .eq(TableConstants.userId, userId)
+        .order(TableConstants.createdAt);
   }
 }
