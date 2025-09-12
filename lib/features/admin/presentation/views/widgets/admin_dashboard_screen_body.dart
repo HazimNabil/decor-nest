@@ -81,7 +81,6 @@ class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
                   ProductsQueryStatus.loading => Skeletonizer.sliver(
                     child: AdminProductSliverList(
                       products: List.filled(20, Product.dummy()),
-                      isFinalPage: state.hasReachedMax,
                     ),
                   ),
                   ProductsQueryStatus.success => AdminProductSliverList(

@@ -16,8 +16,20 @@ class DatabaseErrors {
   static const rowNotFound = 'No matching record found.';
 }
 
-class TableNames {
-  const TableNames._();
+class TableConstants {
+  const TableConstants._();
 
   static const products = 'products';
+  static const favorites = 'favorites';
+  static const cart = 'cart';
+  static const category = 'category';
+  static const id = 'id';
+  static const isFavorite = 'is_favorite';
+  static const isInCart = 'is_in_cart';
+  static const name = 'name';
+  static const createdAt = 'created_at';
+  static const imagePath = 'image_path';
+  static const imageUrl = 'image_url';
+  static const userId = 'user_id';
+  static const productId = 'product_id';
 }

@@ -1,5 +1,7 @@
+import 'package:decor_nest/core/constants/database_constants.dart';
+import 'package:decor_nest/core/helper/typedefs.dart';
+import 'package:decor_nest/core/models/base_product.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:decor_nest/core/models/product.dart';
 
 class DatabaseService {
   final _supabase = Supabase.instance.client;
@@ -7,7 +9,7 @@ class DatabaseService {
 
   Future<void> add({
     required String tableName,
-    required Product product,
+    required BaseProduct product,
   }) async {
     await _supabase.from(tableName).insert(product.toJson());
   }
@@ -17,16 +19,43 @@ class DatabaseService {
     required int id,
     required Map<String, dynamic> fields,
   }) async {
-    await _supabase.from(tableName).update(fields).eq('id', id);
+    await _supabase.from(tableName).update(fields).eq(TableConstants.id, id);
   }
 
   Future<void> delete({required String tableName, required int id}) async {
-    await _supabase.from(tableName).delete().eq('id', id);
+    await _supabase.from(tableName).delete().eq(TableConstants.id, id);
   }
 
-  Future<List<Map<String, dynamic>>> read({
+  Future<void> deleteByFields({
+    required String tableName,
+    required Map<String, dynamic> fields,
+  }) async {
+    var query = _supabase.from(tableName).delete();
+
+    fields.forEach((key, value) {
+      query = query.eq(key, value);
+    });
+
+    await query;
+  }
+
+  FutureJson read({required String tableName, required int page}) async {
+    final start = page * _pageSize;
+    final end = start + _pageSize - 1;
+
+    final data = await _supabase
+        .from(tableName)
+        .select()
+        .order(TableConstants.createdAt, ascending: false)
+        .range(start, end);
+
+    return data;
+  }
+
+  FutureJson filterByCategory({
     required String tableName,
     required int page,
+    required String category,
   }) async {
     final start = page * _pageSize;
     final end = start + _pageSize - 1;
@@ -34,13 +63,14 @@ class DatabaseService {
     final data = await _supabase
         .from(tableName)
         .select()
-        .order('created_at', ascending: false)
+        .eq(TableConstants.category, category)
+        .order(TableConstants.createdAt, ascending: false)
         .range(start, end);
 
     return data;
   }
 
-  Future<List<Map<String, dynamic>>> search({
+  FutureJson search({
     required String tableName,
     required String query,
     required int page,
@@ -51,8 +81,8 @@ class DatabaseService {
     final data = await _supabase
         .from(tableName)
         .select()
-        .ilike('name', '%$query%')
-        .order('created_at', ascending: false)
+        .ilike(TableConstants.name, '%$query%')
+        .order(TableConstants.createdAt, ascending: false)
         .range(start, end);
 
     return data;

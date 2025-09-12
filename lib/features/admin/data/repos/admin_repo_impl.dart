@@ -32,7 +32,7 @@ class AdminRepoImpl implements AdminRepo {
       product.imagePath = filePath;
 
       await _databaseService.add(
-        tableName: TableNames.products,
+        tableName: TableConstants.products,
         product: product,
       );
 
@@ -44,7 +44,7 @@ class AdminRepoImpl implements AdminRepo {
   FutureEither<Unit> deleteProduct({required Product product}) async {
     return _guard(() async {
       await _databaseService.delete(
-        tableName: TableNames.products,
+        tableName: TableConstants.products,
         id: product.id!,
       );
 
@@ -58,7 +58,7 @@ class AdminRepoImpl implements AdminRepo {
   FutureEither<List<Product>> readProducts({required int page}) async {
     return _guard(() async {
       final jsonProducts = await _databaseService.read(
-        tableName: TableNames.products,
+        tableName: TableConstants.products,
         page: page,
       );
 
@@ -77,7 +77,7 @@ class AdminRepoImpl implements AdminRepo {
   }) async {
     return _guard(() async {
       final jsonProducts = await _databaseService.search(
-        tableName: TableNames.products,
+        tableName: TableConstants.products,
         query: query,
         page: page,
       );
@@ -99,12 +99,14 @@ class AdminRepoImpl implements AdminRepo {
     return _guard(() async {
       if (image != null) {
         await _storageService.updateImage(product.imagePath!, image);
-        fields['image_path'] = product.imagePath;
-        fields['image_url'] = _storageService.getImageUrl(product.imagePath!);
+        fields[TableConstants.imagePath] = product.imagePath;
+        fields[TableConstants.imageUrl] = _storageService.getImageUrl(
+          product.imagePath!,
+        );
       }
 
       await _databaseService.update(
-        tableName: TableNames.products,
+        tableName: TableConstants.products,
         id: product.id!,
         fields: fields,
       );
