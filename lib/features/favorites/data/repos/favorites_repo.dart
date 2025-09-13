@@ -7,4 +7,5 @@ abstract interface class FavoritesRepo {
     required FavoriteProduct favorite,
     required bool isFavorite,
   });
+  FutureStreamEither<List<FavoriteProduct>> watchFavorites();
 }

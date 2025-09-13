@@ -5,4 +5,6 @@ typedef FutureEither<T> = Future<Either<Failure, T>>;
 
 typedef FutureJson = Future<List<Map<String, dynamic>>>;
 
+typedef FutureStreamEither<T> = Future<Stream<Either<Failure, T>>>;
+
 typedef StreamJson = Stream<List<Map<String, dynamic>>>;
