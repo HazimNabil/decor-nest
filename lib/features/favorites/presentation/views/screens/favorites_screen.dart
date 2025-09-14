@@ -4,7 +4,7 @@ import 'package:decor_nest/features/favorites/presentation/views/widgets/favorit
 import 'package:decor_nest/features/favorites/presentation/views/widgets/favorites_screen_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:decor_nest/features/favorites/presentation/favorites_cubit/favorites_cubit.dart';
+import 'package:decor_nest/features/favorites/presentation/view_models/favorites_cubit/favorites_cubit.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});

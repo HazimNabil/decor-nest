@@ -2,7 +2,7 @@ import 'package:decor_nest/core/widgets/failure_indicator.dart';
 import 'package:decor_nest/features/favorites/presentation/views/widgets/favorite_card_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:decor_nest/features/favorites/presentation/favorites_cubit/favorites_cubit.dart';
+import 'package:decor_nest/features/favorites/presentation/view_models/favorites_cubit/favorites_cubit.dart';
 
 class FavoritesScreenBody extends StatelessWidget {
   const FavoritesScreenBody({super.key});
