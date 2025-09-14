@@ -1,5 +1,4 @@
 import 'package:decor_nest/core/di/service_locator.dart';
-import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/features/favorites/data/models/favorite_product.dart';
 import 'package:decor_nest/features/favorites/data/repos/favorites_repo_impl.dart';
 import 'package:decor_nest/features/favorites/presentation/views/widgets/favorite_card.dart';
@@ -8,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavoriteCardGridView extends StatelessWidget {
-  const FavoriteCardGridView({super.key});
+  final List<FavoriteProduct> favorites;
+
+  const FavoriteCardGridView({super.key, required this.favorites});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +20,14 @@ class FavoriteCardGridView extends StatelessWidget {
         mainAxisSpacing: 16,
         childAspectRatio: 0.71,
       ),
-      itemCount: 10,
-      itemBuilder: (_, _) {
+      itemCount: favorites.length,
+      itemBuilder: (_, index) {
         return BlocProvider(
           create: (context) =>
               ToggleFavoriteCubit(locator<FavoritesRepoImpl>()),
           child: FavoriteCard(
-            product: FavoriteProduct.fromProduct(Product.dummy(), 'userId'),
+            key: ValueKey(favorites[index].id),
+            product: favorites[index],
           ),
         );
       },
