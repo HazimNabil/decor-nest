@@ -1,8 +1,6 @@
-import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/constants/database_constants.dart';
 import 'package:decor_nest/core/errors/database_failure.dart';
 import 'package:decor_nest/core/errors/failure.dart';
-import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:decor_nest/core/services/database_service.dart';
 import 'package:decor_nest/features/favorites/data/repos/favorites_repo.dart';
@@ -49,11 +47,10 @@ class FavoritesRepoImpl implements FavoritesRepo {
   }
 
   @override
-  FutureStreamEither<List<FavoriteProduct>> watchFavorites() async {
+  StreamEither<List<FavoriteProduct>> watchFavorites() {
     try {
-      final userId = await CacheHelper.getSecureData(CacheConstants.userId);
       return _databaseService
-          .stream(tableName: TableConstants.favorites, userId: userId)
+          .stream(tableName: TableConstants.favorites)
           .map(_parseJson);
     } on PostgrestException catch (e) {
       return Stream.value(left(DatabaseFailure.fromException(e)));

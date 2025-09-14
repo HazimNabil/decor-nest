@@ -88,11 +88,10 @@ class DatabaseService {
     return data;
   }
 
-  StreamJson stream({required String tableName, required String userId}) {
+  StreamJson stream({required String tableName}) {
     return _supabase
         .from(tableName)
         .stream(primaryKey: [TableConstants.id])
-        .eq(TableConstants.userId, userId)
         .order(TableConstants.createdAt);
   }
 }

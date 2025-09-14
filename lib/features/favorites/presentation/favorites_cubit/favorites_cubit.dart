@@ -15,9 +15,11 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     _listenToFavorites();
   }
 
-  Future<void> _listenToFavorites() async {
+  void _listenToFavorites() {
     emit(FavoritesLoadInProgress());
-    final favoritesStream = await _favoritesRepo.watchFavorites();
+
+    final favoritesStream = _favoritesRepo.watchFavorites();
+
     _favoritesSubscription = favoritesStream.listen((result) {
       result.fold(
         (failure) => emit(FavoritesLoadFailure(failure.message)),
