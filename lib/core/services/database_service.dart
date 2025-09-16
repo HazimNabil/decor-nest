@@ -94,4 +94,19 @@ class DatabaseService {
         .stream(primaryKey: [TableConstants.id])
         .order(TableConstants.createdAt);
   }
+
+  Future<bool> isFound({
+    required String tableName,
+    required int productId,
+    required String userId,
+  }) async {
+    final response = await _supabase
+        .from(tableName)
+        .select()
+        .eq(TableConstants.userId, userId)
+        .eq(TableConstants.productId, productId)
+        .maybeSingle();
+
+    return response != null;
+  }
 }
