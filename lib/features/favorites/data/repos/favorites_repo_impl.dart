@@ -14,17 +14,15 @@ class FavoritesRepoImpl implements FavoritesRepo {
   FavoritesRepoImpl(this._databaseService);
 
   @override
-  FutureEither<Unit> toggleFavorite({
-    required FavoriteProduct favorite,
-    required bool isFavorite,
-  }) async {
+  FutureEither<bool> toggleFavorite(FavoriteProduct favorite) async {
     try {
+      final isFavorite = await _databaseService.isFound(
+        tableName: TableConstants.favorites,
+        productId: favorite.productId,
+        userId: favorite.userId,
+      );
+
       if (isFavorite) {
-        await _databaseService.add(
-          tableName: TableConstants.favorites,
-          product: favorite,
-        );
-      } else {
         await _databaseService.deleteByFields(
           tableName: TableConstants.favorites,
           fields: {
@@ -32,13 +30,14 @@ class FavoritesRepoImpl implements FavoritesRepo {
             TableConstants.productId: favorite.productId,
           },
         );
+      } else {
+        await _databaseService.add(
+          tableName: TableConstants.favorites,
+          product: favorite,
+        );
       }
-      await _databaseService.update(
-        tableName: TableConstants.products,
-        id: favorite.productId,
-        fields: {TableConstants.isFavorite: isFavorite},
-      );
-      return right(unit);
+
+      return right(!isFavorite);
     } on PostgrestException catch (e) {
       return left(DatabaseFailure.fromException(e));
     } catch (e) {

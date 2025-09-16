@@ -17,10 +17,7 @@ class ToggleFavoriteCubit extends Cubit<ToggleFavoriteState> {
   }) async {
     emit(ToggleFavoriteSuccess(isFavorite));
 
-    final result = await favoritesRepo.toggleFavorite(
-      favorite: favorite,
-      isFavorite: isFavorite,
-    );
+    final result = await favoritesRepo.toggleFavorite(favorite);
     result.fold(
       (failure) => emit(ToggleFavoriteFailure(failure.message)),
       (_) => {},
