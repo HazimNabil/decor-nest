@@ -34,7 +34,6 @@ class ProductThumbnail extends StatelessWidget {
           child: BlocConsumer<ToggleFavoriteCubit, ToggleFavoriteState>(
             listener: (context, state) {
               if (state is ToggleFavoriteFailure) {
-                product.isFavorite = !product.isFavorite;
                 context.showToast(
                   message: state.message,
                   type: ToastificationType.error,
@@ -42,20 +41,14 @@ class ProductThumbnail extends StatelessWidget {
               }
             },
             builder: (context, state) {
-              final isFavorite = state is ToggleFavoriteSuccess
-                  ? state.isFavorite
-                  : product.isFavorite;
-
               return CircleAvatar(
                 radius: 20,
-                backgroundColor: isFavorite
-                    ? context.primaryColor
-                    : context.surfaceColor,
+                backgroundColor: context.surfaceColor,
                 child: IconButton(
                   icon: SvgPicture.asset(
                     Assets.iconsUnselectedFavorites,
                     colorFilter: ColorFilter.mode(
-                      isFavorite ? Colors.white : context.subTextColor,
+                      context.subTextColor,
                       BlendMode.srcIn,
                     ),
                   ),
@@ -83,7 +76,6 @@ class ProductThumbnail extends StatelessWidget {
   }
 
   Future<void> toggleFavorite(BuildContext context) async {
-    product.isFavorite = !product.isFavorite;
     final userId = await CacheHelper.getSecureData(CacheConstants.userId);
 
     final favorite = FavoriteProduct.fromProduct(product, userId);
@@ -91,7 +83,7 @@ class ProductThumbnail extends StatelessWidget {
     if (context.mounted) {
       await context.read<ToggleFavoriteCubit>().toggleFavorite(
         favorite: favorite,
-        isFavorite: product.isFavorite,
+        isFavorite: true,
       );
     }
   }

@@ -23,8 +23,6 @@ class CartProduct extends Product {
     required super.woodType,
     required super.imageUrl,
     required super.imagePath,
-    required super.isFavorite,
-    super.isInCart = true,
     required this.quantity,
     required this.totalPrice,
     required this.productId,

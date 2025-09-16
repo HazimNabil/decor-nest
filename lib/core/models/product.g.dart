@@ -16,8 +16,6 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
   woodType: json['wood_type'] as String?,
   imageUrl: json['image_url'] as String?,
   imagePath: json['image_path'] as String?,
-  isFavorite: json['is_favorite'] as bool? ?? false,
-  isInCart: json['is_in_cart'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
@@ -30,6 +28,4 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
   'wood_type': ?instance.woodType,
   'image_url': ?instance.imageUrl,
   'image_path': ?instance.imagePath,
-  'is_favorite': instance.isFavorite,
-  'is_in_cart': instance.isInCart,
 };

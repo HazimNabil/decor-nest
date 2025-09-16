@@ -17,8 +17,6 @@ FavoriteProduct _$FavoriteProductFromJson(Map<String, dynamic> json) =>
       woodType: json['wood_type'] as String?,
       imageUrl: json['image_url'] as String?,
       imagePath: json['image_path'] as String?,
-      isFavorite: json['is_favorite'] as bool? ?? true,
-      isInCart: json['is_in_cart'] as bool,
       productId: (json['product_id'] as num).toInt(),
       userId: json['user_id'] as String,
     );
@@ -34,8 +32,6 @@ Map<String, dynamic> _$FavoriteProductToJson(FavoriteProduct instance) =>
       'wood_type': ?instance.woodType,
       'image_url': ?instance.imageUrl,
       'image_path': ?instance.imagePath,
-      'is_favorite': instance.isFavorite,
-      'is_in_cart': instance.isInCart,
       'product_id': instance.productId,
       'user_id': instance.userId,
     };

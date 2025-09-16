@@ -20,8 +20,6 @@ class FavoriteProduct extends Product {
     required super.woodType,
     required super.imageUrl,
     required super.imagePath,
-    super.isFavorite = true,
-    required super.isInCart,
     required this.productId,
     required this.userId,
   });
@@ -45,7 +43,6 @@ class FavoriteProduct extends Product {
       woodType: product.woodType,
       imageUrl: product.imageUrl,
       imagePath: product.imagePath,
-      isInCart: product.isInCart,
       productId: product.id!,
       userId: userId,
     );
