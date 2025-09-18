@@ -47,4 +47,18 @@ class FavoriteProduct extends Product {
       userId: userId,
     );
   }
+
+  Product toProduct() {
+    return Product(
+      id: productId,
+      name: name,
+      description: description,
+      price: price,
+      stock: stock,
+      category: category,
+      woodType: woodType,
+      imageUrl: imageUrl,
+      imagePath: imagePath,
+    );
+  }
 }
