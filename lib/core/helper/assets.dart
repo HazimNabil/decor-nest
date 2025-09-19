@@ -7,6 +7,8 @@ class Assets {
 
   static const iconsFilter = 'assets/icons/filter.svg';
 
+  static const iconsTrash = 'assets/icons/trash.svg';
+
   static const iconsGoogle = 'assets/icons/google.svg';
 
   static const iconsSelectedFavorites = 'assets/icons/selected_favorites.svg';
