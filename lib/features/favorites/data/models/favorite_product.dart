@@ -43,7 +43,7 @@ class FavoriteProduct extends Product {
       woodType: product.woodType,
       imageUrl: product.imageUrl,
       imagePath: product.imagePath,
-      productId: product.id!,
+      productId: product.id ?? -1,
       userId: userId,
     );
   }

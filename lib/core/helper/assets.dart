@@ -30,6 +30,8 @@ class Assets {
 
   static const imagesFailure = 'assets/images/failure.svg';
 
+  static const imagesNoFavorites = 'assets/images/no_favorites.svg';
+
   static const imagesLamp = 'assets/images/lamp.jpeg';
 
   static const imagesOnBoardingOne = 'assets/images/on_boarding_one.png';

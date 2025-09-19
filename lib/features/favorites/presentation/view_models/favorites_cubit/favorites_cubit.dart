@@ -29,8 +29,6 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   }
 
   Future<void> removeFromFavorite(FavoriteProduct favorite) async {
-    emit(FavoritesLoadInProgress());
-
     final result = await _favoritesRepo.removeFromFavorite(favorite);
     result.fold((failure) => emit(FavoritesFailure(failure.message)), (_) {});
   }
