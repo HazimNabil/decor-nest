@@ -11,12 +11,12 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   final FavoritesRepo _favoritesRepo;
   late final StreamSubscription _favoritesSubscription;
 
-  FavoritesCubit(this._favoritesRepo) : super(FavoritesInitial()) {
+  FavoritesCubit(this._favoritesRepo) : super(const FavoritesInitial()) {
     _listenToFavorites();
   }
 
   void _listenToFavorites() {
-    emit(FavoritesLoadInProgress());
+    emit(const FavoritesLoadInProgress());
 
     final favoritesStream = _favoritesRepo.watchFavorites();
 
