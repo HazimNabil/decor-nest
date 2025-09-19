@@ -6,7 +6,7 @@ import 'package:decor_nest/features/home/presentation/views/widgets/favorite_but
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:decor_nest/features/home/presentation/view_models/toggle_favorite_cubit/toggle_favorite_cubit.dart';
+import 'package:decor_nest/features/home/presentation/view_models/favorite_status_cubit/favorite_status_cubit.dart';
 import 'package:decor_nest/core/di/service_locator.dart';
 
 class ProductThumbnail extends StatelessWidget {
@@ -30,7 +30,7 @@ class ProductThumbnail extends StatelessWidget {
           right: 12,
           child: BlocProvider(
             create: (context) {
-              final cubit = ToggleFavoriteCubit(locator<FavoritesRepoImpl>());
+              final cubit = FavoriteStatusCubit(locator<FavoritesRepoImpl>());
               return cubit..initFavoriteStatus(product);
             },
             child: FavoriteButton(product: product),

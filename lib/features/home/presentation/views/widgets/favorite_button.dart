@@ -1,7 +1,7 @@
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/models/product.dart';
-import 'package:decor_nest/features/home/presentation/view_models/toggle_favorite_cubit/toggle_favorite_cubit.dart';
+import 'package:decor_nest/features/home/presentation/view_models/favorite_status_cubit/favorite_status_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,7 +14,7 @@ class FavoriteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ToggleFavoriteCubit, ToggleFavoriteState>(
+    return BlocConsumer<FavoriteStatusCubit, FavoriteStatusState>(
       listenWhen: (_, current) => current.status.isFailure,
       listener: (_, state) {
         context.showToast(
@@ -56,7 +56,7 @@ class FavoriteButton extends StatelessWidget {
 
   Future<void> toggleFavorite(BuildContext context) async {
     if (context.mounted) {
-      await context.read<ToggleFavoriteCubit>().toggleFavorite(product);
+      await context.read<FavoriteStatusCubit>().toggleFavorite(product);
     }
   }
 }
