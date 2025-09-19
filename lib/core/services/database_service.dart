@@ -1,6 +1,6 @@
 import 'package:decor_nest/core/constants/database_constants.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
-import 'package:decor_nest/core/models/base_product.dart';
+import 'package:decor_nest/core/models/product.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DatabaseService {
@@ -9,7 +9,7 @@ class DatabaseService {
 
   Future<void> add({
     required String tableName,
-    required BaseProduct product,
+    required Product product,
   }) async {
     await _supabase.from(tableName).insert(product.toJson());
   }
@@ -64,7 +64,7 @@ class DatabaseService {
         .from(tableName)
         .select()
         .eq(TableConstants.category, category)
-        .order(TableConstants.createdAt, ascending: false)
+        .order(TableConstants.createdAt)
         .range(start, end);
 
     return data;
@@ -82,9 +82,31 @@ class DatabaseService {
         .from(tableName)
         .select()
         .ilike(TableConstants.name, '%$query%')
-        .order(TableConstants.createdAt, ascending: false)
+        .order(TableConstants.createdAt)
         .range(start, end);
 
     return data;
+  }
+
+  StreamJson stream({required String tableName}) {
+    return _supabase
+        .from(tableName)
+        .stream(primaryKey: [TableConstants.id])
+        .order(TableConstants.createdAt);
+  }
+
+  Future<bool> isFound({
+    required String tableName,
+    required int productId,
+    required String userId,
+  }) async {
+    final response = await _supabase
+        .from(tableName)
+        .select()
+        .eq(TableConstants.userId, userId)
+        .eq(TableConstants.productId, productId)
+        .maybeSingle();
+
+    return response != null;
   }
 }

@@ -1,31 +1,27 @@
-import 'package:decor_nest/core/models/base_product.dart';
 import 'package:decor_nest/core/models/product.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'favorite_product.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class FavoriteProduct extends BaseProduct {
-  final String description;
-
+class FavoriteProduct extends Product {
   @JsonKey(name: 'product_id')
   final int productId;
-
   @JsonKey(name: 'user_id')
   final String userId;
-
-  @JsonKey(name: 'image_url')
-  final String? imageUrl;
 
   FavoriteProduct({
     super.id,
     required super.name,
-    required this.description,
+    required super.description,
+    required super.category,
     required super.price,
     required super.stock,
+    required super.woodType,
+    required super.imageUrl,
+    required super.imagePath,
     required this.productId,
     required this.userId,
-    this.imageUrl,
   });
 
   factory FavoriteProduct.fromJson(Map<String, dynamic> json) {
@@ -43,9 +39,26 @@ class FavoriteProduct extends BaseProduct {
       description: product.description,
       price: product.price,
       stock: product.stock,
-      productId: product.id!,
-      userId: userId,
+      category: product.category,
+      woodType: product.woodType,
       imageUrl: product.imageUrl,
+      imagePath: product.imagePath,
+      productId: product.id ?? -1,
+      userId: userId,
+    );
+  }
+
+  Product toProduct() {
+    return Product(
+      id: productId,
+      name: name,
+      description: description,
+      price: price,
+      stock: stock,
+      category: category,
+      woodType: woodType,
+      imageUrl: imageUrl,
+      imagePath: imagePath,
     );
   }
 }
