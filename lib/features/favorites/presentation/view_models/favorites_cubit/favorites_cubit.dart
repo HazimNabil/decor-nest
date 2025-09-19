@@ -22,10 +22,17 @@ class FavoritesCubit extends Cubit<FavoritesState> {
 
     _favoritesSubscription = favoritesStream.listen((result) {
       result.fold(
-        (failure) => emit(FavoritesLoadFailure(failure.message)),
+        (failure) => emit(FavoritesFailure(failure.message)),
         (favorites) => emit(FavoritesLoaded(favorites)),
       );
     });
+  }
+
+  Future<void> removeFromFavorite(FavoriteProduct favorite) async {
+    emit(FavoritesLoadInProgress());
+
+    final result = await _favoritesRepo.removeFromFavorite(favorite);
+    result.fold((failure) => emit(FavoritesFailure(failure.message)), (_) {});
   }
 
   @override

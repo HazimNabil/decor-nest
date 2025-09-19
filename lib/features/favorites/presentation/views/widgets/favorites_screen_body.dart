@@ -20,7 +20,7 @@ class FavoritesScreenBody extends StatelessWidget {
             FavoritesLoaded(:final favorites) => FavoriteCardGridView(
               favorites: favorites,
             ),
-            FavoritesLoadFailure(:final message) => Center(
+            FavoritesFailure(:final message) => Center(
               child: FailureIndicator(message: message),
             ),
             _ => const Center(child: SizedBox.shrink()),

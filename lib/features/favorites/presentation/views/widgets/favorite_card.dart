@@ -3,7 +3,7 @@ import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/features/favorites/data/models/favorite_product.dart';
-import 'package:decor_nest/features/home/presentation/view_models/toggle_favorite_cubit/toggle_favorite_cubit.dart';
+import 'package:decor_nest/features/favorites/presentation/view_models/favorites_cubit/favorites_cubit.dart';
 import 'package:decor_nest/features/home/presentation/views/screens/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,11 +46,7 @@ class FavoriteCard extends StatelessWidget {
                         BlendMode.srcIn,
                       ),
                     ),
-                    onPressed: () async {
-                      await context.read<ToggleFavoriteCubit>().toggleFavorite(
-                        favorite,
-                      );
-                    },
+                    onPressed: () async => await removeFromFavorite(context),
                   ),
                 ),
               ),
@@ -73,5 +69,9 @@ class FavoriteCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> removeFromFavorite(BuildContext context) async {
+    await context.read<FavoritesCubit>().removeFromFavorite(favorite);
   }
 }

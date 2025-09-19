@@ -20,10 +20,10 @@ final class FavoritesLoaded extends FavoritesState {
   List<Object> get props => [favorites];
 }
 
-final class FavoritesLoadFailure extends FavoritesState {
+final class FavoritesFailure extends FavoritesState {
   final String message;
 
-  const FavoritesLoadFailure(this.message);
+  const FavoritesFailure(this.message);
 
   @override
   List<Object> get props => [message];

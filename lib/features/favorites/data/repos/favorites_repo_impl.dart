@@ -31,6 +31,25 @@ class FavoritesRepoImpl implements FavoritesRepo {
   }
 
   @override
+  FutureEither<Unit> removeFromFavorite(FavoriteProduct favorite) async {
+    try {
+      await _databaseService.deleteByFields(
+        tableName: TableConstants.favorites,
+        fields: {
+          TableConstants.userId: favorite.userId,
+          TableConstants.productId: favorite.productId,
+        },
+      );
+
+      return right(unit);
+    } on PostgrestException catch (e) {
+      return left(DatabaseFailure.fromException(e));
+    } catch (e) {
+      return left(DatabaseFailure(e.toString()));
+    }
+  }
+
+  @override
   FutureEither<bool> toggleFavorite(Product product) async {
     try {
       final userId = await CacheHelper.getSecureData(CacheConstants.userId);
