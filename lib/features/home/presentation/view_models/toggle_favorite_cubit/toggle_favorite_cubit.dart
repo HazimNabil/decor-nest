@@ -8,26 +8,37 @@ part 'toggle_favorite_state.dart';
 class ToggleFavoriteCubit extends Cubit<ToggleFavoriteState> {
   final FavoritesRepo favoritesRepo;
 
-  ToggleFavoriteCubit(this.favoritesRepo)
-    : super(const ToggleFavoriteInitial());
+  ToggleFavoriteCubit(this.favoritesRepo) : super(const ToggleFavoriteState());
 
   Future<void> toggleFavorite(Product product) async {
-    final previousState = state;
-    if (previousState is ToggleFavoriteSuccess) {
-      emit(ToggleFavoriteSuccess(!previousState.isFavorite));
-    }
+    emit(
+      state.copyWith(
+        status: ToggleFavoriteStatus.success,
+        isFavorite: !state.isFavorite,
+      ),
+    );
 
     final result = await favoritesRepo.toggleFavorite(product);
     result.fold((failure) {
-      emit(previousState);
-      emit(ToggleFavoriteFailure(failure.message));
+      emit(
+        state.copyWith(
+          status: ToggleFavoriteStatus.failure,
+          isFavorite: !state.isFavorite,
+          errorMessage: failure.message,
+        ),
+      );
     }, (_) {});
   }
 
   Future<void> initFavoriteStatus(Product product) async {
-    emit(const ToggleFavoriteLoading());
+    emit(state.copyWith(status: ToggleFavoriteStatus.loading));
 
     final isFavorite = await favoritesRepo.isFavorite(product);
-    emit(ToggleFavoriteSuccess(isFavorite));
+    emit(
+      state.copyWith(
+        status: ToggleFavoriteStatus.success,
+        isFavorite: isFavorite,
+      ),
+    );
   }
 }

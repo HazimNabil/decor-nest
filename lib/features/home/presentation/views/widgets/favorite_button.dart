@@ -15,42 +15,40 @@ class FavoriteButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ToggleFavoriteCubit, ToggleFavoriteState>(
-      buildWhen: (_, current) => current is ToggleFavoriteSuccess,
-      listenWhen: (_, current) => current is ToggleFavoriteFailure,
-      listener: (context, state) {
-        if (state is ToggleFavoriteFailure) {
-          context.showToast(
-            message: state.message,
-            type: ToastificationType.error,
-          );
-        }
+      listenWhen: (_, current) => current.status.isFailure,
+      listener: (_, state) {
+        context.showToast(
+          message: state.errorMessage!,
+          type: ToastificationType.error,
+        );
       },
       builder: (context, state) {
-        final isFavorite = state is ToggleFavoriteSuccess
-            ? state.isFavorite
-            : false;
-
+        if (state.status.isLoading) {
+          return CircleAvatar(
+            radius: 20,
+            backgroundColor: context.surfaceColor,
+            child: CircularProgressIndicator(
+              strokeWidth: 3,
+              valueColor: AlwaysStoppedAnimation(context.primaryColor),
+              padding: const EdgeInsets.all(10),
+            ),
+          );
+        }
         return CircleAvatar(
           radius: 20,
-          backgroundColor: isFavorite
+          backgroundColor: state.isFavorite
               ? context.primaryColor
               : context.surfaceColor,
-          child: state is ToggleFavoriteLoading
-              ? CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(context.primaryColor),
-                  strokeWidth: 3,
-                  padding: const EdgeInsets.all(10),
-                )
-              : IconButton(
-                  icon: SvgPicture.asset(
-                    Assets.iconsUnselectedFavorites,
-                    colorFilter: ColorFilter.mode(
-                      isFavorite ? Colors.white : context.subTextColor,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                  onPressed: () async => await toggleFavorite(context),
-                ),
+          child: IconButton(
+            icon: SvgPicture.asset(
+              Assets.iconsUnselectedFavorites,
+              colorFilter: ColorFilter.mode(
+                state.isFavorite ? Colors.white : context.subTextColor,
+                BlendMode.srcIn,
+              ),
+            ),
+            onPressed: () async => await toggleFavorite(context),
+          ),
         );
       },
     );

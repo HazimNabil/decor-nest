@@ -1,34 +1,36 @@
 part of 'toggle_favorite_cubit.dart';
 
-sealed class ToggleFavoriteState extends Equatable {
-  const ToggleFavoriteState();
+enum ToggleFavoriteStatus { initial, loading, success, failure }
 
-  @override
-  List<Object> get props => [];
+extension ToggleFavoriteStatusExtension on ToggleFavoriteStatus {
+  bool get isLoading => this == ToggleFavoriteStatus.loading;
+  bool get isSuccess => this == ToggleFavoriteStatus.success;
+  bool get isFailure => this == ToggleFavoriteStatus.failure;
 }
 
-final class ToggleFavoriteInitial extends ToggleFavoriteState {
-  const ToggleFavoriteInitial();
-}
-
-final class ToggleFavoriteLoading extends ToggleFavoriteState {
-  const ToggleFavoriteLoading();
-}
-
-final class ToggleFavoriteSuccess extends ToggleFavoriteState {
+class ToggleFavoriteState extends Equatable {
+  final ToggleFavoriteStatus status;
   final bool isFavorite;
+  final String? errorMessage;
 
-  const ToggleFavoriteSuccess(this.isFavorite);
-
-  @override
-  List<Object> get props => [isFavorite];
-}
-
-final class ToggleFavoriteFailure extends ToggleFavoriteState {
-  final String message;
-
-  const ToggleFavoriteFailure(this.message);
+  const ToggleFavoriteState({
+    this.status = ToggleFavoriteStatus.initial,
+    this.isFavorite = false,
+    this.errorMessage,
+  });
 
   @override
-  List<Object> get props => [message];
+  List<Object?> get props => [status, isFavorite, errorMessage];
+
+  ToggleFavoriteState copyWith({
+    ToggleFavoriteStatus? status,
+    bool? isFavorite,
+    String? errorMessage,
+  }) {
+    return ToggleFavoriteState(
+      status: status ?? this.status,
+      isFavorite: isFavorite ?? this.isFavorite,
+      errorMessage: errorMessage ?? this.errorMessage,
+    );
+  }
 }
