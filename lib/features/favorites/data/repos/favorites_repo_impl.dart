@@ -1,7 +1,10 @@
+import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/constants/database_constants.dart';
 import 'package:decor_nest/core/errors/database_failure.dart';
 import 'package:decor_nest/core/errors/failure.dart';
+import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
+import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/services/database_service.dart';
 import 'package:decor_nest/features/favorites/data/repos/favorites_repo.dart';
 import 'package:decor_nest/features/favorites/data/models/favorite_product.dart';
@@ -14,14 +17,26 @@ class FavoritesRepoImpl implements FavoritesRepo {
   FavoritesRepoImpl(this._databaseService);
 
   @override
-  FutureEither<bool> toggleFavorite(FavoriteProduct favorite) async {
+  Future<bool> isFavorite(Product product) async {
     try {
-      final isFavorite = await _databaseService.isFound(
+      final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+      return await _databaseService.isFound(
         tableName: TableConstants.favorites,
-        productId: favorite.productId,
-        userId: favorite.userId,
+        productId: product.id!,
+        userId: userId,
       );
+    } catch (e) {
+      return false;
+    }
+  }
 
+  @override
+  FutureEither<bool> toggleFavorite(Product product) async {
+    try {
+      final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+      final favorite = FavoriteProduct.fromProduct(product, userId);
+
+      final isFavorite = await this.isFavorite(product);
       if (isFavorite) {
         await _databaseService.deleteByFields(
           tableName: TableConstants.favorites,

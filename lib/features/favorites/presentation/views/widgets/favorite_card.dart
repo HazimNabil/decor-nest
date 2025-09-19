@@ -11,9 +11,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class FavoriteCard extends StatelessWidget {
-  final FavoriteProduct product;
+  final FavoriteProduct favorite;
 
-  const FavoriteCard({super.key, required this.product});
+  const FavoriteCard({super.key, required this.favorite});
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +21,14 @@ class FavoriteCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
-          onTap: () => context.push(
-            DetailsScreen.path,
-            extra: (product, context.read<ToggleFavoriteCubit>()),
-          ),
+          onTap: () =>
+              context.push(DetailsScreen.path, extra: favorite.toProduct()),
           child: Stack(
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(14),
                 child: CachedNetworkImage(
-                  imageUrl: product.imageUrl!,
+                  imageUrl: favorite.imageUrl!,
                   errorWidget: (_, _, _) => const Icon(Icons.error),
                 ),
               ),
@@ -50,8 +48,7 @@ class FavoriteCard extends StatelessWidget {
                     ),
                     onPressed: () async {
                       await context.read<ToggleFavoriteCubit>().toggleFavorite(
-                        favorite: product,
-                        isFavorite: false,
+                        favorite,
                       );
                     },
                   ),
@@ -62,14 +59,14 @@ class FavoriteCard extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Text(
-          product.name,
+          favorite.name,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppStyles.medium16(context),
         ),
         const SizedBox(height: 4),
         Text(
-          '\$${product.price.toStringAsFixed(2)}',
+          '\$${favorite.price.toStringAsFixed(2)}',
           style: AppStyles.medium16(
             context,
           ).copyWith(color: context.actionColor),

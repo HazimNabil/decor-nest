@@ -10,7 +10,6 @@ import 'package:decor_nest/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:decor_nest/features/auth/presentation/views/screens/login_screen.dart';
 import 'package:decor_nest/features/auth/presentation/views/screens/sign_up_screen.dart';
 import 'package:decor_nest/features/cart/presentation/views/screens/cart_screen.dart';
-import 'package:decor_nest/features/home/presentation/view_models/toggle_favorite_cubit/toggle_favorite_cubit.dart';
 import 'package:decor_nest/features/home/presentation/views/screens/details_screen.dart';
 import 'package:decor_nest/features/onboarding/presentation/views/screens/onboarding_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,13 +28,20 @@ class AppRouter {
       GoRoute(path: LoginScreen.path, builder: (_, _) => const LoginScreen()),
       GoRoute(path: SignUpScreen.path, builder: (_, _) => const SignUpScreen()),
       GoRoute(path: CustomNavBar.path, builder: (_, _) => const CustomNavBar()),
+      GoRoute(
+        path: DetailsScreen.path,
+        builder: (_, state) {
+          final product = state.extra as Product;
+          return DetailsScreen(product: product);
+        },
+      ),
       GoRoute(path: CartScreen.path, builder: (_, _) => const CartScreen()),
       GoRoute(
         path: AdminDashboardScreen.path,
         builder: (_, _) => BlocProvider(
           create: (context) {
-            return ProductsQueryBloc(locator<AdminRepoImpl>())
-              ..add(const ProductsFetched());
+            final bloc = ProductsQueryBloc(locator<AdminRepoImpl>());
+            return bloc..add(const ProductsFetched());
           },
           child: const AdminDashboardScreen(),
         ),
@@ -49,17 +55,6 @@ class AppRouter {
       GoRoute(
         path: AddProductScreen.path,
         builder: (_, _) => const AddProductScreen(),
-      ),
-      GoRoute(
-        path: DetailsScreen.path,
-        builder: (_, state) {
-          final (product, cubit) =
-              state.extra as (Product, ToggleFavoriteCubit);
-          return BlocProvider.value(
-            value: cubit,
-            child: DetailsScreen(product: product),
-          );
-        },
       ),
     ],
     redirect: (_, state) async {
