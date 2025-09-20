@@ -1,8 +1,12 @@
+import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/cart/data/repos/cart_repo_impl.dart';
+import 'package:decor_nest/features/home/presentation/view_models/add_to_cart_cubit/add_to_cart_cubit.dart';
 import 'package:decor_nest/features/home/presentation/views/widgets/add_to_cart_bloc_consumer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
 
 class ProductActionBar extends StatefulWidget {
@@ -93,10 +97,13 @@ class _ProductActionBarState extends State<ProductActionBar> {
             ],
           ),
           const SizedBox(height: 24),
-          AddToCartBlocConsumer(
-            product: widget.product,
-            totalPrice: _totalPriceNotifier.value,
-            quantity: _quantityNotifier.value,
+          BlocProvider(
+            create: (context) => AddToCartCubit(locator<CartRepoImpl>()),
+            child: AddToCartBlocConsumer(
+              product: widget.product,
+              totalPrice: _totalPriceNotifier.value,
+              quantity: _quantityNotifier.value,
+            ),
           ),
         ],
       ),
