@@ -1,11 +1,14 @@
-import 'package:decor_nest/core/helper/assets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/quantity_buttons.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/cart_tile_info.dart';
 import 'package:flutter/material.dart';
+import 'package:decor_nest/features/cart/data/models/cart_product.dart';
 
 class CartTile extends StatelessWidget {
-  const CartTile({super.key});
+  final CartProduct cartProduct;
+
+  const CartTile({super.key, required this.cartProduct});
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +22,16 @@ class CartTile extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.asset(Assets.imagesLamp, height: 72, width: 72),
+            child: CachedNetworkImage(
+              imageUrl: cartProduct.imageUrl!,
+              height: 72,
+              width: 72,
+              errorWidget: (_, _, _) => const Icon(Icons.error),
+            ),
           ),
-          const SizedBox(width: 16),
-          const CartTileInfo(),
-          const Spacer(),
-          const QuantityButtons(),
+          const SizedBox(width: 12),
+          Expanded(child: CartTileInfo(cartProduct: cartProduct)),
+          QuantityButtons(cartProduct: cartProduct),
         ],
       ),
     );

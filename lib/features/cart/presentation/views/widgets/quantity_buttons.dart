@@ -1,9 +1,14 @@
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/cart/presentation/view_models/cart_cubit/cart_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:decor_nest/features/cart/data/models/cart_product.dart';
 
 class QuantityButtons extends StatelessWidget {
-  const QuantityButtons({super.key});
+  final CartProduct cartProduct;
+
+  const QuantityButtons({super.key, required this.cartProduct});
 
   @override
   Widget build(BuildContext context) {
@@ -12,12 +17,16 @@ class QuantityButtons extends StatelessWidget {
       spacing: 8,
       children: [
         SizedBox(
-          width: 26,
-          height: 26,
+          width: 22,
+          height: 22,
           child: IconButton(
             icon: const Icon(Icons.remove),
-            onPressed: () {},
-            iconSize: 20,
+            onPressed: () {
+              if (cartProduct.quantity == 1) {
+                context.read<CartCubit>().removeFromCart(cartProduct);
+              }
+            },
+            iconSize: 18,
             style: IconButton.styleFrom(
               padding: EdgeInsets.zero,
               shape: const CircleBorder(),
@@ -27,18 +36,18 @@ class QuantityButtons extends StatelessWidget {
           ),
         ),
         Text(
-          '1',
+          '${cartProduct.quantity}',
           style: AppStyles.regular14(
             context,
           ).copyWith(color: context.textColor),
         ),
         SizedBox(
-          width: 26,
-          height: 26,
+          width: 22,
+          height: 22,
           child: IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {},
-            iconSize: 20,
+            iconSize: 18,
             style: IconButton.styleFrom(
               padding: EdgeInsets.zero,
               shape: const CircleBorder(),
