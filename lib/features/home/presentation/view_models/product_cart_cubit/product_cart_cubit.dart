@@ -3,20 +3,20 @@ import 'package:decor_nest/features/cart/data/repos/cart_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
-part 'add_to_cart_state.dart';
+part 'product_cart_state.dart';
 
-class AddToCartCubit extends Cubit<AddToCartState> {
+class ProductCartCubit extends Cubit<ProductCartState> {
   final CartRepo _cartRepo;
 
-  AddToCartCubit(this._cartRepo) : super(const AddToCartInitial());
+  ProductCartCubit(this._cartRepo) : super(const ProductCartInitial());
 
   Future<void> addToCart(CartProduct cartProduct) async {
-    emit(const AddToCartLoading());
+    emit(const ProductCartLoading());
 
     final result = await _cartRepo.addToCart(cartProduct);
     result.fold(
-      (failure) => emit(AddToCartFailure(failure.message)),
-      (_) => emit(const AddToCartSuccess()),
+      (failure) => emit(ProductCartFailure(failure.message)),
+      (_) => emit(const ProductCartSuccess()),
     );
   }
 }

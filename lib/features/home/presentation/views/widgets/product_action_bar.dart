@@ -3,8 +3,8 @@ import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/features/cart/data/repos/cart_repo_impl.dart';
-import 'package:decor_nest/features/home/presentation/view_models/add_to_cart_cubit/add_to_cart_cubit.dart';
-import 'package:decor_nest/features/home/presentation/views/widgets/add_to_cart_bloc_consumer.dart';
+import 'package:decor_nest/features/home/presentation/view_models/product_cart_cubit/product_cart_cubit.dart';
+import 'package:decor_nest/features/home/presentation/views/widgets/product_cart_bloc_consumer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
@@ -98,8 +98,11 @@ class _ProductActionBarState extends State<ProductActionBar> {
           ),
           const SizedBox(height: 24),
           BlocProvider(
-            create: (context) => AddToCartCubit(locator<CartRepoImpl>()),
-            child: AddToCartBlocConsumer(
+            create: (context) {
+              final cubit = ProductCartCubit(locator<CartRepoImpl>());
+              return cubit..initCartStatus(widget.product);
+            },
+            child: ProductCartBlocConsumer(
               product: widget.product,
               totalPrice: _totalPriceNotifier.value,
               quantity: _quantityNotifier.value,

@@ -1,7 +1,7 @@
 import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/features/cart/data/models/cart_product.dart';
-import 'package:decor_nest/features/home/presentation/view_models/add_to_cart_cubit/add_to_cart_cubit.dart';
+import 'package:decor_nest/features/home/presentation/view_models/product_cart_cubit/product_cart_cubit.dart';
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
@@ -10,12 +10,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:decor_nest/core/models/product.dart';
 import 'package:toastification/toastification.dart';
 
-class AddToCartBlocConsumer extends StatelessWidget {
+class ProductCartBlocConsumer extends StatelessWidget {
   final Product product;
   final double totalPrice;
   final int quantity;
 
-  const AddToCartBlocConsumer({
+  const ProductCartBlocConsumer({
     super.key,
     required this.product,
     required this.totalPrice,
@@ -24,14 +24,14 @@ class AddToCartBlocConsumer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AddToCartCubit, AddToCartState>(
+    return BlocConsumer<ProductCartCubit, ProductCartState>(
       listener: (context, state) {
-        if (state is AddToCartFailure) {
+        if (state is ProductCartFailure) {
           context.showToast(
             message: state.message,
             type: ToastificationType.error,
           );
-        } else if (state is AddToCartSuccess) {
+        } else if (state is ProductCartSuccess) {
           context.showToast(
             message: 'Product added to cart',
             type: ToastificationType.success,
@@ -43,7 +43,7 @@ class AddToCartBlocConsumer extends StatelessWidget {
           text: 'Add To Cart',
           icon: Assets.iconsAddToCart,
           color: context.primaryColor,
-          isLoading: state is AddToCartLoading,
+          isLoading: state is ProductCartLoading,
           onPressed: () => _addToCart(context),
         );
       },
@@ -69,7 +69,7 @@ class AddToCartBlocConsumer extends StatelessWidget {
     );
 
     if (context.mounted) {
-      await context.read<AddToCartCubit>().addToCart(cartProduct);
+      await context.read<ProductCartCubit>().addToCart(cartProduct);
     }
   }
 }
