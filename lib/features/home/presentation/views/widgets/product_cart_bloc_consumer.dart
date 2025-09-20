@@ -1,6 +1,4 @@
-import 'package:decor_nest/core/constants/cache_constants.dart';
-import 'package:decor_nest/core/helper/cache_helper.dart';
-import 'package:decor_nest/features/cart/data/models/cart_product.dart';
+import 'package:decor_nest/features/cart/presentation/views/screens/cart_screen.dart';
 import 'package:decor_nest/features/home/presentation/view_models/product_cart_cubit/product_cart_cubit.dart';
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
@@ -8,6 +6,7 @@ import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:decor_nest/core/models/product.dart';
+import 'package:go_router/go_router.dart';
 import 'package:toastification/toastification.dart';
 
 class ProductCartBlocConsumer extends StatelessWidget {
@@ -26,12 +25,12 @@ class ProductCartBlocConsumer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ProductCartCubit, ProductCartState>(
       listener: (context, state) {
-        if (state is ProductCartFailure) {
+        if (state.status.isFailure) {
           context.showToast(
-            message: state.message,
+            message: state.errorMessage!,
             type: ToastificationType.error,
           );
-        } else if (state is ProductCartSuccess) {
+        } else if (state.status.isSuccess) {
           context.showToast(
             message: 'Product added to cart',
             type: ToastificationType.success,
@@ -40,36 +39,23 @@ class ProductCartBlocConsumer extends StatelessWidget {
       },
       builder: (context, state) {
         return CustomButton(
-          text: 'Add To Cart',
+          text: state.isInCart ? 'See In Cart' : 'Add To Cart',
           icon: Assets.iconsAddToCart,
           color: context.primaryColor,
-          isLoading: state is ProductCartLoading,
-          onPressed: () => _addToCart(context),
+          isLoading: state.status.isLoading,
+          onPressed: () {
+            state.isInCart
+                ? context.push(CartScreen.path)
+                : _addToCart(context);
+          },
         );
       },
     );
   }
 
   Future<void> _addToCart(BuildContext context) async {
-    final userId = await CacheHelper.getSecureData(CacheConstants.userId);
-
-    final cartProduct = CartProduct(
-      name: product.name,
-      imageUrl: product.imageUrl,
-      price: totalPrice,
-      stock: product.stock,
-      quantity: quantity,
-      productId: product.id!,
-      totalPrice: totalPrice,
-      userId: userId,
-      description: product.description,
-      category: product.category,
-      woodType: product.woodType,
-      imagePath: product.imagePath,
-    );
-
     if (context.mounted) {
-      await context.read<ProductCartCubit>().addToCart(cartProduct);
+      await context.read<ProductCartCubit>().addToCart(product, quantity);
     }
   }
 }

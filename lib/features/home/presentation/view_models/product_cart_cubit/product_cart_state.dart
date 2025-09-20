@@ -1,29 +1,37 @@
 part of 'product_cart_cubit.dart';
 
-sealed class ProductCartState extends Equatable {
-  const ProductCartState();
+enum ProductCartStatus { initial, loading, success, failure, checked }
+
+extension ProductCartStatusExtension on ProductCartStatus {
+  bool get isLoading => this == ProductCartStatus.loading;
+  bool get isSuccess => this == ProductCartStatus.success;
+  bool get isFailure => this == ProductCartStatus.failure;
+  bool get isChecked => this == ProductCartStatus.checked;
+}
+
+class ProductCartState extends Equatable {
+  final ProductCartStatus status;
+  final bool isInCart;
+  final String? errorMessage;
+
+  const ProductCartState({
+    this.status = ProductCartStatus.initial,
+    this.errorMessage,
+    this.isInCart = false,
+  });
 
   @override
-  List<Object> get props => [];
-}
+  List<Object?> get props => [status, isInCart, errorMessage];
 
-final class ProductCartInitial extends ProductCartState {
-  const ProductCartInitial();
-}
-
-final class ProductCartLoading extends ProductCartState {
-  const ProductCartLoading();
-}
-
-final class ProductCartSuccess extends ProductCartState {
-  const ProductCartSuccess();
-}
-
-final class ProductCartFailure extends ProductCartState {
-  final String message;
-
-  const ProductCartFailure(this.message);
-
-  @override
-  List<Object> get props => [message];
+  ProductCartState copyWith({
+    ProductCartStatus? status,
+    bool? isInCart,
+    String? errorMessage,
+  }) {
+    return ProductCartState(
+      status: status ?? this.status,
+      isInCart: isInCart ?? this.isInCart,
+      errorMessage: errorMessage ?? this.errorMessage,
+    );
+  }
 }

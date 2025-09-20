@@ -17,11 +17,18 @@ class CartRepoImpl implements CartRepo {
   CartRepoImpl(this._databaseService);
 
   @override
-  FutureEither<Unit> addToCart(Product product) async {
+  FutureEither<Unit> addToCart(Product product, int quantity) async {
     try {
+      final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+      final cartProduct = CartProduct.fromProduct(
+        product: product,
+        quantity: quantity,
+        userId: userId,
+      );
+
       await _databaseService.add(
         tableName: TableConstants.cart,
-        product: product,
+        product: cartProduct,
       );
 
       return right(unit);
