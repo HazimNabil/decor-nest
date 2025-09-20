@@ -1,6 +1,6 @@
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
-import 'package:decor_nest/features/cart/presentation/views/widgets/amount_buttons.dart';
+import 'package:decor_nest/features/cart/presentation/views/widgets/quantity_buttons.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/cart_tile_info.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +24,7 @@ class CartTile extends StatelessWidget {
           const SizedBox(width: 16),
           const CartTileInfo(),
           const Spacer(),
-          const AmountButtons(),
+          const QuantityButtons(),
         ],
       ),
     );
