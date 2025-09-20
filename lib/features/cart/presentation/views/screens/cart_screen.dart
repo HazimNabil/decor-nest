@@ -3,7 +3,6 @@ import 'package:decor_nest/core/widgets/failure_indicator.dart';
 import 'package:decor_nest/features/cart/data/models/cart_product.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/cart_custom_scroll_view.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/cart_screen_app_bar.dart';
-import 'package:decor_nest/features/cart/presentation/views/widgets/cart_tile_sliver_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:decor_nest/features/cart/presentation/view_models/cart_cubit/cart_cubit.dart';
@@ -28,13 +27,16 @@ class CartScreen extends StatelessWidget {
 
           return switch (state) {
             CartLoading() => Skeletonizer(
-              child: CartTileSliverList(
+              child: CartCustomScrollView(
                 cartProducts: List.filled(20, dummyCartProduct),
+                totalPayment: 0,
               ),
             ),
-            CartLoaded(:final cartProducts) => CartCustomScrollView(
-              cartProducts: cartProducts,
-            ),
+            CartLoaded(:final cartProducts, :final totalPayment) =>
+              CartCustomScrollView(
+                cartProducts: cartProducts,
+                totalPayment: totalPayment,
+              ),
             CartFailure(:final message) => FailureIndicator(message: message),
             _ => const SizedBox.shrink(),
           };

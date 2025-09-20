@@ -4,7 +4,9 @@ import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class CartActionBar extends StatelessWidget {
-  const CartActionBar({super.key});
+  final double totalPayment;
+
+  const CartActionBar({super.key, required this.totalPayment});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,10 @@ class CartActionBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Total Payment', style: AppStyles.medium16(context)),
-              Text('\$2500.00', style: AppStyles.medium16(context)),
+              Text(
+                '\$${totalPayment.toStringAsFixed(2)}',
+                style: AppStyles.medium16(context),
+              ),
             ],
           ),
           const SizedBox(height: 24),

@@ -20,6 +20,10 @@ final class CartLoaded extends CartState {
 
   const CartLoaded(this.cartProducts);
 
+  double get totalPayment {
+    return cartProducts.fold(0.0, (sum, product) => sum + product.totalPrice);
+  }
+
   @override
   List<Object> get props => [cartProducts];
 }

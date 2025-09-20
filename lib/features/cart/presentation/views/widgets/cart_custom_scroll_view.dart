@@ -5,17 +5,28 @@ import 'package:flutter/material.dart';
 
 class CartCustomScrollView extends StatelessWidget {
   final List<CartProduct> cartProducts;
+  final double totalPayment;
 
-  const CartCustomScrollView({super.key, required this.cartProducts});
+  const CartCustomScrollView({
+    super.key,
+    required this.cartProducts,
+    required this.totalPayment,
+  });
 
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
         CartTileSliverList(cartProducts: cartProducts),
-        const SliverFillRemaining(
+        SliverFillRemaining(
           hasScrollBody: false,
-          child: Column(spacing: 24, children: [Spacer(), CartActionBar()]),
+          child: Column(
+            spacing: 24,
+            children: [
+              const Spacer(),
+              CartActionBar(totalPayment: totalPayment),
+            ],
+          ),
         ),
       ],
     );
