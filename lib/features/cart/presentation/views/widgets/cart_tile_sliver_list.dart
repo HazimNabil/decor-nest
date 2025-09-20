@@ -6,10 +6,13 @@ class CartTileSliverList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverList.separated(
-      itemCount: 15,
-      itemBuilder: (_, _) => const CartTile(),
-      separatorBuilder: (_, _) => const SizedBox(height: 16),
+    return SliverPadding(
+      padding: const EdgeInsets.only(left: 24, right: 24, top: 24),
+      sliver: SliverList.separated(
+        itemCount: 15,
+        itemBuilder: (_, _) => const CartTile(),
+        separatorBuilder: (_, _) => const SizedBox(height: 16),
+      ),
     );
   }
 }
