@@ -37,4 +37,25 @@ class CartProduct extends Product {
   Map<String, dynamic> toJson() {
     return _$CartProductToJson(this);
   }
+
+  factory CartProduct.fromProduct({
+    required Product product,
+    required int quantity,
+    required String userId,
+  }) {
+    return CartProduct(
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      stock: product.stock,
+      category: product.category,
+      woodType: product.woodType,
+      imageUrl: product.imageUrl,
+      imagePath: product.imagePath,
+      quantity: quantity,
+      totalPrice: product.price * quantity,
+      productId: product.id!,
+      userId: userId,
+    );
+  }
 }
