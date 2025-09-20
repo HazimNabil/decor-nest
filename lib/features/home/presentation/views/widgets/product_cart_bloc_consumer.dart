@@ -11,8 +11,8 @@ import 'package:toastification/toastification.dart';
 
 class ProductCartBlocConsumer extends StatelessWidget {
   final Product product;
-  final double totalPrice;
-  final int quantity;
+  final ValueNotifier<double> totalPrice;
+  final ValueNotifier<int> quantity;
 
   const ProductCartBlocConsumer({
     super.key,
@@ -55,7 +55,7 @@ class ProductCartBlocConsumer extends StatelessWidget {
 
   Future<void> _addToCart(BuildContext context) async {
     if (context.mounted) {
-      await context.read<ProductCartCubit>().addToCart(product, quantity);
+      await context.read<ProductCartCubit>().addToCart(product, quantity.value);
     }
   }
 }

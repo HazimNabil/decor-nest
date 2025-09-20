@@ -104,8 +104,8 @@ class _ProductActionBarState extends State<ProductActionBar> {
             },
             child: ProductCartBlocConsumer(
               product: widget.product,
-              totalPrice: _totalPriceNotifier.value,
-              quantity: _quantityNotifier.value,
+              totalPrice: _totalPriceNotifier,
+              quantity: _quantityNotifier,
             ),
           ),
         ],
