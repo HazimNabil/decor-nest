@@ -54,7 +54,7 @@ class CartProduct extends Product {
       imagePath: product.imagePath,
       quantity: quantity,
       totalPrice: product.price * quantity,
-      productId: product.id!,
+      productId: product.id ?? -1,
       userId: userId,
     );
   }
