@@ -32,6 +32,11 @@ class CartCubit extends Cubit<CartState> {
     result.fold((failure) => emit(CartFailure(failure.message)), (_) {});
   }
 
+  Future<void> clearCart() async {
+    final result = await _cartRepo.clearCart();
+    result.fold((failure) => emit(CartFailure(failure.message)), (_) {});
+  }
+
   @override
   Future<void> close() {
     _subscription.cancel();

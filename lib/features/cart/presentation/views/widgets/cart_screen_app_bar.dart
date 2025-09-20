@@ -1,7 +1,9 @@
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/cart/presentation/view_models/cart_cubit/cart_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -34,7 +36,7 @@ class CartScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
               Assets.iconsTrash,
               colorFilter: ColorFilter.mode(context.textColor, BlendMode.srcIn),
             ),
-            onPressed: () {},
+            onPressed: () => context.read<CartCubit>().clearCart(),
             style: IconButton.styleFrom(
               shape: const CircleBorder(),
               backgroundColor: context.surfaceColor,

@@ -73,6 +73,18 @@ class CartRepoImpl implements CartRepo {
   }
 
   @override
+  FutureEither<Unit> clearCart() async {
+    try {
+      await _databaseService.clear(tableName: TableConstants.cart);
+      return right(unit);
+    } on PostgrestException catch (e) {
+      return left(DatabaseFailure.fromException(e));
+    } catch (e) {
+      return left(DatabaseFailure(e.toString()));
+    }
+  }
+
+  @override
   StreamEither<List<CartProduct>> watchCart() {
     try {
       return _databaseService
