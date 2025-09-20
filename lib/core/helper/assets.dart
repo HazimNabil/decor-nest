@@ -34,6 +34,8 @@ class Assets {
 
   static const imagesNoFavorites = 'assets/images/no_favorites.svg';
 
+  static const imagesEmptyCart = 'assets/images/empty_cart.svg';
+
   static const imagesLamp = 'assets/images/lamp.jpeg';
 
   static const imagesOnBoardingOne = 'assets/images/on_boarding_one.png';
