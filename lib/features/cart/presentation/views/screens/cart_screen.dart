@@ -3,6 +3,7 @@ import 'package:decor_nest/core/widgets/failure_indicator.dart';
 import 'package:decor_nest/features/cart/data/models/cart_product.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/cart_custom_scroll_view.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/cart_screen_app_bar.dart';
+import 'package:decor_nest/features/cart/presentation/views/widgets/empty_cart_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:decor_nest/features/cart/presentation/view_models/cart_cubit/cart_cubit.dart';
@@ -33,10 +34,12 @@ class CartScreen extends StatelessWidget {
               ),
             ),
             CartLoaded(:final cartProducts, :final totalPayment) =>
-              CartCustomScrollView(
-                cartProducts: cartProducts,
-                totalPayment: totalPayment,
-              ),
+              cartProducts.isEmpty
+                  ? const EmptyCartWidget()
+                  : CartCustomScrollView(
+                      cartProducts: cartProducts,
+                      totalPayment: totalPayment,
+                    ),
             CartFailure(:final message) => FailureIndicator(message: message),
             _ => const SizedBox.shrink(),
           };
