@@ -33,8 +33,8 @@ class SearchField extends StatelessWidget {
       textInputAction: TextInputAction.search,
       trailing: [
         IconButton(
-          icon: const Icon(Icons.clear),
-          onPressed: () => controller.text.isEmpty ? null : controller.clear(),
+          icon: const Icon(Icons.clear, size: 20),
+          onPressed: () => controller.clear(),
         ),
       ],
       onSubmitted: onSubmitted,
