@@ -126,8 +126,8 @@ class _ProductActionBarState extends State<ProductActionBar> {
       _totalPriceNotifier.value += widget.product.price;
     } else {
       context.showToast(
-        message: 'Stock is not available',
-        type: ToastificationType.error,
+        message: 'Out of stock',
+        type: ToastificationType.info,
       );
     }
   }
