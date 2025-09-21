@@ -21,8 +21,16 @@ class CartCubit extends Cubit<CartState> {
     final cartStream = _cartRepo.watchCart();
     _subscription = cartStream.listen((result) {
       result.fold(
-        (failure) => emit(CartFailure(failure.message)),
-        (cartProducts) => emit(CartLoaded(cartProducts)),
+        (failure) {
+          emit(CartFailure(failure.message));
+        },
+        (cartProducts) {
+          final previousState = state;
+          if (previousState is CartLoaded && previousState.isQuantityUpdating) {
+            return;
+          }
+          emit(CartLoaded(cartProducts));
+        },
       );
     });
   }
@@ -36,7 +44,7 @@ class CartCubit extends Cubit<CartState> {
       return product;
     }).toList();
 
-    emit(CartLoaded(updatedProducts));
+    emit(CartLoaded(updatedProducts, isQuantityUpdating: true));
 
     final result = await _cartRepo.updateQuantity(id, newQuantity);
     result.fold((failure) => emit(CartFailure(failure.message)), (_) {});

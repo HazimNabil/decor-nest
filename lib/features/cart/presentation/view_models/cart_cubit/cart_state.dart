@@ -17,15 +17,16 @@ final class CartLoading extends CartState {
 
 final class CartLoaded extends CartState {
   final List<CartProduct> cartProducts;
+  final bool isQuantityUpdating;
 
-  const CartLoaded(this.cartProducts);
+  const CartLoaded(this.cartProducts, {this.isQuantityUpdating = false});
 
   double get totalPayment {
     return cartProducts.fold(0.0, (sum, product) => sum + product.totalPrice);
   }
 
   @override
-  List<Object> get props => [cartProducts];
+  List<Object> get props => [cartProducts, isQuantityUpdating];
 }
 
 final class CartFailure extends CartState {
