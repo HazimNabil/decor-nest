@@ -64,7 +64,16 @@ class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
                     style: AppStyles.regular16(context),
                   ),
                   const SizedBox(height: 24),
-                  SearchField(controller: _searchController),
+                  SearchField(
+                    controller: _searchController,
+                    onSubmitted: (query) {
+                      if (query.isNotEmpty) {
+                        context.read<ProductsQueryBloc>().add(
+                          ProductsSearched(query.trim()),
+                        );
+                      }
+                    },
+                  ),
                   const SizedBox(height: 16),
                   CustomButton(
                     text: 'Add Product',

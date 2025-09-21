@@ -2,14 +2,17 @@ import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:decor_nest/features/admin/presentation/view_models/products_query_bloc/products_query_bloc.dart';
 
 class SearchField extends StatelessWidget {
   final TextEditingController controller;
+  final void Function(String) onSubmitted;
 
-  const SearchField({super.key, required this.controller});
+  const SearchField({
+    super.key,
+    required this.controller,
+    required this.onSubmitted,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +37,7 @@ class SearchField extends StatelessWidget {
           onPressed: () => controller.text.isEmpty ? null : controller.clear(),
         ),
       ],
-      onSubmitted: (query) {
-        if (query.isNotEmpty) {
-          context.read<ProductsQueryBloc>().add(ProductsSearched(query.trim()));
-        }
-      },
+      onSubmitted: onSubmitted,
     );
   }
 }
