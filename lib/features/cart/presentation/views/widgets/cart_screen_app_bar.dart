@@ -36,7 +36,7 @@ class CartScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
               Assets.iconsTrash,
               colorFilter: ColorFilter.mode(context.textColor, BlendMode.srcIn),
             ),
-            onPressed: () => context.read<CartCubit>().clearCart(),
+            onPressed: () async => await context.read<CartCubit>().clearCart(),
             style: IconButton.styleFrom(
               shape: const CircleBorder(),
               backgroundColor: context.surfaceColor,
