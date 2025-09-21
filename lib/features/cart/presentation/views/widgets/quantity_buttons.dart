@@ -4,6 +4,7 @@ import 'package:decor_nest/features/cart/presentation/view_models/cart_cubit/car
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:decor_nest/features/cart/data/models/cart_product.dart';
+import 'package:toastification/toastification.dart';
 
 class QuantityButtons extends StatelessWidget {
   final CartProduct cartProduct;
@@ -21,11 +22,7 @@ class QuantityButtons extends StatelessWidget {
           height: 22,
           child: IconButton(
             icon: const Icon(Icons.remove),
-            onPressed: () {
-              if (cartProduct.quantity == 1) {
-                context.read<CartCubit>().removeFromCart(cartProduct);
-              }
-            },
+            onPressed: () async => await _increaseQuantity(context),
             iconSize: 18,
             style: IconButton.styleFrom(
               padding: EdgeInsets.zero,
@@ -46,7 +43,7 @@ class QuantityButtons extends StatelessWidget {
           height: 22,
           child: IconButton(
             icon: const Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () async => await _decreaseQuantity(context),
             iconSize: 18,
             style: IconButton.styleFrom(
               padding: EdgeInsets.zero,
@@ -58,5 +55,27 @@ class QuantityButtons extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> _decreaseQuantity(BuildContext context) async {
+    if (cartProduct.quantity < cartProduct.stock) {
+      await context.read<CartCubit>().updateQuantity(
+        cartProduct.id!,
+        cartProduct.quantity + 1,
+      );
+    } else {
+      context.showToast(message: 'Out of stock', type: ToastificationType.info);
+    }
+  }
+
+  Future<void> _increaseQuantity(BuildContext context) async {
+    if (cartProduct.quantity == 1) {
+      await context.read<CartCubit>().removeFromCart(cartProduct);
+    } else {
+      await context.read<CartCubit>().updateQuantity(
+        cartProduct.id!,
+        cartProduct.quantity - 1,
+      );
+    }
   }
 }

@@ -27,6 +27,21 @@ class CartCubit extends Cubit<CartState> {
     });
   }
 
+  Future<void> updateQuantity(int id, int newQuantity) async {
+    final currentState = state;
+    if (currentState is! CartLoaded) return;
+
+    final updatedProducts = currentState.cartProducts.map((product) {
+      if (product.id == id) return product.copyWith(quantity: newQuantity);
+      return product;
+    }).toList();
+
+    emit(CartLoaded(updatedProducts));
+
+    final result = await _cartRepo.updateQuantity(id, newQuantity);
+    result.fold((failure) => emit(CartFailure(failure.message)), (_) {});
+  }
+
   Future<void> removeFromCart(CartProduct cartProduct) async {
     final result = await _cartRepo.removeFromCart(cartProduct);
     result.fold((failure) => emit(CartFailure(failure.message)), (_) {});

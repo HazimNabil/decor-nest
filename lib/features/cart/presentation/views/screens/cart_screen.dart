@@ -33,12 +33,12 @@ class CartScreen extends StatelessWidget {
                 totalPayment: 0,
               ),
             ),
-            CartLoaded(:final cartProducts, :final totalPayment) =>
+            CartLoaded(:final cartProducts) =>
               cartProducts.isEmpty
                   ? const EmptyCartWidget()
                   : CartCustomScrollView(
                       cartProducts: cartProducts,
-                      totalPayment: totalPayment,
+                      totalPayment: state.totalPayment,
                     ),
             CartFailure(:final message) => FailureIndicator(message: message),
             _ => const SizedBox.shrink(),

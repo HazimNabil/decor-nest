@@ -109,4 +109,20 @@ class CartRepoImpl implements CartRepo {
       return left(DatabaseFailure(e.toString()));
     }
   }
+  
+  @override
+  FutureEither<Unit> updateQuantity(int id, int newQuantity) async {
+    try {
+      await _databaseService.update(
+        tableName: TableConstants.cart,
+        id: id,
+        fields: {TableConstants.quantity: newQuantity},
+      );
+      return right(unit);
+    } on PostgrestException catch (e) {
+      return left(DatabaseFailure.fromException(e));
+    } catch (e) {
+      return left(DatabaseFailure(e.toString()));
+    }
+  }
 }
