@@ -1,7 +1,10 @@
+import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
-import 'package:decor_nest/features/cart/presentation/view_models/cart_cubit/cart_cubit.dart';
+import 'package:decor_nest/features/cart/data/repos/cart_repo_impl.dart';
+import 'package:decor_nest/features/cart/presentation/view_models/clear_cart_cubit/clear_cart_cubit.dart';
+import 'package:decor_nest/features/cart/presentation/views/widgets/clear_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -36,7 +39,7 @@ class CartScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
               Assets.iconsTrash,
               colorFilter: ColorFilter.mode(context.textColor, BlendMode.srcIn),
             ),
-            onPressed: () async => await context.read<CartCubit>().clearCart(),
+            onPressed: () => _showClearDialog(context),
             style: IconButton.styleFrom(
               shape: const CircleBorder(),
               backgroundColor: context.surfaceColor,
@@ -45,6 +48,18 @@ class CartScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void _showClearDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return BlocProvider<ClearCartCubit>(
+          create: (context) => ClearCartCubit(locator<CartRepoImpl>()),
+          child: const ClearDialog(),
+        );
+      },
     );
   }
 
