@@ -1,8 +1,10 @@
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/cart/presentation/views/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeScreenAppBar({super.key});
@@ -18,19 +20,16 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
         scrolledUnderElevation: 0,
         title: Text('Decor Nest', style: AppStyles.medium24(context)),
         actions: [
-          CircleAvatar(
-            radius: 24,
-            backgroundColor: context.surfaceColor,
-            child: IconButton(
-              icon: SvgPicture.asset(
-                Assets.iconsCart,
-                height: 22,
-                colorFilter: ColorFilter.mode(
-                  context.textColor,
-                  BlendMode.srcIn,
-                ),
-              ),
-              onPressed: () {},
+          IconButton(
+            icon: SvgPicture.asset(
+              Assets.iconsCart,
+              colorFilter: ColorFilter.mode(context.textColor, BlendMode.srcIn),
+            ),
+            onPressed: () => context.push(CartScreen.path),
+            style: IconButton.styleFrom(
+              shape: const CircleBorder(),
+              backgroundColor: context.surfaceColor,
+              fixedSize: const Size(48, 48),
             ),
           ),
         ],

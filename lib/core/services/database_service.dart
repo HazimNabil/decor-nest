@@ -39,6 +39,10 @@ class DatabaseService {
     await query;
   }
 
+  Future<void> clear({required String tableName}) async {
+    await _supabase.from(tableName).delete().neq(TableConstants.id, -1);
+  }
+
   FutureJson read({required String tableName, required int page}) async {
     final start = page * _pageSize;
     final end = start + _pageSize - 1;

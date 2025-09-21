@@ -7,6 +7,8 @@ class Assets {
 
   static const iconsFilter = 'assets/icons/filter.svg';
 
+  static const iconsTrash = 'assets/icons/trash.svg';
+
   static const iconsGoogle = 'assets/icons/google.svg';
 
   static const iconsSelectedFavorites = 'assets/icons/selected_favorites.svg';
@@ -31,6 +33,8 @@ class Assets {
   static const imagesFailure = 'assets/images/failure.svg';
 
   static const imagesNoFavorites = 'assets/images/no_favorites.svg';
+
+  static const imagesEmptyCart = 'assets/images/empty_cart.svg';
 
   static const imagesLamp = 'assets/images/lamp.jpeg';
 
