@@ -28,6 +28,12 @@ class SearchField extends StatelessWidget {
         EdgeInsets.symmetric(horizontal: 16),
       ),
       textInputAction: TextInputAction.search,
+      trailing: [
+        IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () => controller.text.isEmpty ? null : controller.clear(),
+        ),
+      ],
       onSubmitted: (query) {
         if (query.isNotEmpty) {
           context.read<ProductsQueryBloc>().add(ProductsSearched(query.trim()));
