@@ -1,8 +1,10 @@
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/search_field.dart';
+import 'package:decor_nest/features/search/presentation/views/screens/filter_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchHeader extends StatefulWidget {
   const SearchHeader({super.key});
@@ -40,17 +42,23 @@ class _SearchHeaderState extends State<SearchHeader> {
           ),
         ),
         const SizedBox(width: 4),
-        Container(
-          height: 48,
-          width: 48,
-          decoration: BoxDecoration(
-            color: context.primaryColor,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: SvgPicture.asset(
-            Assets.iconsFilter,
-            fit: BoxFit.scaleDown,
-            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+        InkWell(
+          onTap: () => context.push(FilterScreen.path),
+          child: Container(
+            height: 48,
+            width: 48,
+            decoration: BoxDecoration(
+              color: context.primaryColor,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: SvgPicture.asset(
+              Assets.iconsFilter,
+              fit: BoxFit.scaleDown,
+              colorFilter: const ColorFilter.mode(
+                Colors.white,
+                BlendMode.srcIn,
+              ),
+            ),
           ),
         ),
       ],

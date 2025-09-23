@@ -18,6 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/helper/cache_helper.dart';
+import 'package:decor_nest/features/search/presentation/views/screens/filter_screen.dart';
 
 class AppRouter {
   static final router = GoRouter(
@@ -30,6 +31,7 @@ class AppRouter {
       GoRoute(path: LoginScreen.path, builder: (_, _) => const LoginScreen()),
       GoRoute(path: SignUpScreen.path, builder: (_, _) => const SignUpScreen()),
       GoRoute(path: CustomNavBar.path, builder: (_, _) => const CustomNavBar()),
+      GoRoute(path: FilterScreen.path, builder: (_, _) => const FilterScreen()),
       GoRoute(
         path: DetailsScreen.path,
         builder: (_, state) {
