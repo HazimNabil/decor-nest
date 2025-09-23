@@ -1,5 +1,5 @@
 import 'package:decor_nest/core/models/product.dart';
-import 'package:decor_nest/features/home/presentation/views/widgets/product_card.dart';
+import 'package:decor_nest/core/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 
 class ProductCardSliverGrid extends StatelessWidget {
