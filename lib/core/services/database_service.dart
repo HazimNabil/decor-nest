@@ -43,34 +43,21 @@ class DatabaseService {
     await _supabase.from(tableName).delete().neq(TableConstants.id, -1);
   }
 
-  FutureJson read({required String tableName, required int page}) async {
-    final start = page * _pageSize;
-    final end = start + _pageSize - 1;
-
-    final data = await _supabase
-        .from(tableName)
-        .select()
-        .order(TableConstants.createdAt, ascending: false)
-        .range(start, end);
-
-    return data;
-  }
-
-  FutureJson filterByCategory({
+  FutureJson read({
     required String tableName,
     required int page,
-    required String category,
+    String? category,
   }) async {
     final start = page * _pageSize;
     final end = start + _pageSize - 1;
 
-    final data = await _supabase
-        .from(tableName)
-        .select()
-        .eq(TableConstants.category, category)
-        .order(TableConstants.createdAt)
-        .range(start, end);
+    var query = _supabase.from(tableName).select();
 
+    if (category != null) {
+      query = query.eq(TableConstants.category, category);
+    }
+
+    final data = await query.order(TableConstants.createdAt).range(start, end);
     return data;
   }
 

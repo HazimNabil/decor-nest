@@ -20,7 +20,11 @@ class HomeRepoImpl implements HomeRepo {
     try {
       final List<Map<String, dynamic>> jsonProducts;
 
-      jsonProducts = await _fetchFromDatabase(category, page);
+      jsonProducts = await _databaseService.read(
+        tableName: TableConstants.products,
+        page: page,
+        category: category,
+      );
 
       final products = jsonProducts
           .map((jsonProduct) => Product.fromJson(jsonProduct))
@@ -32,19 +36,5 @@ class HomeRepoImpl implements HomeRepo {
     } catch (e) {
       return left(DatabaseFailure(e.toString()));
     }
-  }
-
-  FutureJson _fetchFromDatabase(String? category, int page) async {
-    if (category == null) {
-      return await _databaseService.read(
-        tableName: TableConstants.products,
-        page: page,
-      );
-    }
-    return await _databaseService.filterByCategory(
-      tableName: TableConstants.products,
-      page: page,
-      category: category,
-    );
   }
 }
