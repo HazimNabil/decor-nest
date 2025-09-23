@@ -1,6 +1,7 @@
 import 'package:decor_nest/core/constants/database_constants.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:decor_nest/core/models/product.dart';
+import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DatabaseService {
@@ -63,17 +64,22 @@ class DatabaseService {
 
   FutureJson search({
     required String tableName,
-    required String query,
     required int page,
+    ProductFilter? filter,
   }) async {
     final start = page * _pageSize;
     final end = start + _pageSize - 1;
 
-    final data = await _supabase
-        .from(tableName)
-        .select()
-        .ilike(TableConstants.name, '%$query%')
-        .order(TableConstants.createdAt)
+    var query = _supabase.from(tableName).select();
+
+    if (filter != null) {
+      query = _applyFilters(query, filter);
+    }
+
+    final sortColumn = filter?.sortBy ?? TableConstants.createdAt;
+
+    final data = await query
+        .order(sortColumn, ascending: filter?.ascending ?? false)
         .range(start, end);
 
     return data;
@@ -99,5 +105,31 @@ class DatabaseService {
         .maybeSingle();
 
     return response != null;
+  }
+
+  PostgrestFilterBuilder<PostgrestList> _applyFilters(
+    PostgrestFilterBuilder<PostgrestList> query,
+    ProductFilter filter,
+  ) {
+    if (filter.category?.isNotEmpty ?? false) {
+      query = query.eq(TableConstants.category, filter.category!);
+    }
+
+    if (filter.woodType?.isNotEmpty ?? false) {
+      query = query.eq(TableConstants.woodType, filter.woodType!);
+    }
+
+    if (filter.minPrice != null) {
+      query = query.gte(TableConstants.price, filter.minPrice!);
+    }
+    if (filter.maxPrice != null) {
+      query = query.lte(TableConstants.price, filter.maxPrice!);
+    }
+
+    if (filter.searchQuery?.isNotEmpty ?? false) {
+      query = query.ilike(TableConstants.name, filter.searchQuery!);
+    }
+
+    return query;
   }
 }

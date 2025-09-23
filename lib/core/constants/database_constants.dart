@@ -33,4 +33,6 @@ class TableConstants {
   static const userId = 'user_id';
   static const productId = 'product_id';
   static const quantity = 'quantity';
+  static const woodType = 'wood_type';
+  static const price = 'price';
 }
