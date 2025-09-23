@@ -47,23 +47,4 @@ class HomeRepoImpl implements HomeRepo {
       category: category,
     );
   }
-
-  @override
-  FutureEither<Unit> toggleFavorite({
-    required int productId,
-    required bool isFavorite,
-  }) async {
-    try {
-      await _databaseService.update(
-        tableName: TableConstants.products,
-        id: productId,
-        fields: {TableConstants.isFavorite: isFavorite},
-      );
-      return right(unit);
-    } on PostgrestException catch (e) {
-      return left(DatabaseFailure.fromException(e));
-    } catch (e) {
-      return left(DatabaseFailure(e.toString()));
-    }
-  }
 }
