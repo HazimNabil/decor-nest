@@ -18,7 +18,6 @@ class _CategoryFilterChipsState extends State<CategoryFilterChips> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 24),
         Text('Category', style: AppStyles.medium20(context)),
         const SizedBox(height: 16),
         Wrap(

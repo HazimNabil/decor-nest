@@ -16,7 +16,7 @@ class FilterScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.only(left: 24, right: 24, top: 16),
         child: Column(
-          spacing: 16,
+          spacing: 32,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CategoryFilterChips(),

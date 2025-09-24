@@ -17,7 +17,6 @@ class _PriceRangeSliderState extends State<PriceRangeSlider> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 24),
         Text('Price Range', style: AppStyles.medium20(context)),
         const SizedBox(height: 16),
         SliderTheme(

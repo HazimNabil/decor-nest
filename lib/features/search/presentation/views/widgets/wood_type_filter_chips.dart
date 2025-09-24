@@ -18,7 +18,6 @@ class _WoodTypeFilterChipsState extends State<WoodTypeFilterChips> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 24),
         Text('Wood Type', style: AppStyles.medium20(context)),
         const SizedBox(height: 16),
         Wrap(
