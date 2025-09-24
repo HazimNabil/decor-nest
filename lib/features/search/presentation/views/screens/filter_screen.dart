@@ -1,5 +1,6 @@
 import 'package:decor_nest/core/widgets/custom_app_bar.dart';
 import 'package:decor_nest/features/search/presentation/views/widgets/category_filter_chips.dart';
+import 'package:decor_nest/features/search/presentation/views/widgets/price_range_slider.dart';
 import 'package:decor_nest/features/search/presentation/views/widgets/wood_type_filter_chips.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,11 @@ class FilterScreen extends StatelessWidget {
         child: Column(
           spacing: 16,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [CategoryFilterChips(), WoodTypeFilterChips()],
+          children: [
+            CategoryFilterChips(),
+            WoodTypeFilterChips(),
+            PriceRangeSlider(),
+          ],
         ),
       ),
     );
