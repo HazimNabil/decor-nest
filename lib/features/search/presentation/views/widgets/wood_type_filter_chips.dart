@@ -2,15 +2,15 @@ import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:flutter/material.dart';
 
-class CategoryFilterChips extends StatefulWidget {
-  const CategoryFilterChips({super.key});
+class WoodTypeFilterChips extends StatefulWidget {
+  const WoodTypeFilterChips({super.key});
 
   @override
-  State<CategoryFilterChips> createState() => _CategoryFilterChipsState();
+  State<WoodTypeFilterChips> createState() => _WoodTypeFilterChipsState();
 }
 
-class _CategoryFilterChipsState extends State<CategoryFilterChips> {
-  final _selectedCategories = <String>[];
+class _WoodTypeFilterChipsState extends State<WoodTypeFilterChips> {
+  final _selectedWoodTypes = <String>[];
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +19,16 @@ class _CategoryFilterChipsState extends State<CategoryFilterChips> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 24),
-        Text('Category', style: AppStyles.medium20(context)),
+        Text('Wood Type', style: AppStyles.medium20(context)),
         const SizedBox(height: 16),
         Wrap(
           spacing: 16,
           runSpacing: 4,
-          children: List.generate(_categories.length, (index) {
+          children: List.generate(_woodTypes.length, (index) {
             return FilterChip(
-              label: Text(_categories[index]),
+              label: Text(_woodTypes[index]),
               labelStyle: AppStyles.regular14(context).copyWith(
-                color: _selectedCategories.contains(_categories[index])
+                color: _selectedWoodTypes.contains(_woodTypes[index])
                     ? Colors.white
                     : context.subTextColor,
               ),
@@ -39,13 +39,13 @@ class _CategoryFilterChipsState extends State<CategoryFilterChips> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              selected: _selectedCategories.contains(_categories[index]),
+              selected: _selectedWoodTypes.contains(_woodTypes[index]),
               onSelected: (selected) {
                 setState(() {
                   if (selected) {
-                    _selectedCategories.add(_categories[index]);
+                    _selectedWoodTypes.add(_woodTypes[index]);
                   } else {
-                    _selectedCategories.remove(_categories[index]);
+                    _selectedWoodTypes.remove(_woodTypes[index]);
                   }
                 });
               },
@@ -56,7 +56,15 @@ class _CategoryFilterChipsState extends State<CategoryFilterChips> {
     );
   }
 
-  List<String> get _categories {
-    return const ['chair', 'table', 'lamp', 'sofa', 'mirror', 'mattress'];
+  List<String> get _woodTypes {
+    return const [
+      'eucalyptus',
+      'teak',
+      'oak',
+      'pine',
+      'maple',
+      'bamboo',
+      'walnut',
+    ];
   }
 }
