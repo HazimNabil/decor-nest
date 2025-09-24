@@ -15,16 +15,19 @@ class FilterScreen extends StatelessWidget {
     return const Scaffold(
       appBar: CustomAppBar(title: 'Filter'),
       body: Padding(
-        padding: EdgeInsets.only(left: 24, right: 24, top: 16),
-        child: Column(
-          spacing: 32,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CategoryFilterChips(),
-            WoodTypeFilterChips(),
-            PriceRangeSlider(),
-            SortByDropDown(),
-          ],
+        padding: EdgeInsets.only(left: 24, right: 24, top: 24),
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 32,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CategoryFilterChips(),
+              WoodTypeFilterChips(),
+              PriceRangeSlider(),
+              SortByDropDown(),
+              SizedBox.shrink(),
+            ],
+          ),
         ),
       ),
     );
