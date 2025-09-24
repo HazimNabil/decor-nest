@@ -1,6 +1,6 @@
 class ProductFilter {
-  final String? category;
-  final String? woodType;
+  final List<String>? category;
+  final List<String>? woodType;
   final double? minPrice;
   final double? maxPrice;
   final String? searchQuery;
@@ -18,8 +18,8 @@ class ProductFilter {
   });
 
   ProductFilter copyWith({
-    String? category,
-    String? woodType,
+    List<String>? category,
+    List<String>? woodType,
     double? minPrice,
     double? maxPrice,
     String? searchQuery,
