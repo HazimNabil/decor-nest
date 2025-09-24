@@ -112,11 +112,11 @@ class DatabaseService {
     ProductFilter filter,
   ) {
     if (filter.category?.isNotEmpty ?? false) {
-      query = query.eq(TableConstants.category, filter.category!);
+      query = query.inFilter(TableConstants.category, filter.category!);
     }
 
     if (filter.woodType?.isNotEmpty ?? false) {
-      query = query.eq(TableConstants.woodType, filter.woodType!);
+      query = query.inFilter(TableConstants.woodType, filter.woodType!);
     }
 
     if (filter.minPrice != null) {
