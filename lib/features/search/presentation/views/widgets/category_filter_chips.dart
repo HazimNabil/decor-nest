@@ -1,9 +1,12 @@
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:flutter/material.dart';
 
 class CategoryFilterChips extends StatefulWidget {
-  const CategoryFilterChips({super.key});
+  final ProductFilter filter;
+
+  const CategoryFilterChips({super.key, required this.filter});
 
   @override
   State<CategoryFilterChips> createState() => _CategoryFilterChipsState();
@@ -39,20 +42,23 @@ class _CategoryFilterChipsState extends State<CategoryFilterChips> {
                 borderRadius: BorderRadius.circular(10),
               ),
               selected: _selectedCategories.contains(_categories[index]),
-              onSelected: (selected) {
-                setState(() {
-                  if (selected) {
-                    _selectedCategories.add(_categories[index]);
-                  } else {
-                    _selectedCategories.remove(_categories[index]);
-                  }
-                });
-              },
+              onSelected: (selected) => _selectCategories(selected, index),
             );
           }),
         ),
       ],
     );
+  }
+
+  void _selectCategories(bool selected, int index) {
+    setState(() {
+      if (selected) {
+        _selectedCategories.add(_categories[index]);
+      } else {
+        _selectedCategories.remove(_categories[index]);
+      }
+    });
+    widget.filter.categories = _selectedCategories;
   }
 
   List<String> get _categories {

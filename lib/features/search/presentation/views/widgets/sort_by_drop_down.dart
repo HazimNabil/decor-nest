@@ -1,9 +1,13 @@
+import 'package:decor_nest/core/constants/database_constants.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/custom_drop_down_button.dart';
+import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:flutter/material.dart';
 
 class SortByDropDown extends StatelessWidget {
-  const SortByDropDown({super.key});
+  final ProductFilter filter;
+
+  const SortByDropDown({super.key, required this.filter});
 
   @override
   Widget build(BuildContext context) {
@@ -14,20 +18,25 @@ class SortByDropDown extends StatelessWidget {
       children: [
         Text('Sort By', style: AppStyles.medium20(context)),
         CustomDropDownButton(
-          values: _sortByOptions,
+          values: _sortByOptions.keys.toList(),
           currentValue: 'Newest',
-          onChanged: (value) {},
+          onChanged: _selectSortByOption,
         ),
       ],
     );
   }
 
-  List<String> get _sortByOptions {
-    return const [
-      'Newest',
-      'Oldest',
-      'Price: Low to High',
-      'Price: High to Low',
-    ];
+  void _selectSortByOption(String value) {
+    filter.sortBy = _sortByOptions[value]!;
+    filter.ascending = value == 'Oldest' || value == 'Price: Low to High';
+  }
+
+  Map<String, String> get _sortByOptions {
+    return const {
+      'Newest': TableConstants.createdAt,
+      'Oldest': TableConstants.createdAt,
+      'Price: Low to High': TableConstants.price,
+      'Price: High to Low': TableConstants.price,
+    };
   }
 }

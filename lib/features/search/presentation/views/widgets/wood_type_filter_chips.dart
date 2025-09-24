@@ -1,9 +1,12 @@
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:flutter/material.dart';
 
 class WoodTypeFilterChips extends StatefulWidget {
-  const WoodTypeFilterChips({super.key});
+  final ProductFilter filter;
+
+  const WoodTypeFilterChips({super.key, required this.filter});
 
   @override
   State<WoodTypeFilterChips> createState() => _WoodTypeFilterChipsState();
@@ -39,20 +42,23 @@ class _WoodTypeFilterChipsState extends State<WoodTypeFilterChips> {
                 borderRadius: BorderRadius.circular(10),
               ),
               selected: _selectedWoodTypes.contains(_woodTypes[index]),
-              onSelected: (selected) {
-                setState(() {
-                  if (selected) {
-                    _selectedWoodTypes.add(_woodTypes[index]);
-                  } else {
-                    _selectedWoodTypes.remove(_woodTypes[index]);
-                  }
-                });
-              },
+              onSelected: (selected) => _selectWoodTypes(selected, index),
             );
           }),
         ),
       ],
     );
+  }
+
+  void _selectWoodTypes(bool selected, int index) {
+    setState(() {
+      if (selected) {
+        _selectedWoodTypes.add(_woodTypes[index]);
+      } else {
+        _selectedWoodTypes.remove(_woodTypes[index]);
+      }
+    });
+    widget.filter.woodTypes = _selectedWoodTypes;
   }
 
   List<String> get _woodTypes {

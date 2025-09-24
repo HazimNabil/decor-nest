@@ -1,9 +1,12 @@
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:flutter/material.dart';
 
 class PriceRangeSlider extends StatefulWidget {
-  const PriceRangeSlider({super.key});
+  final ProductFilter filter;
+
+  const PriceRangeSlider({super.key, required this.filter});
 
   @override
   State<PriceRangeSlider> createState() => _PriceRangeSliderState();
@@ -34,10 +37,16 @@ class _PriceRangeSliderState extends State<PriceRangeSlider> {
               _values.start.round().toString(),
               _values.end.round().toString(),
             ),
-            onChanged: (values) => setState(() => _values = values),
+            onChanged: _selectPriceRange,
           ),
         ),
       ],
     );
+  }
+
+  void _selectPriceRange(values) {
+    setState(() => _values = values);
+    widget.filter.minPrice = values.start;
+    widget.filter.maxPrice = values.end;
   }
 }

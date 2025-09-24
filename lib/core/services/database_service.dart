@@ -111,12 +111,12 @@ class DatabaseService {
     PostgrestFilterBuilder<PostgrestList> query,
     ProductFilter filter,
   ) {
-    if (filter.category?.isNotEmpty ?? false) {
-      query = query.inFilter(TableConstants.category, filter.category!);
+    if (filter.categories?.isNotEmpty ?? false) {
+      query = query.inFilter(TableConstants.category, filter.categories!);
     }
 
-    if (filter.woodType?.isNotEmpty ?? false) {
-      query = query.inFilter(TableConstants.woodType, filter.woodType!);
+    if (filter.woodTypes?.isNotEmpty ?? false) {
+      query = query.inFilter(TableConstants.woodType, filter.woodTypes!);
     }
 
     if (filter.minPrice != null) {
