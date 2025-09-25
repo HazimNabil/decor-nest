@@ -1,4 +1,5 @@
 import 'package:decor_nest/core/constants/database_constants.dart';
+import 'package:decor_nest/core/helper/typedefs.dart';
 
 class ProductFilter {
   List<String> categories;
@@ -6,8 +7,7 @@ class ProductFilter {
   double minPrice;
   double maxPrice;
   String searchQuery;
-  String sortBy;
-  bool ascending;
+  SortBy sortBy;
 
   ProductFilter({
     required this.categories,
@@ -15,8 +15,7 @@ class ProductFilter {
     this.minPrice = 0,
     this.maxPrice = 1000,
     this.searchQuery = '',
-    this.sortBy = TableConstants.createdAt,
-    this.ascending = false,
+    this.sortBy = (column: TableConstants.createdAt, ascending: false),
   });
 
   void clear() {
@@ -24,8 +23,6 @@ class ProductFilter {
     woodTypes = [];
     minPrice = 0;
     maxPrice = 1000;
-    searchQuery = '';
-    sortBy = TableConstants.createdAt;
-    ascending = false;
+    sortBy = (column: TableConstants.createdAt, ascending: false);
   }
 }

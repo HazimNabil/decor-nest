@@ -76,10 +76,11 @@ class DatabaseService {
       query = _applyFilters(query, filter);
     }
 
-    final sortColumn = filter?.sortBy ?? TableConstants.createdAt;
+    final sortBy =
+        filter?.sortBy ?? (column: TableConstants.createdAt, ascending: false);
 
     final data = await query
-        .order(sortColumn, ascending: filter?.ascending ?? false)
+        .order(sortBy.column, ascending: sortBy.ascending)
         .range(start, end);
 
     return data;
