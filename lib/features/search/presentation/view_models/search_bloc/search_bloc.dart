@@ -22,6 +22,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     ProductsSearched event,
     Emitter<SearchState> emit,
   ) async {
+    emit(const SearchState());
     await _handlePagination(
       event: event,
       emit: emit,
@@ -77,6 +78,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
             products: [...oldProducts, ...products],
             hasReachedMax: products.length < 10,
             page: state.page + 1,
+            filter: event is ProductsSearched ? event.filter : state.filter,
           ),
         );
       },
