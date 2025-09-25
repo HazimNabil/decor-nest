@@ -14,6 +14,9 @@ import 'package:decor_nest/features/cart/presentation/views/screens/cart_screen.
 import 'package:decor_nest/features/cart/presentation/view_models/cart_cubit/cart_cubit.dart';
 import 'package:decor_nest/features/home/presentation/views/screens/details_screen.dart';
 import 'package:decor_nest/features/onboarding/presentation/views/screens/onboarding_screen.dart';
+import 'package:decor_nest/features/search/data/models/product_filter.dart';
+import 'package:decor_nest/features/search/data/repos/search_repo_impl.dart';
+import 'package:decor_nest/features/search/presentation/view_models/search_bloc/search_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:decor_nest/core/constants/cache_constants.dart';
@@ -30,8 +33,27 @@ class AppRouter {
       ),
       GoRoute(path: LoginScreen.path, builder: (_, _) => const LoginScreen()),
       GoRoute(path: SignUpScreen.path, builder: (_, _) => const SignUpScreen()),
-      GoRoute(path: CustomNavBar.path, builder: (_, _) => const CustomNavBar()),
-      GoRoute(path: FilterScreen.path, builder: (_, _) => const FilterScreen()),
+      ShellRoute(
+        builder: (_, _, child) {
+          return BlocProvider(
+            create: (context) => SearchBloc(locator<SearchRepoImpl>()),
+            child: child,
+          );
+        },
+        routes: [
+          GoRoute(
+            path: CustomNavBar.path,
+            builder: (_, _) => const CustomNavBar(),
+          ),
+          GoRoute(
+            path: FilterScreen.path,
+            builder: (_, state) {
+              final filter = state.extra as ProductFilter;
+              return FilterScreen(filter: filter);
+            },
+          ),
+        ],
+      ),
       GoRoute(
         path: DetailsScreen.path,
         builder: (_, state) {
