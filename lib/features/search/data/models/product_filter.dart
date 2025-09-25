@@ -17,7 +17,8 @@ class ProductFilter {
     this.ascending = false,
   });
 
-  ProductFilter clear() {
-    return ProductFilter();
+  void clear() {
+    categories = woodTypes = minPrice = maxPrice = sortBy = null;
+    ascending = false;
   }
 }
