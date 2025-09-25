@@ -127,7 +127,7 @@ class DatabaseService {
     }
 
     if (filter.searchQuery?.isNotEmpty ?? false) {
-      query = query.ilike(TableConstants.name, filter.searchQuery!);
+      query = query.ilike(TableConstants.name, '%${filter.searchQuery!}%');
     }
 
     return query;
