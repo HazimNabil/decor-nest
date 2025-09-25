@@ -1,8 +1,11 @@
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/search_field.dart';
+import 'package:decor_nest/features/search/data/models/product_filter.dart';
+import 'package:decor_nest/features/search/presentation/view_models/search_bloc/search_bloc.dart';
 import 'package:decor_nest/features/search/presentation/views/screens/filter_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,11 +18,13 @@ class SearchHeader extends StatefulWidget {
 
 class _SearchHeaderState extends State<SearchHeader> {
   late final TextEditingController _searchController;
+  late final ProductFilter _filter;
 
   @override
   void initState() {
     super.initState();
     _searchController = TextEditingController();
+    _filter = ProductFilter();
   }
 
   @override
@@ -31,19 +36,22 @@ class _SearchHeaderState extends State<SearchHeader> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      spacing: 4,
       children: [
         Expanded(
           child: SizedBox(
             height: 48,
             child: SearchField(
               controller: _searchController,
-              onSubmitted: (query) {},
+              onSubmitted: (query) {
+                _filter.searchQuery = query;
+                context.read<SearchBloc>().add(ProductsSearched(_filter));
+              },
             ),
           ),
         ),
-        const SizedBox(width: 4),
         InkWell(
-          onTap: () => context.push(FilterScreen.path),
+          onTap: () => context.push(FilterScreen.path, extra: _filter),
           child: Container(
             height: 48,
             width: 48,
