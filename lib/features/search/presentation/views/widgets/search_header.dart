@@ -36,7 +36,7 @@ class _SearchHeaderState extends State<SearchHeader> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      spacing: 4,
+      spacing: 8,
       children: [
         Expanded(
           child: SizedBox(
