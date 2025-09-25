@@ -111,23 +111,19 @@ class DatabaseService {
     PostgrestFilterBuilder<PostgrestList> query,
     ProductFilter filter,
   ) {
-    if (filter.categories?.isNotEmpty ?? false) {
-      query = query.inFilter(TableConstants.category, filter.categories!);
+    if (filter.categories.isNotEmpty) {
+      query = query.inFilter(TableConstants.category, filter.categories);
     }
 
-    if (filter.woodTypes?.isNotEmpty ?? false) {
-      query = query.inFilter(TableConstants.woodType, filter.woodTypes!);
+    if (filter.woodTypes.isNotEmpty) {
+      query = query.inFilter(TableConstants.woodType, filter.woodTypes);
     }
 
-    if (filter.minPrice != null) {
-      query = query.gte(TableConstants.price, filter.minPrice!);
-    }
-    if (filter.maxPrice != null) {
-      query = query.lte(TableConstants.price, filter.maxPrice!);
-    }
+    query = query.gte(TableConstants.price, filter.minPrice);
+    query = query.lte(TableConstants.price, filter.maxPrice);
 
-    if (filter.searchQuery?.isNotEmpty ?? false) {
-      query = query.ilike(TableConstants.name, '%${filter.searchQuery!}%');
+    if (filter.searchQuery.isNotEmpty) {
+      query = query.ilike(TableConstants.name, '%${filter.searchQuery}%');
     }
 
     return query;

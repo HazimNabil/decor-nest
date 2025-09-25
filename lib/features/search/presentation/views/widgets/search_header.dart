@@ -24,7 +24,7 @@ class _SearchHeaderState extends State<SearchHeader> {
   void initState() {
     super.initState();
     _searchController = TextEditingController();
-    _filter = ProductFilter();
+    _filter = ProductFilter(categories: [], woodTypes: []);
   }
 
   @override
