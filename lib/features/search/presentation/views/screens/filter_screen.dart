@@ -1,4 +1,5 @@
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_app_bar.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/features/search/data/models/product_filter.dart';
@@ -30,23 +31,37 @@ class _FilterScreenState extends State<FilterScreen> {
         padding: const EdgeInsets.only(left: 24, right: 24, top: 24),
         child: SingleChildScrollView(
           child: Column(
-            spacing: 32,
+            spacing: 28,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CategoryFilterChips(filter: widget.filter),
               WoodTypeFilterChips(filter: widget.filter),
               PriceRangeSlider(filter: widget.filter),
               SortByDropDown(filter: widget.filter),
-              CustomButton(
-                text: 'Clear Filters',
-                color: context.primaryColor,
-                onPressed: () {
-                  setState(() => widget.filter.clear());
-                  context.read<SearchBloc>().add(
-                    ProductsSearched(widget.filter),
-                  );
-                  context.pop();
-                },
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    side: BorderSide(color: context.primaryColor),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() => widget.filter.clear());
+                    context.read<SearchBloc>().add(
+                      ProductsSearched(widget.filter),
+                    );
+                    context.pop();
+                  },
+                  child: Text(
+                    'Clear Filters',
+                    style: AppStyles.semiBold16(
+                      context,
+                    ).copyWith(color: context.primaryColor),
+                  ),
+                ),
               ),
               CustomButton(
                 text: 'Apply Filters',
