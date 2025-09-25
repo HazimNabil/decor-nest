@@ -13,8 +13,6 @@ class WoodTypeFilterChips extends StatefulWidget {
 }
 
 class _WoodTypeFilterChipsState extends State<WoodTypeFilterChips> {
-  final _selectedWoodTypes = <String>[];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,7 +28,7 @@ class _WoodTypeFilterChipsState extends State<WoodTypeFilterChips> {
             return FilterChip(
               label: Text(_woodTypes[index]),
               labelStyle: AppStyles.regular14(context).copyWith(
-                color: _selectedWoodTypes.contains(_woodTypes[index])
+                color: widget.filter.woodTypes.contains(_woodTypes[index])
                     ? Colors.white
                     : context.subTextColor,
               ),
@@ -41,7 +39,7 @@ class _WoodTypeFilterChipsState extends State<WoodTypeFilterChips> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              selected: _selectedWoodTypes.contains(_woodTypes[index]),
+              selected: widget.filter.woodTypes.contains(_woodTypes[index]),
               onSelected: (selected) => _selectWoodTypes(selected, index),
             );
           }),
@@ -53,12 +51,11 @@ class _WoodTypeFilterChipsState extends State<WoodTypeFilterChips> {
   void _selectWoodTypes(bool selected, int index) {
     setState(() {
       if (selected) {
-        _selectedWoodTypes.add(_woodTypes[index]);
+        widget.filter.woodTypes.add(_woodTypes[index]);
       } else {
-        _selectedWoodTypes.remove(_woodTypes[index]);
+        widget.filter.woodTypes.remove(_woodTypes[index]);
       }
     });
-    widget.filter.woodTypes = _selectedWoodTypes;
   }
 
   List<String> get _woodTypes {

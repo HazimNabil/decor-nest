@@ -13,8 +13,6 @@ class CategoryFilterChips extends StatefulWidget {
 }
 
 class _CategoryFilterChipsState extends State<CategoryFilterChips> {
-  final _selectedCategories = <String>[];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,7 +28,7 @@ class _CategoryFilterChipsState extends State<CategoryFilterChips> {
             return FilterChip(
               label: Text(_categories[index]),
               labelStyle: AppStyles.regular14(context).copyWith(
-                color: _selectedCategories.contains(_categories[index])
+                color: widget.filter.categories.contains(_categories[index])
                     ? Colors.white
                     : context.subTextColor,
               ),
@@ -41,7 +39,7 @@ class _CategoryFilterChipsState extends State<CategoryFilterChips> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              selected: _selectedCategories.contains(_categories[index]),
+              selected: widget.filter.categories.contains(_categories[index]),
               onSelected: (selected) => _selectCategories(selected, index),
             );
           }),
@@ -53,12 +51,11 @@ class _CategoryFilterChipsState extends State<CategoryFilterChips> {
   void _selectCategories(bool selected, int index) {
     setState(() {
       if (selected) {
-        _selectedCategories.add(_categories[index]);
+        widget.filter.categories.add(_categories[index]);
       } else {
-        _selectedCategories.remove(_categories[index]);
+        widget.filter.categories.remove(_categories[index]);
       }
     });
-    widget.filter.categories = _selectedCategories;
   }
 
   List<String> get _categories {

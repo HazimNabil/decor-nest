@@ -13,8 +13,6 @@ class PriceRangeSlider extends StatefulWidget {
 }
 
 class _PriceRangeSliderState extends State<PriceRangeSlider> {
-  RangeValues _values = const RangeValues(0, 1000);
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,14 +26,14 @@ class _PriceRangeSliderState extends State<PriceRangeSlider> {
             rangeThumbShape: RoundRangeSliderThumbShape(enabledThumbRadius: 11),
           ),
           child: RangeSlider(
-            values: _values,
+            values: RangeValues(widget.filter.minPrice, widget.filter.maxPrice),
             max: 1000,
             activeColor: context.primaryColor,
             inactiveColor: context.subTextColor.withAlpha(128),
             divisions: 100,
             labels: RangeLabels(
-              _values.start.round().toString(),
-              _values.end.round().toString(),
+              widget.filter.minPrice.round().toString(),
+              widget.filter.maxPrice.round().toString(),
             ),
             onChanged: _selectPriceRange,
           ),
@@ -45,8 +43,9 @@ class _PriceRangeSliderState extends State<PriceRangeSlider> {
   }
 
   void _selectPriceRange(values) {
-    setState(() => _values = values);
-    widget.filter.minPrice = values.start;
-    widget.filter.maxPrice = values.end;
+    setState(() {
+      widget.filter.minPrice = values.start;
+      widget.filter.maxPrice = values.end;
+    });
   }
 }

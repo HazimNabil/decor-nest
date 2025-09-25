@@ -1,42 +1,56 @@
 import 'package:decor_nest/core/constants/database_constants.dart';
+import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
-import 'package:decor_nest/features/admin/presentation/views/widgets/custom_drop_down_button.dart';
 import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:flutter/material.dart';
 
-class SortByDropDown extends StatelessWidget {
+class SortByDropDown extends StatefulWidget {
   final ProductFilter filter;
 
   const SortByDropDown({super.key, required this.filter});
 
   @override
+  State<SortByDropDown> createState() => _SortByDropDownState();
+}
+
+class _SortByDropDownState extends State<SortByDropDown> {
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      spacing: 16,
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Sort By', style: AppStyles.medium20(context)),
-        CustomDropDownButton(
-          values: _sortByOptions.keys.toList(),
-          currentValue: 'Newest',
-          onChanged: _selectSortByOption,
-        ),
-      ],
+    return Container(
+      decoration: BoxDecoration(
+        color: context.surfaceColor,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: DropdownButton<SortBy>(
+        value: widget.filter.sortBy,
+        elevation: 0,
+        isExpanded: true,
+        borderRadius: BorderRadius.circular(12),
+        underline: const SizedBox.shrink(),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        menuMaxHeight: 200,
+        style: AppStyles.medium16(context),
+        items: _sortByOptions.entries.map((option) {
+          return DropdownMenuItem(value: option.value, child: Text(option.key));
+        }).toList(),
+        onChanged: _selectSortByOption,
+      ),
     );
   }
 
-  void _selectSortByOption(String value) {
-    filter.sortBy = _sortByOptions[value]!;
-    filter.ascending = value == 'Oldest' || value == 'Price: Low to High';
+  void _selectSortByOption(SortBy? option) {
+    setState(() {
+      widget.filter.sortBy = option!;
+    });
   }
 
-  Map<String, String> get _sortByOptions {
+  Map<String, SortBy> get _sortByOptions {
     return const {
-      'Newest': TableConstants.createdAt,
-      'Oldest': TableConstants.createdAt,
-      'Price: Low to High': TableConstants.price,
-      'Price: High to Low': TableConstants.price,
+      'Newest': (column: TableConstants.createdAt, ascending: false),
+      'Oldest': (column: TableConstants.createdAt, ascending: true),
+      'Price: Low to High': (column: TableConstants.price, ascending: true),
+      'Price: High to Low': (column: TableConstants.price, ascending: false),
     };
   }
 }
