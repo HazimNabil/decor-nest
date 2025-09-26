@@ -25,4 +25,13 @@ class ProductFilter {
     maxPrice = 1000;
     sortBy = (column: TableConstants.createdAt, ascending: false);
   }
+
+  int get filterCount {
+    int count = 0;
+    if (categories.isNotEmpty) count++;
+    if (woodTypes.isNotEmpty) count++;
+    if (minPrice > 0 || maxPrice < 1000) count++;
+    if (sortBy != (column: TableConstants.createdAt, ascending: false)) count++;
+    return count;
+  }
 }
