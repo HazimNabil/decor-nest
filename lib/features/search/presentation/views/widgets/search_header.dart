@@ -1,5 +1,6 @@
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/search_field.dart';
 import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:decor_nest/features/search/presentation/view_models/search_bloc/search_bloc.dart';
@@ -52,19 +53,28 @@ class _SearchHeaderState extends State<SearchHeader> {
         ),
         InkWell(
           onTap: () => context.push(FilterScreen.path, extra: _filter),
-          child: Container(
-            height: 48,
-            width: 48,
-            decoration: BoxDecoration(
-              color: context.primaryColor,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: SvgPicture.asset(
-              Assets.iconsFilter,
-              fit: BoxFit.scaleDown,
-              colorFilter: const ColorFilter.mode(
-                Colors.white,
-                BlendMode.srcIn,
+          child: Badge.count(
+            count: _filter.filterCount,
+            isLabelVisible: _filter.filterCount > 0,
+            backgroundColor: context.actionColor,
+            textColor: Colors.white,
+            textStyle: AppStyles.medium14(context),
+            padding: const EdgeInsets.all(3),
+            largeSize: 24,
+            child: Container(
+              height: 48,
+              width: 48,
+              decoration: BoxDecoration(
+                color: context.primaryColor,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: SvgPicture.asset(
+                Assets.iconsFilter,
+                fit: BoxFit.scaleDown,
+                colorFilter: const ColorFilter.mode(
+                  Colors.white,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ),
