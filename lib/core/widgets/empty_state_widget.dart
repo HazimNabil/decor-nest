@@ -1,11 +1,16 @@
-import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class NoFavoritesWidget extends StatelessWidget {
-  const NoFavoritesWidget({super.key});
+class EmptyStateWidget extends StatelessWidget {
+  final String image, message;
+
+  const EmptyStateWidget({
+    super.key,
+    required this.image,
+    required this.message,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +20,11 @@ class NoFavoritesWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            Assets.imagesNoFavorites,
+            image,
             width: 230 * context.widthRatio,
-            height: 230 * context.widthRatio,
+            height: 230 * context.heightRatio,
           ),
-          Text('No favorites yet', style: AppStyles.medium20(context)),
+          Text(message, style: AppStyles.medium16(context)),
         ],
       ),
     );
