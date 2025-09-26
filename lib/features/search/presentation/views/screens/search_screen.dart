@@ -1,6 +1,8 @@
+import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/widgets/failure_indicator.dart';
 import 'package:decor_nest/core/widgets/product_card_sliver_grid.dart';
+import 'package:decor_nest/core/widgets/empty_state_widget.dart';
 import 'package:decor_nest/features/search/presentation/views/widgets/search_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,18 +53,30 @@ class _SearchScreenState extends State<SearchScreen> {
               BlocBuilder<SearchBloc, SearchState>(
                 builder: (context, state) {
                   return switch (state.status) {
-                    SearchStatus.initial => const SliverToBoxAdapter(
-                      child: Center(child: Text('Type something to search')),
+                    SearchStatus.initial => const SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: EmptyStateWidget(
+                        image: Assets.imagesTypeToSearch,
+                        message: 'Start typing to search for products',
+                      ),
                     ),
                     SearchStatus.loading => Skeletonizer.sliver(
                       child: ProductCardSliverGrid(
                         products: List.filled(12, Product.dummy()),
                       ),
                     ),
-                    SearchStatus.success => ProductCardSliverGrid(
-                      products: state.products,
-                    ),
-                    SearchStatus.failure => SliverToBoxAdapter(
+                    SearchStatus.success =>
+                      state.products.isEmpty
+                          ? const SliverFillRemaining(
+                              hasScrollBody: false,
+                              child: EmptyStateWidget(
+                                image: Assets.imagesNoResultsFound,
+                                message: 'No search results found',
+                              ),
+                            )
+                          : ProductCardSliverGrid(products: state.products),
+                    SearchStatus.failure => SliverFillRemaining(
+                      hasScrollBody: false,
                       child: FailureIndicator(message: state.errorMessage!),
                     ),
                   };
