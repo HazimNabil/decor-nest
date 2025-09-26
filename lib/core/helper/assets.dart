@@ -36,6 +36,10 @@ class Assets {
 
   static const imagesEmptyCart = 'assets/images/empty_cart.svg';
 
+  static const imagesNoResultsFound = 'assets/images/no_results_found.svg';
+
+  static const imagesTypeToSearch = 'assets/images/type_to_search.svg';
+
   static const imagesLamp = 'assets/images/lamp.jpeg';
 
   static const imagesOnBoardingOne = 'assets/images/on_boarding_one.png';
