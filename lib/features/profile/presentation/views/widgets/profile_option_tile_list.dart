@@ -22,7 +22,6 @@ class ProfileOptionTileList extends StatelessWidget {
       ('Change Username', Icons.person_outline),
       ('Change Email', Icons.email_outlined),
       ('Change Password', Icons.lock_outline),
-      ('Settings', Icons.settings_outlined),
     ];
   }
 }

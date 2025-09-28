@@ -1,5 +1,7 @@
+import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/features/profile/presentation/views/widgets/profile_option_tile_list.dart';
+import 'package:decor_nest/features/profile/presentation/views/widgets/theme_segmented_button.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -18,6 +20,14 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text('john.doe@gmail.com', style: AppStyles.regular14(context)),
                 const SizedBox(height: 32),
+                const ThemeSegmentedButton(),
+                Divider(
+                  color: context.subTextColor.withAlpha(100),
+                  indent: 8,
+                  endIndent: 8,
+                  thickness: 1,
+                  height: 32,
+                ),
                 const ProfileOptionTileList(),
                 const Spacer(),
                 TextButton(
