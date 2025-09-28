@@ -10,15 +10,25 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: Center(
             child: Column(
               children: [
                 Text('John Doe', style: AppStyles.medium20(context)),
                 const SizedBox(height: 2),
                 Text('john.doe@gmail.com', style: AppStyles.regular14(context)),
-                const SizedBox(height: 24),
+                const SizedBox(height: 32),
                 const ProfileOptionTileList(),
+                const Spacer(),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Logout',
+                    style: AppStyles.medium20(
+                      context,
+                    ).copyWith(color: Colors.red),
+                  ),
+                ),
               ],
             ),
           ),
