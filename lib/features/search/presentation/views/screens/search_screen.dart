@@ -41,6 +41,7 @@ class _SearchScreenState extends State<SearchScreen> {
         child: SearchScreenBody(scrollController: _scrollController),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'search_screen_fab',
         onPressed: _scrollToTop,
         mini: true,
         child: const Icon(Icons.arrow_upward, color: Colors.white),

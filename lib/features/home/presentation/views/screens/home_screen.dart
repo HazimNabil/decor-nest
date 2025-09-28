@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: const HomeScreenAppBar(),
       body: HomeScreenBody(controller: _scrollController),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'home_screen_fab',
         onPressed: _scrollToTop,
         mini: true,
         child: const Icon(Icons.arrow_upward, color: Colors.white),

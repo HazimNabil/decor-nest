@@ -44,6 +44,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         child: AdminDashboardScreenBody(scrollController: _scrollController),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'admin_dashboard_screen_fab',
         onPressed: _scrollToTop,
         mini: true,
         child: const Icon(Icons.arrow_upward, color: Colors.white),
