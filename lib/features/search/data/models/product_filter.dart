@@ -10,17 +10,16 @@ class ProductFilter {
   SortBy sortBy;
 
   ProductFilter({
-    required this.categories,
-    required this.woodTypes,
     this.minPrice = 0,
     this.maxPrice = 1000,
     this.searchQuery = '',
     this.sortBy = (column: TableConstants.createdAt, ascending: false),
-  });
+  }) : categories = [],
+       woodTypes = [];
 
   void clear() {
-    categories = [];
-    woodTypes = [];
+    categories.clear();
+    woodTypes.clear();
     minPrice = 0;
     maxPrice = 1000;
     sortBy = (column: TableConstants.createdAt, ascending: false);

@@ -80,11 +80,7 @@ class AdminRepoImpl implements AdminRepo {
       final jsonProducts = await _databaseService.search(
         tableName: TableConstants.products,
         page: page,
-        filter: ProductFilter(
-          searchQuery: query,
-          categories: [],
-          woodTypes: [],
-        ),
+        filter: ProductFilter(searchQuery: query),
       );
 
       final products = jsonProducts
