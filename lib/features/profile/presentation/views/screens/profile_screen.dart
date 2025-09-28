@@ -1,5 +1,5 @@
 import 'package:decor_nest/core/themes/app_styles.dart';
-import 'package:decor_nest/features/profile/presentation/views/widgets/profile_option_tile.dart';
+import 'package:decor_nest/features/profile/presentation/views/widgets/profile_option_tile_list.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -18,10 +18,7 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text('john.doe@gmail.com', style: AppStyles.regular14(context)),
                 const SizedBox(height: 24),
-                const ProfileOptionTile(
-                  title: 'Change Username',
-                  icon: Icons.person_outline,
-                ),
+                const ProfileOptionTileList(),
               ],
             ),
           ),
