@@ -8,6 +8,7 @@ import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/services/database_service.dart';
 import 'package:decor_nest/features/admin/data/services/storage_service.dart';
 import 'package:decor_nest/features/admin/data/repos/admin_repo.dart';
+import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException, StorageException;
@@ -78,8 +79,8 @@ class AdminRepoImpl implements AdminRepo {
     return _guard(() async {
       final jsonProducts = await _databaseService.search(
         tableName: TableConstants.products,
-        query: query,
         page: page,
+        filter: ProductFilter(searchQuery: query),
       );
 
       final products = jsonProducts

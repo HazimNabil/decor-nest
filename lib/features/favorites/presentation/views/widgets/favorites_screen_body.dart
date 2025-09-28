@@ -1,8 +1,9 @@
+import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/widgets/failure_indicator.dart';
 import 'package:decor_nest/features/favorites/data/models/favorite_product.dart';
 import 'package:decor_nest/features/favorites/presentation/views/widgets/favorite_card_grid_view.dart';
-import 'package:decor_nest/features/favorites/presentation/views/widgets/no_favorites_widget.dart';
+import 'package:decor_nest/core/widgets/empty_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:decor_nest/features/favorites/presentation/view_models/favorites_cubit/favorites_cubit.dart';
@@ -30,7 +31,10 @@ class FavoritesScreenBody extends StatelessWidget {
             ),
             FavoritesLoaded(:final favorites) =>
               favorites.isEmpty
-                  ? const NoFavoritesWidget()
+                  ? const EmptyStateWidget(
+                      image: Assets.imagesNoFavorites,
+                      message: 'You have no favorites yet',
+                    )
                   : FavoriteCardGridView(favorites: favorites),
             FavoritesFailure(:final message) => Center(
               child: FailureIndicator(message: message),

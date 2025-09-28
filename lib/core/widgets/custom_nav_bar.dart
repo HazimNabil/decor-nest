@@ -50,8 +50,8 @@ class _CustomNavBarState extends State<CustomNavBar> {
   List<Widget> get _screens => [
     BlocProvider(
       create: (context) {
-        return FetchProductsBloc(locator<HomeRepoImpl>())
-          ..add(const ProductsFetched());
+        final bloc = FetchProductsBloc(locator<HomeRepoImpl>());
+        return bloc..add(const ProductsFetched());
       },
       child: const HomeScreen(),
     ),

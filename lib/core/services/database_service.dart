@@ -1,6 +1,7 @@
 import 'package:decor_nest/core/constants/database_constants.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:decor_nest/core/models/product.dart';
+import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DatabaseService {
@@ -43,50 +44,43 @@ class DatabaseService {
     await _supabase.from(tableName).delete().neq(TableConstants.id, -1);
   }
 
-  FutureJson read({required String tableName, required int page}) async {
-    final start = page * _pageSize;
-    final end = start + _pageSize - 1;
-
-    final data = await _supabase
-        .from(tableName)
-        .select()
-        .order(TableConstants.createdAt, ascending: false)
-        .range(start, end);
-
-    return data;
-  }
-
-  FutureJson filterByCategory({
+  FutureJson read({
     required String tableName,
     required int page,
-    required String category,
+    String? category,
   }) async {
     final start = page * _pageSize;
     final end = start + _pageSize - 1;
 
-    final data = await _supabase
-        .from(tableName)
-        .select()
-        .eq(TableConstants.category, category)
-        .order(TableConstants.createdAt)
-        .range(start, end);
+    var query = _supabase.from(tableName).select();
 
+    if (category != null) {
+      query = query.eq(TableConstants.category, category);
+    }
+
+    final data = await query.order(TableConstants.createdAt).range(start, end);
     return data;
   }
 
   FutureJson search({
     required String tableName,
-    required String query,
     required int page,
+    ProductFilter? filter,
   }) async {
     final start = page * _pageSize;
     final end = start + _pageSize - 1;
 
-    final data = await _supabase
-        .from(tableName)
-        .select()
-        .ilike(TableConstants.name, '%$query%')
-        .order(TableConstants.createdAt)
+    var query = _supabase.from(tableName).select();
+
+    if (filter != null) {
+      query = _applyFilters(query, filter);
+    }
+
+    final sortBy =
+        filter?.sortBy ?? (column: TableConstants.createdAt, ascending: false);
+
+    final data = await query
+        .order(sortBy.column, ascending: sortBy.ascending)
         .range(start, end);
 
     return data;
@@ -112,5 +106,27 @@ class DatabaseService {
         .maybeSingle();
 
     return response != null;
+  }
+
+  PostgrestFilterBuilder<PostgrestList> _applyFilters(
+    PostgrestFilterBuilder<PostgrestList> query,
+    ProductFilter filter,
+  ) {
+    if (filter.categories.isNotEmpty) {
+      query = query.inFilter(TableConstants.category, filter.categories);
+    }
+
+    if (filter.woodTypes.isNotEmpty) {
+      query = query.inFilter(TableConstants.woodType, filter.woodTypes);
+    }
+
+    query = query.gte(TableConstants.price, filter.minPrice);
+    query = query.lte(TableConstants.price, filter.maxPrice);
+
+    if (filter.searchQuery.isNotEmpty) {
+      query = query.ilike(TableConstants.name, '%${filter.searchQuery}%');
+    }
+
+    return query;
   }
 }

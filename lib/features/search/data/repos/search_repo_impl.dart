@@ -3,34 +3,33 @@ import 'package:decor_nest/core/errors/database_failure.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/services/database_service.dart';
-import 'package:decor_nest/features/home/data/repos/home_repo.dart';
+import 'package:decor_nest/features/search/data/models/product_filter.dart';
+import 'package:decor_nest/features/search/data/repos/search_repo.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class HomeRepoImpl implements HomeRepo {
+class SearchRepoImpl implements SearchRepo {
   final DatabaseService _databaseService;
 
-  HomeRepoImpl(this._databaseService);
+  SearchRepoImpl(this._databaseService);
 
   @override
-  FutureEither<List<Product>> fetchProducts({
+  FutureEither<List<Product>> searchProducts({
     required int page,
-    String? category,
+    ProductFilter? filter,
   }) async {
     try {
-      final List<Map<String, dynamic>> jsonProducts;
-
-      jsonProducts = await _databaseService.read(
+      final jsonProducts = await _databaseService.search(
         tableName: TableConstants.products,
         page: page,
-        category: category,
+        filter: filter,
       );
 
-      final products = jsonProducts
+      final data = jsonProducts
           .map((jsonProduct) => Product.fromJson(jsonProduct))
           .toList();
 
-      return right(products);
+      return right(data);
     } on PostgrestException catch (e) {
       return left(DatabaseFailure.fromException(e));
     } catch (e) {
