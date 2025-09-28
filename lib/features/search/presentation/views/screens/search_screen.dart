@@ -18,6 +18,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   late final ScrollController _scrollController;
+
   @override
   void initState() {
     super.initState();
@@ -44,7 +45,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+          padding: const EdgeInsets.only(top: 4, left: 16, right: 16),
           child: CustomScrollView(
             controller: _scrollController,
             slivers: [
