@@ -40,6 +40,19 @@ class _SearchScreenState extends State<SearchScreen> {
       body: SafeArea(
         child: SearchScreenBody(scrollController: _scrollController),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _scrollToTop,
+        mini: true,
+        child: const Icon(Icons.arrow_upward, color: Colors.white),
+      ),
+    );
+  }
+
+  void _scrollToTop() {
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(seconds: 1),
+      curve: Curves.easeInOut,
     );
   }
 }
