@@ -36,50 +36,58 @@ class _SearchHeaderState extends State<SearchHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      spacing: 8,
-      children: [
-        Expanded(
-          child: SizedBox(
-            height: 48,
-            child: SearchField(
-              controller: _searchController,
-              onSubmitted: (query) {
-                _filter.searchQuery = query;
-                context.read<SearchBloc>().add(ProductsSearched(_filter));
+    return SizedBox(
+      height: 64,
+      child: Row(
+        spacing: 8,
+        children: [
+          Expanded(
+            child: SizedBox(
+              height: 48,
+              child: SearchField(
+                controller: _searchController,
+                onSubmitted: (query) {
+                  _filter.searchQuery = query;
+                  context.read<SearchBloc>().add(ProductsSearched(_filter));
+                },
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () => context.push(FilterScreen.path, extra: _filter),
+            child: BlocSelector<SearchBloc, SearchState, int>(
+              selector: (state) => state.filterCount,
+              builder: (context, filterCount) {
+                return Badge.count(
+                  count: filterCount,
+                  isLabelVisible: filterCount > 0,
+                  backgroundColor: context.actionColor,
+                  textColor: Colors.white,
+                  textStyle: AppStyles.medium14(context),
+                  largeSize: 22,
+                  alignment: const Alignment(0.7, -1),
+                  child: Container(
+                    height: 48,
+                    width: 48,
+                    decoration: BoxDecoration(
+                      color: context.primaryColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: SvgPicture.asset(
+                      Assets.iconsFilter,
+                      fit: BoxFit.scaleDown,
+                      colorFilter: const ColorFilter.mode(
+                        Colors.white,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                  ),
+                );
               },
             ),
           ),
-        ),
-        InkWell(
-          onTap: () => context.push(FilterScreen.path, extra: _filter),
-          child: Badge.count(
-            count: _filter.filterCount,
-            isLabelVisible: _filter.filterCount > 0,
-            backgroundColor: context.actionColor,
-            textColor: Colors.white,
-            textStyle: AppStyles.medium14(context),
-            padding: const EdgeInsets.all(3),
-            largeSize: 24,
-            child: Container(
-              height: 48,
-              width: 48,
-              decoration: BoxDecoration(
-                color: context.primaryColor,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: SvgPicture.asset(
-                Assets.iconsFilter,
-                fit: BoxFit.scaleDown,
-                colorFilter: const ColorFilter.mode(
-                  Colors.white,
-                  BlendMode.srcIn,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

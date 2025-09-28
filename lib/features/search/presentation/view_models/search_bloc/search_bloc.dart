@@ -79,6 +79,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
             hasReachedMax: products.length < 10,
             page: state.page + 1,
             filter: event is ProductsSearched ? event.filter : state.filter,
+            filterCount: event is ProductsSearched
+                ? event.filter?.filterCount ?? 0
+                : state.filterCount,
           ),
         );
       },

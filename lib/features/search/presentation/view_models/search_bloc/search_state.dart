@@ -15,6 +15,7 @@ class SearchState extends Equatable {
   final int page;
   final bool hasReachedMax;
   final ProductFilter? filter;
+  final int filterCount;
 
   const SearchState({
     this.status = SearchStatus.initial,
@@ -23,6 +24,7 @@ class SearchState extends Equatable {
     this.page = 0,
     this.hasReachedMax = false,
     this.filter,
+    this.filterCount = 0,
   });
 
   @override
@@ -33,6 +35,7 @@ class SearchState extends Equatable {
     page,
     hasReachedMax,
     filter,
+    filterCount,
   ];
 
   SearchState copyWith({
@@ -42,6 +45,7 @@ class SearchState extends Equatable {
     int? page,
     bool? hasReachedMax,
     ProductFilter? filter,
+    int? filterCount,
   }) {
     return SearchState(
       status: status ?? this.status,
@@ -50,6 +54,7 @@ class SearchState extends Equatable {
       page: page ?? this.page,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
       filter: filter ?? this.filter,
+      filterCount: filterCount ?? this.filterCount,
     );
   }
 }
