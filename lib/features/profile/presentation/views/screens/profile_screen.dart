@@ -1,8 +1,13 @@
+import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/profile/data/repos/profile_repo_impl.dart';
+import 'package:decor_nest/features/profile/presentation/view_models/logout_cubit/logout_cubit.dart';
+import 'package:decor_nest/features/profile/presentation/views/widgets/logout_button.dart';
 import 'package:decor_nest/features/profile/presentation/views/widgets/profile_option_tile_list.dart';
 import 'package:decor_nest/features/profile/presentation/views/widgets/theme_segmented_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -30,14 +35,9 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 const ProfileOptionTileList(),
                 const Spacer(),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Logout',
-                    style: AppStyles.medium20(
-                      context,
-                    ).copyWith(color: Colors.red),
-                  ),
+                BlocProvider(
+                  create: (context) => LogoutCubit(locator<ProfileRepoImpl>()),
+                  child: const LogoutButton(),
                 ),
               ],
             ),
