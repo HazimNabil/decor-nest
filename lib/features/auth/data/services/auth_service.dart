@@ -51,13 +51,4 @@ class AuthService {
 
     return response.user;
   }
-
-  Future<void> logOut() async {
-    await _googleSignIn.signOut();
-    await _supabaseAuth.signOut();
-  }
-
-  Future<void> resetPassword(String email) async {
-    await _supabaseAuth.resetPasswordForEmail(email);
-  }
 }

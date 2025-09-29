@@ -9,6 +9,4 @@ abstract interface class AuthRepo {
   FutureEither<bool> logIn(LoginInputData loginInputData);
   FutureEither<bool> logInWithGoogle();
   FutureEither<Unit> signUp(SignUpInputData signUpInputData);
-  FutureEither<Unit> logOut();
-  FutureEither<Unit> resetPassword(String email);
 }

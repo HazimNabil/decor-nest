@@ -60,29 +60,4 @@ class AuthRepoImpl implements AuthRepo {
       return left(AuthFailure(e.toString()));
     }
   }
-
-  @override
-  FutureEither<Unit> logOut() async {
-    try {
-      await _authService.logOut();
-      await CacheHelper.removeSecureData(CacheConstants.userId);
-      return right(unit);
-    } on AuthException catch (e) {
-      return left(AuthFailure.fromException(e));
-    } catch (e) {
-      return left(AuthFailure(e.toString()));
-    }
-  }
-
-  @override
-  FutureEither<Unit> resetPassword(String email) async {
-    try {
-      await _authService.resetPassword(email);
-      return right(unit);
-    } on AuthException catch (e) {
-      return left(AuthFailure.fromException(e));
-    } catch (e) {
-      return left(AuthFailure(e.toString()));
-    }
-  }
 }
