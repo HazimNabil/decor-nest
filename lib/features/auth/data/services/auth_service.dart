@@ -1,3 +1,4 @@
+import 'package:decor_nest/core/constants/auth_constants.dart';
 import 'package:decor_nest/core/helper/app_secrets.dart';
 import 'package:decor_nest/features/auth/data/models/login_input_data.dart';
 import 'package:decor_nest/features/auth/data/models/sign_up_input_data.dart';
@@ -22,14 +23,17 @@ class AuthService {
     await _supabaseAuth.signUp(
       email: signUpInputData.email!,
       password: signUpInputData.password!,
-      data: {'username': signUpInputData.username!, 'role': 'user'},
+      data: {
+        UserConstants.username: signUpInputData.username!,
+        UserConstants.role: UserConstants.user,
+      },
     );
   }
 
   Future<User?> logInWithGoogle() async {
     final googleUser = await _googleSignIn.signIn();
     if (googleUser == null) {
-      throw 'You did not choose an account.';
+      throw Exception(AuthErrors.googleAccountNotSelected);
     }
 
     final googleAuth = await googleUser.authentication;
@@ -37,10 +41,10 @@ class AuthService {
     final idToken = googleAuth.idToken;
 
     if (accessToken == null) {
-      throw 'No Access Token found.';
+      throw Exception(AuthErrors.googleAccessTokenNotFound);
     }
     if (idToken == null) {
-      throw 'No ID Token found.';
+      throw Exception(AuthErrors.googleIdTokenNotFound);
     }
 
     final response = await _supabaseAuth.signInWithIdToken(

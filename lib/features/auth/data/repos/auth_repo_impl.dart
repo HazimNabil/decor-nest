@@ -1,3 +1,4 @@
+import 'package:decor_nest/core/constants/auth_constants.dart';
 import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/errors/auth_failure.dart';
 import 'package:decor_nest/core/helper/cache_helper.dart';
@@ -20,7 +21,9 @@ class AuthRepoImpl implements AuthRepo {
   @override
   bool get isAdmin {
     if (!isLoggedIn) return false;
-    return (_authService.currentUser!.userMetadata?['role'] == 'admin');
+
+    final role = _authService.currentUser!.userMetadata?[UserConstants.role];
+    return (role == UserConstants.admin);
   }
 
   @override
