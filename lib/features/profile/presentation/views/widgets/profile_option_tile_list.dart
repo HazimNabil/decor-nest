@@ -1,3 +1,4 @@
+import 'package:decor_nest/features/profile/presentation/views/widgets/change_email_dialog.dart';
 import 'package:decor_nest/features/profile/presentation/views/widgets/change_username_dialog.dart';
 import 'package:decor_nest/features/profile/presentation/views/widgets/profile_option_tile.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,10 @@ class ProfileOptionTileList extends StatelessWidget {
         ProfileOptionTile(
           title: 'Change Email',
           icon: Icons.email_outlined,
-          onTap: () {},
+          onTap: () => showDialog(
+            context: context,
+            builder: (context) => const ChangeEmailDialog(),
+          ),
         ),
         ProfileOptionTile(
           title: 'Change Password',
