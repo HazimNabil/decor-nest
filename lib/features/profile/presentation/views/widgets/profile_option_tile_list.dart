@@ -7,21 +7,24 @@ class ProfileOptionTileList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: List.generate(_profileOptions.length, (index) {
-        final (title, icon) = _profileOptions[index];
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 16.0),
-          child: ProfileOptionTile(title: title, icon: icon),
-        );
-      }),
+      spacing: 16,
+      children: [
+        ProfileOptionTile(
+          title: 'Change Username',
+          icon: Icons.person_outline,
+          onTap: () {},
+        ),
+        ProfileOptionTile(
+          title: 'Change Email',
+          icon: Icons.email_outlined,
+          onTap: () {},
+        ),
+        ProfileOptionTile(
+          title: 'Change Password',
+          icon: Icons.lock_outline,
+          onTap: () {},
+        ),
+      ],
     );
-  }
-
-  List<(String, IconData)> get _profileOptions {
-    return [
-      ('Change Username', Icons.person_outline),
-      ('Change Email', Icons.email_outlined),
-      ('Change Password', Icons.lock_outline),
-    ];
   }
 }
