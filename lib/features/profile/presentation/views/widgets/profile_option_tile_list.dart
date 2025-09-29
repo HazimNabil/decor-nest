@@ -1,4 +1,5 @@
 import 'package:decor_nest/features/profile/presentation/views/widgets/change_email_dialog.dart';
+import 'package:decor_nest/features/profile/presentation/views/widgets/change_password_dialog.dart';
 import 'package:decor_nest/features/profile/presentation/views/widgets/change_username_dialog.dart';
 import 'package:decor_nest/features/profile/presentation/views/widgets/profile_option_tile.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class ProfileOptionTileList extends StatelessWidget {
           icon: Icons.person_outline,
           onTap: () => showDialog(
             context: context,
-            builder: (context) => const ChangeUsernameDialog(),
+            builder: (_) => const ChangeUsernameDialog(),
           ),
         ),
         ProfileOptionTile(
@@ -24,13 +25,16 @@ class ProfileOptionTileList extends StatelessWidget {
           icon: Icons.email_outlined,
           onTap: () => showDialog(
             context: context,
-            builder: (context) => const ChangeEmailDialog(),
+            builder: (_) => const ChangeEmailDialog(),
           ),
         ),
         ProfileOptionTile(
           title: 'Change Password',
           icon: Icons.lock_outline,
-          onTap: () {},
+          onTap: () => showDialog(
+            context: context,
+            builder: (_) => const ChangePasswordDialog(),
+          ),
         ),
       ],
     );
