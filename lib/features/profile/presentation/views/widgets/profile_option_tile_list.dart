@@ -1,8 +1,12 @@
+import 'package:decor_nest/core/di/service_locator.dart';
+import 'package:decor_nest/features/profile/data/repos/profile_repo_impl.dart';
+import 'package:decor_nest/features/profile/presentation/view_models/profile_edit_cubit/profile_edit_cubit.dart';
 import 'package:decor_nest/features/profile/presentation/views/widgets/change_email_dialog.dart';
 import 'package:decor_nest/features/profile/presentation/views/widgets/change_password_dialog.dart';
 import 'package:decor_nest/features/profile/presentation/views/widgets/change_username_dialog.dart';
 import 'package:decor_nest/features/profile/presentation/views/widgets/profile_option_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileOptionTileList extends StatelessWidget {
   const ProfileOptionTileList({super.key});
@@ -17,7 +21,12 @@ class ProfileOptionTileList extends StatelessWidget {
           icon: Icons.person_outline,
           onTap: () => showDialog(
             context: context,
-            builder: (_) => const ChangeUsernameDialog(),
+            builder: (_) {
+              return BlocProvider(
+                create: (_) => ProfileEditCubit(locator<ProfileRepoImpl>()),
+                child: const ChangeUsernameDialog(),
+              );
+            },
           ),
         ),
         ProfileOptionTile(
@@ -25,7 +34,12 @@ class ProfileOptionTileList extends StatelessWidget {
           icon: Icons.email_outlined,
           onTap: () => showDialog(
             context: context,
-            builder: (_) => const ChangeEmailDialog(),
+            builder: (_) {
+              return BlocProvider(
+                create: (_) => ProfileEditCubit(locator<ProfileRepoImpl>()),
+                child: const ChangeEmailDialog(),
+              );
+            },
           ),
         ),
         ProfileOptionTile(
@@ -33,7 +47,12 @@ class ProfileOptionTileList extends StatelessWidget {
           icon: Icons.lock_outline,
           onTap: () => showDialog(
             context: context,
-            builder: (_) => const ChangePasswordDialog(),
+            builder: (_) {
+              return BlocProvider(
+                create: (_) => ProfileEditCubit(locator<ProfileRepoImpl>()),
+                child: const ChangePasswordDialog(),
+              );
+            },
           ),
         ),
       ],

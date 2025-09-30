@@ -53,7 +53,7 @@ class ProfileScreen extends StatelessWidget {
                 const ProfileOptionTileList(),
                 const Spacer(),
                 BlocProvider(
-                  create: (context) => LogoutCubit(locator<ProfileRepoImpl>()),
+                  create: (_) => LogoutCubit(locator<ProfileRepoImpl>()),
                   child: const LogoutButton(),
                 ),
               ],
