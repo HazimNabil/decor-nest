@@ -40,15 +40,21 @@ class ProfileOptionTileList extends StatelessWidget {
         ProfileOptionTile(
           title: 'Change Email',
           icon: Icons.email_outlined,
-          onTap: () => showDialog(
-            context: context,
-            builder: (_) {
-              return BlocProvider(
-                create: (_) => ProfileEditCubit(locator<ProfileRepoImpl>()),
-                child: const ChangeEmailDialog(),
-              );
-            },
-          ),
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (_) {
+                return BlocProvider(
+                  create: (_) => ProfileEditCubit(locator<ProfileRepoImpl>()),
+                  child: const ChangeEmailDialog(),
+                );
+              },
+            ).then((state) async {
+              if (context.mounted && state is ProfileEditSuccess) {
+                await context.read<LogoutCubit>().logOut();
+              }
+            });
+          },
         ),
         ProfileOptionTile(
           title: 'Change Password',
