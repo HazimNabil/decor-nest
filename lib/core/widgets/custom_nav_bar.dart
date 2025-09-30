@@ -5,9 +5,6 @@ import 'package:decor_nest/features/favorites/presentation/views/screens/favorit
 import 'package:decor_nest/features/home/data/repos/home_repo_impl.dart';
 import 'package:decor_nest/features/home/presentation/view_models/fetch_products_bloc/fetch_products_bloc.dart';
 import 'package:decor_nest/features/home/presentation/views/screens/home_screen.dart';
-import 'package:decor_nest/features/profile/data/repos/profile_repo_impl.dart';
-import 'package:decor_nest/features/profile/presentation/view_models/logout_cubit/logout_cubit.dart';
-import 'package:decor_nest/features/profile/presentation/view_models/profile_data_cubit/profile_data_cubit.dart';
 import 'package:decor_nest/features/profile/presentation/views/screens/profile_screen.dart';
 import 'package:decor_nest/features/search/presentation/views/screens/search_screen.dart';
 import 'package:flutter/material.dart';
@@ -60,20 +57,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
     ),
     const FavoritesScreen(),
     const SearchScreen(),
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) {
-            final cubit = ProfileDataCubit(locator<ProfileRepoImpl>());
-            return cubit..emitUser();
-          },
-        ),
-        BlocProvider(
-          create: (context) => LogoutCubit(locator<ProfileRepoImpl>()),
-        ),
-      ],
-      child: const ProfileScreen(),
-    ),
+    const ProfileScreen(),
   ];
 
   List<PersistentBottomNavBarItem> get _items => [
