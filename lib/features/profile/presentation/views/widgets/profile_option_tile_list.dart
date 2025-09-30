@@ -21,61 +21,55 @@ class ProfileOptionTileList extends StatelessWidget {
         ProfileOptionTile(
           title: 'Change Username',
           icon: Icons.person_outline,
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (_) {
-                return BlocProvider(
-                  create: (_) => ProfileEditCubit(locator<ProfileRepoImpl>()),
-                  child: const ChangeUsernameDialog(),
-                );
-              },
-            ).then((state) {
-              if (context.mounted && state is ProfileEditSuccess) {
-                context.read<ProfileDataCubit>().emitUser();
-              }
-            });
-          },
+          onTap: () => _showProfileEditDialog(
+            context: context,
+            dialog: const ChangeUsernameDialog(),
+            onSuccess: (context) async {
+              context.read<ProfileDataCubit>().emitUser();
+            },
+          ),
         ),
         ProfileOptionTile(
           title: 'Change Email',
           icon: Icons.email_outlined,
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (_) {
-                return BlocProvider(
-                  create: (_) => ProfileEditCubit(locator<ProfileRepoImpl>()),
-                  child: const ChangeEmailDialog(),
-                );
-              },
-            ).then((state) async {
-              if (context.mounted && state is ProfileEditSuccess) {
-                await context.read<LogoutCubit>().logOut();
-              }
-            });
-          },
+          onTap: () => _showProfileEditDialog(
+            context: context,
+            dialog: const ChangeEmailDialog(),
+            onSuccess: (context) async {
+              await context.read<LogoutCubit>().logOut();
+            },
+          ),
         ),
         ProfileOptionTile(
           title: 'Change Password',
           icon: Icons.lock_outline,
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (_) {
-                return BlocProvider(
-                  create: (_) => ProfileEditCubit(locator<ProfileRepoImpl>()),
-                  child: const ChangePasswordDialog(),
-                );
-              },
-            ).then((state) async {
-              if (context.mounted && state is ProfileEditSuccess) {
-                await context.read<LogoutCubit>().logOut();
-              }
-            });
-          },
+          onTap: () => _showProfileEditDialog(
+            context: context,
+            dialog: const ChangePasswordDialog(),
+            onSuccess: (context) async {
+              await context.read<LogoutCubit>().logOut();
+            },
+          ),
         ),
       ],
     );
+  }
+
+  Future<void> _showProfileEditDialog({
+    required BuildContext context,
+    required Widget dialog,
+    required Future<void> Function(BuildContext) onSuccess,
+  }) async {
+    final state = await showDialog(
+      context: context,
+      builder: (_) => BlocProvider(
+        create: (_) => ProfileEditCubit(locator<ProfileRepoImpl>()),
+        child: dialog,
+      ),
+    );
+
+    if (context.mounted && state is ProfileEditSuccess) {
+      await onSuccess(context);
+    }
   }
 }
