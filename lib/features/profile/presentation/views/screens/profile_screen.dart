@@ -1,9 +1,6 @@
 import 'package:decor_nest/core/constants/auth_constants.dart';
-import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
-import 'package:decor_nest/features/profile/data/repos/profile_repo_impl.dart';
-import 'package:decor_nest/features/profile/presentation/view_models/logout_cubit/logout_cubit.dart';
 import 'package:decor_nest/features/profile/presentation/view_models/profile_data_cubit/profile_data_cubit.dart';
 import 'package:decor_nest/features/profile/presentation/views/widgets/logout_button.dart';
 import 'package:decor_nest/features/profile/presentation/views/widgets/profile_option_tile_list.dart';
@@ -52,10 +49,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 const ProfileOptionTileList(),
                 const Spacer(),
-                BlocProvider(
-                  create: (_) => LogoutCubit(locator<ProfileRepoImpl>()),
-                  child: const LogoutButton(),
-                ),
+                const LogoutButton(),
               ],
             ),
           ),
