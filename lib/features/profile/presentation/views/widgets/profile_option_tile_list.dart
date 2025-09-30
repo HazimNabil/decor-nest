@@ -1,5 +1,6 @@
 import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:decor_nest/features/profile/data/repos/profile_repo_impl.dart';
+import 'package:decor_nest/features/profile/presentation/view_models/logout_cubit/logout_cubit.dart';
 import 'package:decor_nest/features/profile/presentation/view_models/profile_data_cubit/profile_data_cubit.dart';
 import 'package:decor_nest/features/profile/presentation/view_models/profile_edit_cubit/profile_edit_cubit.dart';
 import 'package:decor_nest/features/profile/presentation/views/widgets/change_email_dialog.dart';
@@ -52,15 +53,21 @@ class ProfileOptionTileList extends StatelessWidget {
         ProfileOptionTile(
           title: 'Change Password',
           icon: Icons.lock_outline,
-          onTap: () => showDialog(
-            context: context,
-            builder: (_) {
-              return BlocProvider(
-                create: (_) => ProfileEditCubit(locator<ProfileRepoImpl>()),
-                child: const ChangePasswordDialog(),
-              );
-            },
-          ),
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (_) {
+                return BlocProvider(
+                  create: (_) => ProfileEditCubit(locator<ProfileRepoImpl>()),
+                  child: const ChangePasswordDialog(),
+                );
+              },
+            ).then((state) async {
+              if (context.mounted && state is ProfileEditSuccess) {
+                await context.read<LogoutCubit>().logOut();
+              }
+            });
+          },
         ),
       ],
     );
