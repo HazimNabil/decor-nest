@@ -21,21 +21,18 @@ class ProfileScreen extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                BlocBuilder<ProfileDataCubit, User?>(
-                  builder: (context, user) {
-                    return Text(
-                      user!.userMetadata![UserConstants.username],
-                      style: AppStyles.medium20(context),
-                    );
+                BlocSelector<ProfileDataCubit, User?, String>(
+                  selector: (state) =>
+                      state!.userMetadata![UserConstants.username],
+                  builder: (context, username) {
+                    return Text(username, style: AppStyles.medium20(context));
                   },
                 ),
                 const SizedBox(height: 2),
-                BlocBuilder<ProfileDataCubit, User?>(
-                  builder: (context, user) {
-                    return Text(
-                      user!.email!,
-                      style: AppStyles.regular14(context),
-                    );
+                BlocSelector<ProfileDataCubit, User?, String>(
+                  selector: (state) => state!.email!,
+                  builder: (context, email) {
+                    return Text(email, style: AppStyles.regular14(context));
                   },
                 ),
                 const SizedBox(height: 32),
