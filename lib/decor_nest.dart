@@ -19,6 +19,8 @@ class DecorNest extends StatelessWidget {
           theme: AppThemes.light,
           darkTheme: AppThemes.dark,
           themeMode: themeMode,
+          themeAnimationDuration: const Duration(seconds: 1),
+          themeAnimationCurve: Curves.fastOutSlowIn,
           routerConfig: AppRouter.router,
         );
       },
