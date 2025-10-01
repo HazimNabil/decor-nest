@@ -19,4 +19,16 @@ class AuthErrors {
       'This email is already in use. Try logging in or reset your password.';
   static const weakPassword =
       'Your password is too weak. Use at least 8 characters';
+  static const googleAccountNotSelected = 'You did not choose an account.';
+  static const googleAccessTokenNotFound = 'No Access Token found.';
+  static const googleIdTokenNotFound = 'No ID Token found.';
+}
+
+class UserConstants {
+  const UserConstants._();
+
+  static const username = 'username';
+  static const role = 'role';
+  static const admin = 'admin';
+  static const user = 'user';
 }

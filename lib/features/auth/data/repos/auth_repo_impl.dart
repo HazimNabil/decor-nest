@@ -1,3 +1,4 @@
+import 'package:decor_nest/core/constants/auth_constants.dart';
 import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/errors/auth_failure.dart';
 import 'package:decor_nest/core/helper/cache_helper.dart';
@@ -20,7 +21,9 @@ class AuthRepoImpl implements AuthRepo {
   @override
   bool get isAdmin {
     if (!isLoggedIn) return false;
-    return (_authService.currentUser!.userMetadata?['role'] == 'admin');
+
+    final role = _authService.currentUser!.userMetadata?[UserConstants.role];
+    return (role == UserConstants.admin);
   }
 
   @override
@@ -54,31 +57,6 @@ class AuthRepoImpl implements AuthRepo {
       final user = await _authService.logInWithGoogle();
       await CacheHelper.setSecureData(CacheConstants.userId, user!.id);
       return right(isAdmin);
-    } on AuthException catch (e) {
-      return left(AuthFailure.fromException(e));
-    } catch (e) {
-      return left(AuthFailure(e.toString()));
-    }
-  }
-
-  @override
-  FutureEither<Unit> logOut() async {
-    try {
-      await _authService.logOut();
-      await CacheHelper.removeSecureData(CacheConstants.userId);
-      return right(unit);
-    } on AuthException catch (e) {
-      return left(AuthFailure.fromException(e));
-    } catch (e) {
-      return left(AuthFailure(e.toString()));
-    }
-  }
-
-  @override
-  FutureEither<Unit> resetPassword(String email) async {
-    try {
-      await _authService.resetPassword(email);
-      return right(unit);
     } on AuthException catch (e) {
       return left(AuthFailure.fromException(e));
     } catch (e) {
