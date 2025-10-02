@@ -40,8 +40,11 @@ class DatabaseService {
     await query;
   }
 
-  Future<void> clear({required String tableName}) async {
-    await _supabase.from(tableName).delete().neq(TableConstants.id, -1);
+  Future<void> clear({
+    required String tableName,
+    required String userId,
+  }) async {
+    await _supabase.from(tableName).delete().eq(TableConstants.userId, userId);
   }
 
   FutureJson read({

@@ -75,7 +75,11 @@ class CartRepoImpl implements CartRepo {
   @override
   FutureEither<Unit> clearCart() async {
     try {
-      await _databaseService.clear(tableName: TableConstants.cart);
+      final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+      await _databaseService.clear(
+        tableName: TableConstants.cart,
+        userId: userId,
+      );
       return right(unit);
     } on PostgrestException catch (e) {
       return left(DatabaseFailure.fromException(e));
@@ -109,7 +113,7 @@ class CartRepoImpl implements CartRepo {
       return left(DatabaseFailure(e.toString()));
     }
   }
-  
+
   @override
   FutureEither<Unit> updateQuantity(int id, int newQuantity) async {
     try {
