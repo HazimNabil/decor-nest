@@ -21,31 +21,13 @@ class CartCubit extends Cubit<CartState> {
     final cartStream = _cartRepo.watchCart();
     _subscription = cartStream.listen((result) {
       result.fold(
-        (failure) {
-          emit(CartFailure(failure.message));
-        },
-        (cartProducts) {
-          final previousState = state;
-          if (previousState is CartLoaded && previousState.isQuantityUpdating) {
-            return;
-          }
-          emit(CartLoaded(cartProducts));
-        },
+        (failure) => emit(CartFailure(failure.message)),
+        (cartProducts) => emit(CartLoaded(cartProducts)),
       );
     });
   }
 
   Future<void> updateQuantity(int id, int newQuantity) async {
-    final currentState = state;
-    if (currentState is! CartLoaded) return;
-
-    final updatedProducts = currentState.cartProducts.map((product) {
-      if (product.id == id) return product.copyWith(quantity: newQuantity);
-      return product;
-    }).toList();
-
-    emit(CartLoaded(updatedProducts, isQuantityUpdating: true));
-
     final result = await _cartRepo.updateQuantity(id, newQuantity);
     result.fold((failure) => emit(CartFailure(failure.message)), (_) {});
   }
