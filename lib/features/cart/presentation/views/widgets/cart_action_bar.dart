@@ -2,6 +2,7 @@ import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/features/cart/data/models/payment_request.dart';
+import 'package:decor_nest/features/cart/presentation/view_models/clear_cart_cubit/clear_cart_cubit.dart';
 import 'package:decor_nest/features/cart/presentation/view_models/payment_cubit/payment_cubit.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/payment_status_dialog.dart';
 import 'package:flutter/material.dart';
@@ -38,12 +39,13 @@ class CartActionBar extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           BlocConsumer<PaymentCubit, PaymentState>(
-            listener: (context, state) {
+            listener: (context, state) async {
               if (state is PaymentSuccess) {
                 showDialog(
                   context: context,
                   builder: (_) => PaymentStatusDialog(state: state),
                 );
+                await context.read<ClearCartCubit>().clearCart();
               } else if (state is PaymentFailure) {
                 showDialog(
                   context: context,

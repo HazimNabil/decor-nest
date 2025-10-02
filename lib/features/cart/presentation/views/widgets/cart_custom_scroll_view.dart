@@ -1,6 +1,8 @@
 import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:decor_nest/features/cart/data/models/cart_product.dart';
+import 'package:decor_nest/features/cart/data/repos/cart_repo_impl.dart';
 import 'package:decor_nest/features/cart/data/services/payment_service.dart';
+import 'package:decor_nest/features/cart/presentation/view_models/clear_cart_cubit/clear_cart_cubit.dart';
 import 'package:decor_nest/features/cart/presentation/view_models/payment_cubit/payment_cubit.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/cart_action_bar.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/cart_tile_sliver_list.dart';
@@ -28,8 +30,13 @@ class CartCustomScrollView extends StatelessWidget {
             spacing: 24,
             children: [
               const Spacer(),
-              BlocProvider(
-                create: (_) => PaymentCubit(locator<PaymentService>()),
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (_) => PaymentCubit(locator<PaymentService>()),
+                  ),
+                  BlocProvider(create: (context) => ClearCartCubit(locator<CartRepoImpl>())),
+                ],
                 child: CartActionBar(totalPayment: totalPayment),
               ),
             ],
