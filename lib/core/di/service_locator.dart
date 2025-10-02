@@ -4,6 +4,7 @@ import 'package:decor_nest/features/admin/data/services/storage_service.dart';
 import 'package:decor_nest/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:decor_nest/features/auth/data/services/auth_service.dart';
 import 'package:decor_nest/features/cart/data/repos/cart_repo_impl.dart';
+import 'package:decor_nest/features/cart/data/services/payment_service.dart';
 import 'package:decor_nest/features/favorites/data/repos/favorites_repo_impl.dart';
 import 'package:decor_nest/features/home/data/repos/home_repo_impl.dart';
 import 'package:decor_nest/features/profile/data/repos/profile_repo_impl.dart';
@@ -49,4 +50,10 @@ void setupServiceLocator() {
   locator.registerLazySingleton<ProfileRepoImpl>(
     () => ProfileRepoImpl(locator<ProfileService>()),
   );
+
+  locator.registerSingletonAsync<PaymentService>(() async {
+    final paymobService = PaymentService();
+    await paymobService.init();
+    return paymobService;
+  });
 }
