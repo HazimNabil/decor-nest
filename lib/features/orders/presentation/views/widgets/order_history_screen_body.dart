@@ -1,4 +1,4 @@
-import 'package:decor_nest/features/orders/presentation/views/widgets/order_card.dart';
+import 'package:decor_nest/features/orders/presentation/views/widgets/order_card_list_view.dart';
 import 'package:flutter/material.dart';
 
 class OrderHistoryScreenBody extends StatelessWidget {
@@ -6,6 +6,6 @@ class OrderHistoryScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const OrderCard();
+    return const OrderCardListView();
   }
 }
