@@ -50,23 +50,7 @@ class CartActionBar extends StatelessWidget {
           BlocConsumer<CheckoutCubit, CheckoutState>(
             listener: (context, state) async {
               if (state is PaymentSuccess) {
-                showDialog(
-                  context: context,
-                  builder: (_) => PaymentStatusDialog(state: state),
-                );
-                await context.read<ClearCartCubit>().clearCart();
-                final userId = await CacheHelper.getSecureData(
-                  CacheConstants.userId,
-                );
-                final order = Order(
-                  userId: userId,
-                  createdAt: DateTime.now(),
-                  totalPrice: totalPayment,
-                  itemCount: itemCount,
-                );
-                if (context.mounted) {
-                  await context.read<CheckoutCubit>().createOrder(order);
-                }
+                await _handlePaymentSuccess(context, state);
               } else if (state is PaymentFailure) {
                 showDialog(
                   context: context,
@@ -85,20 +69,7 @@ class CartActionBar extends StatelessWidget {
                 color: context.primaryColor,
                 isLoading: state is PaymentLoading,
                 onPressed: () async {
-                  final paymentRequest = PaymentRequest(
-                    amount: totalPayment,
-                    context: context,
-                    title: Text(
-                      'Checkout',
-                      style: AppStyles.medium24(
-                        context,
-                      ).copyWith(color: Colors.white),
-                    ),
-                    appBarColor: context.primaryColor,
-                  );
-                  await context.read<CheckoutCubit>().processPayment(
-                    paymentRequest,
-                  );
+                  await _processCheckout(context);
                 },
               );
             },
@@ -106,5 +77,36 @@ class CartActionBar extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _processCheckout(BuildContext context) async {
+    final paymentRequest = PaymentRequest(
+      amount: totalPayment,
+      context: context,
+      title: Text(
+        'Checkout',
+        style: AppStyles.medium24(context).copyWith(color: Colors.white),
+      ),
+      appBarColor: context.primaryColor,
+    );
+    await context.read<CheckoutCubit>().processPayment(paymentRequest);
+  }
+
+  Future<void> _handlePaymentSuccess(BuildContext context, PaymentSuccess state) async {
+    showDialog(
+      context: context,
+      builder: (_) => PaymentStatusDialog(state: state),
+    );
+    await context.read<ClearCartCubit>().clearCart();
+    final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+    final order = Order(
+      userId: userId,
+      createdAt: DateTime.now(),
+      totalPrice: totalPayment,
+      itemCount: itemCount,
+    );
+    if (context.mounted) {
+      await context.read<CheckoutCubit>().createOrder(order);
+    }
   }
 }
