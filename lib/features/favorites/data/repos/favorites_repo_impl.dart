@@ -67,7 +67,7 @@ class FavoritesRepoImpl implements FavoritesRepo {
       } else {
         await _databaseService.add(
           tableName: TableConstants.favorites,
-          product: favorite,
+          record: favorite,
         );
       }
 

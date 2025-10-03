@@ -28,7 +28,7 @@ class CartRepoImpl implements CartRepo {
 
       await _databaseService.add(
         tableName: TableConstants.cart,
-        product: cartProduct,
+        record: cartProduct,
       );
 
       return right(unit);

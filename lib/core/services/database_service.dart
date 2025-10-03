@@ -1,6 +1,5 @@
 import 'package:decor_nest/core/constants/database_constants.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
-import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -8,11 +7,8 @@ class DatabaseService {
   final _supabase = Supabase.instance.client;
   static const _pageSize = 10;
 
-  Future<void> add({
-    required String tableName,
-    required Product product,
-  }) async {
-    await _supabase.from(tableName).insert(product.toJson());
+  Future<void> add({required String tableName, required dynamic record}) async {
+    await _supabase.from(tableName).insert(record.toJson());
   }
 
   Future<void> update({
