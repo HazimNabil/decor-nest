@@ -47,6 +47,17 @@ class DatabaseService {
     await _supabase.from(tableName).delete().eq(TableConstants.userId, userId);
   }
 
+  FutureJson readByUserId({
+    required String tableName,
+    required String userId,
+  }) async {
+    return _supabase
+        .from(tableName)
+        .select()
+        .eq(TableConstants.userId, userId)
+        .order(TableConstants.createdAt);
+  }
+
   FutureJson read({
     required String tableName,
     required int page,
