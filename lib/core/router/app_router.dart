@@ -14,6 +14,7 @@ import 'package:decor_nest/features/cart/presentation/views/screens/cart_screen.
 import 'package:decor_nest/features/cart/presentation/view_models/cart_cubit/cart_cubit.dart';
 import 'package:decor_nest/features/home/presentation/views/screens/details_screen.dart';
 import 'package:decor_nest/features/onboarding/presentation/views/screens/onboarding_screen.dart';
+import 'package:decor_nest/features/orders/presentation/views/screens/order_history_screen.dart';
 import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:decor_nest/features/search/data/repos/search_repo_impl.dart';
 import 'package:decor_nest/features/search/presentation/view_models/search_bloc/search_bloc.dart';
@@ -89,6 +90,10 @@ class AppRouter {
       GoRoute(
         path: AddProductScreen.path,
         builder: (_, _) => const AddProductScreen(),
+      ),
+      GoRoute(
+        path: OrderHistoryScreen.path,
+        builder: (_, _) => const OrderHistoryScreen(),
       ),
     ],
     redirect: (_, state) async {
