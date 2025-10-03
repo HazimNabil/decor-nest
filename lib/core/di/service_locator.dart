@@ -7,6 +7,7 @@ import 'package:decor_nest/features/cart/data/repos/cart_repo_impl.dart';
 import 'package:decor_nest/features/cart/data/services/payment_service.dart';
 import 'package:decor_nest/features/favorites/data/repos/favorites_repo_impl.dart';
 import 'package:decor_nest/features/home/data/repos/home_repo_impl.dart';
+import 'package:decor_nest/features/orders/data/repos/orders_repo_impl.dart';
 import 'package:decor_nest/features/profile/data/repos/profile_repo_impl.dart';
 import 'package:decor_nest/features/profile/data/services/profile_service.dart';
 import 'package:decor_nest/features/search/data/repos/search_repo_impl.dart';
@@ -56,4 +57,8 @@ void setupServiceLocator() {
     await paymobService.init();
     return paymobService;
   });
+
+  locator.registerLazySingleton<OrdersRepoImpl>(
+    () => OrdersRepoImpl(locator<DatabaseService>()),
+  );
 }
