@@ -27,3 +27,12 @@ final class PaymentFailure extends PaymentState {
   @override
   List<Object> get props => [message];
 }
+
+final class CreateOrderFailure extends PaymentState {
+  final String message;
+
+  const CreateOrderFailure(this.message);
+
+  @override
+  List<Object> get props => [message];
+}

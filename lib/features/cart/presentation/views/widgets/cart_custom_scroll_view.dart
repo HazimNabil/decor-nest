@@ -6,6 +6,7 @@ import 'package:decor_nest/features/cart/presentation/view_models/clear_cart_cub
 import 'package:decor_nest/features/cart/presentation/view_models/payment_cubit/payment_cubit.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/cart_action_bar.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/cart_tile_sliver_list.dart';
+import 'package:decor_nest/features/orders/data/repos/orders_repo_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,11 +34,19 @@ class CartCustomScrollView extends StatelessWidget {
               MultiBlocProvider(
                 providers: [
                   BlocProvider(
-                    create: (_) => PaymentCubit(locator<PaymentService>()),
+                    create: (_) => PaymentCubit(
+                      locator<PaymentService>(),
+                      locator<OrdersRepoImpl>(),
+                    ),
                   ),
-                  BlocProvider(create: (context) => ClearCartCubit(locator<CartRepoImpl>())),
+                  BlocProvider(
+                    create: (_) => ClearCartCubit(locator<CartRepoImpl>()),
+                  ),
                 ],
-                child: CartActionBar(totalPayment: totalPayment),
+                child: CartActionBar(
+                  totalPayment: totalPayment,
+                  itemCount: cartProducts.length,
+                ),
               ),
             ],
           ),

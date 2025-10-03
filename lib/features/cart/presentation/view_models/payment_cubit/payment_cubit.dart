@@ -1,15 +1,18 @@
 import 'package:decor_nest/features/cart/data/models/payment_request.dart';
 import 'package:decor_nest/features/cart/data/services/payment_service.dart';
+import 'package:decor_nest/features/orders/data/models/order.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_paymob/paymob_response.dart';
+import 'package:decor_nest/features/orders/data/repos/orders_repo.dart';
 
 part 'payment_state.dart';
 
 class PaymentCubit extends Cubit<PaymentState> {
   final PaymentService _paymentService;
+  final OrdersRepo _ordersRepo;
 
-  PaymentCubit(this._paymentService) : super(const PaymentInitial());
+  PaymentCubit(this._paymentService, this._ordersRepo)
+    : super(const PaymentInitial());
 
   Future<void> processPayment(PaymentRequest request) async {
     emit(const PaymentLoading());
@@ -17,18 +20,21 @@ class PaymentCubit extends Cubit<PaymentState> {
     try {
       await _paymentService.processPayment(
         request: request,
-        onPayment: _handlePaymentResponse,
+        onPayment: (response) {
+          response.success
+              ? emit(const PaymentSuccess())
+              : emit(PaymentFailure(response.message!));
+        },
       );
     } catch (e) {
       emit(PaymentFailure(e.toString()));
     }
   }
 
-  void _handlePaymentResponse(PaymentPaymobResponse response) {
-    if (response.success) {
-      emit(const PaymentSuccess());
-    } else {
-      emit(PaymentFailure(response.message!));
-    }
+  Future<void> createOrder(Order order) async {
+    final result = await _ordersRepo.createOrder(order);
+    result.fold((failure) {
+      emit(CreateOrderFailure(failure.message));
+    }, (_) => {});
   }
 }
