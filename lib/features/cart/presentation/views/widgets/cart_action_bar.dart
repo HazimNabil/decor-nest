@@ -5,7 +5,7 @@ import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/features/cart/data/models/payment_request.dart';
 import 'package:decor_nest/features/cart/presentation/view_models/clear_cart_cubit/clear_cart_cubit.dart';
-import 'package:decor_nest/features/cart/presentation/view_models/payment_cubit/payment_cubit.dart';
+import 'package:decor_nest/features/cart/presentation/view_models/checkout_cubit/checkout_cubit.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/payment_status_dialog.dart';
 import 'package:decor_nest/features/orders/data/models/order.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +47,7 @@ class CartActionBar extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 24),
-          BlocConsumer<PaymentCubit, PaymentState>(
+          BlocConsumer<CheckoutCubit, CheckoutState>(
             listener: (context, state) async {
               if (state is PaymentSuccess) {
                 showDialog(
@@ -65,7 +65,7 @@ class CartActionBar extends StatelessWidget {
                   itemCount: itemCount,
                 );
                 if (context.mounted) {
-                  await context.read<PaymentCubit>().createOrder(order);
+                  await context.read<CheckoutCubit>().createOrder(order);
                 }
               } else if (state is PaymentFailure) {
                 showDialog(
@@ -96,7 +96,7 @@ class CartActionBar extends StatelessWidget {
                     ),
                     appBarColor: context.primaryColor,
                   );
-                  await context.read<PaymentCubit>().processPayment(
+                  await context.read<CheckoutCubit>().processPayment(
                     paymentRequest,
                   );
                 },

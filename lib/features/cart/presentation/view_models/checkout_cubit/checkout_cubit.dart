@@ -5,14 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:decor_nest/features/orders/data/repos/orders_repo.dart';
 
-part 'payment_state.dart';
+part 'checkout_state.dart';
 
-class PaymentCubit extends Cubit<PaymentState> {
+class CheckoutCubit extends Cubit<CheckoutState> {
   final PaymentService _paymentService;
   final OrdersRepo _ordersRepo;
 
-  PaymentCubit(this._paymentService, this._ordersRepo)
-    : super(const PaymentInitial());
+  CheckoutCubit(this._paymentService, this._ordersRepo)
+    : super(const CheckoutInitial());
 
   Future<void> processPayment(PaymentRequest request) async {
     emit(const PaymentLoading());

@@ -3,10 +3,10 @@ import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:decor_nest/features/cart/presentation/view_models/payment_cubit/payment_cubit.dart';
+import 'package:decor_nest/features/cart/presentation/view_models/checkout_cubit/checkout_cubit.dart';
 
 class PaymentStatusDialog extends StatelessWidget {
-  final PaymentState state;
+  final CheckoutState state;
 
   const PaymentStatusDialog({super.key, required this.state});
 
