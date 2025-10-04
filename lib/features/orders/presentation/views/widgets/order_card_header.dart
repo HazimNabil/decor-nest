@@ -1,9 +1,12 @@
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/orders/data/models/order.dart';
 import 'package:flutter/material.dart';
 
 class OrderCardHeader extends StatelessWidget {
-  const OrderCardHeader({super.key});
+  final Order order;
+
+  const OrderCardHeader({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +17,15 @@ class OrderCardHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 4,
           children: [
-            Text('Order #123456', style: AppStyles.medium16(context)),
-            Text('2023-06-15', style: AppStyles.regular14(context)),
+            Text('Order #${order.id}', style: AppStyles.medium16(context)),
+            Text(
+              order.createdAt.toString(),
+              style: AppStyles.regular14(context),
+            ),
           ],
         ),
         Text(
-          '2 items',
+          '${order.itemCount} items',
           style: AppStyles.regular14(
             context,
           ).copyWith(color: context.textColor),

@@ -1,10 +1,13 @@
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
+import 'package:decor_nest/features/orders/data/models/order.dart';
 import 'package:decor_nest/features/orders/presentation/views/widgets/order_card_header.dart';
 import 'package:flutter/material.dart';
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({super.key});
+  final Order order;
+
+  const OrderCard({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +21,10 @@ class OrderCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         spacing: 12,
         children: [
-          const OrderCardHeader(),
+          OrderCardHeader(order: order),
           Divider(height: 1, color: context.primaryColor),
           Text(
-            'Total: \$123.45',
+            'Total: \$${order.totalPrice}',
             style: AppStyles.medium16(
               context,
             ).copyWith(color: context.actionColor),
