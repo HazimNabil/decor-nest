@@ -34,7 +34,7 @@ class AdminRepoImpl implements AdminRepo {
 
       await _databaseService.add(
         tableName: TableConstants.products,
-        product: product,
+        record: product,
       );
 
       return unit;

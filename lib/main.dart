@@ -4,6 +4,7 @@ import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/core/helper/custom_bloc_observer.dart';
 import 'package:decor_nest/core/themes/theme_cubit.dart';
 import 'package:decor_nest/decor_nest.dart';
+import 'package:decor_nest/features/cart/data/services/payment_service.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart' show runApp, WidgetsFlutterBinding;
@@ -20,6 +21,7 @@ Future<void> main() async {
     ),
   ]);
   setupServiceLocator();
+  await locator.isReady<PaymentService>();
   Bloc.observer = CustomBlocObserver();
   runApp(
     DevicePreview(

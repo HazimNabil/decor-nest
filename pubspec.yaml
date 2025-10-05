@@ -55,6 +55,7 @@ dependencies:
   skeletonizer: ^2.1.0+1
   cached_network_image: ^3.4.1
   persistent_bottom_nav_bar: ^6.2.1
+  flutter_paymob: ^1.0.8
 
 dev_dependencies:
   flutter_test:
