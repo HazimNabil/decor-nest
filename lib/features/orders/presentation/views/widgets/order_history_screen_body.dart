@@ -1,3 +1,5 @@
+import 'package:decor_nest/core/helper/assets.dart';
+import 'package:decor_nest/core/widgets/empty_state_widget.dart';
 import 'package:decor_nest/core/widgets/failure_indicator.dart';
 import 'package:decor_nest/features/orders/data/models/order.dart';
 import 'package:decor_nest/features/orders/presentation/view_models/fetch_orders_cubit/fetch_orders_cubit.dart';
@@ -17,9 +19,13 @@ class OrderHistoryScreenBody extends StatelessWidget {
           FetchOrdersLoading() => Skeletonizer(
             child: OrderCardListView(orders: List.filled(10, Order.dummy())),
           ),
-          FetchOrdersSuccess(:final orders) => OrderCardListView(
-            orders: orders,
-          ),
+          FetchOrdersSuccess(:final orders) =>
+            orders.isEmpty
+                ? const EmptyStateWidget(
+                    image: Assets.imagesNoData,
+                    message: 'You have not made any orders yet.',
+                  )
+                : OrderCardListView(orders: orders),
           FetchOrdersFailure(:final message) => Center(
             child: FailureIndicator(message: message),
           ),
