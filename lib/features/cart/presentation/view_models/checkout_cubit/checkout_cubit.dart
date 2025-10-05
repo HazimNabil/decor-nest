@@ -26,6 +26,9 @@ class CheckoutCubit extends Cubit<CheckoutState> {
               : emit(PaymentFailure(response.message!));
         },
       );
+      if (state is PaymentLoading) {
+        emit(const CheckoutInitial());
+      }
     } catch (e) {
       emit(PaymentFailure(e.toString()));
     }
