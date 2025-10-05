@@ -32,7 +32,7 @@ class Assets {
 
   static const imagesFailure = 'assets/images/failure.svg';
 
-  static const imagesNoFavorites = 'assets/images/no_favorites.svg';
+  static const imagesNoData = 'assets/images/no_data.svg';
 
   static const imagesEmptyCart = 'assets/images/empty_cart.svg';
 

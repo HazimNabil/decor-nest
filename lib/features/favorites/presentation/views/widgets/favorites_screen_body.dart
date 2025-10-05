@@ -32,7 +32,7 @@ class FavoritesScreenBody extends StatelessWidget {
             FavoritesLoaded(:final favorites) =>
               favorites.isEmpty
                   ? const EmptyStateWidget(
-                      image: Assets.imagesNoFavorites,
+                      image: Assets.imagesNoData,
                       message: 'You have no favorites yet',
                     )
                   : FavoriteCardGridView(favorites: favorites),
