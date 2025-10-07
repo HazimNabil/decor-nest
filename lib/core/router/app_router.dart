@@ -23,6 +23,7 @@ import 'package:go_router/go_router.dart';
 import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/features/search/presentation/views/screens/filter_screen.dart';
+import 'package:decor_nest/features/offline/presentation/views/screens/offline_screen.dart';
 
 class AppRouter {
   static final router = GoRouter(
@@ -94,6 +95,10 @@ class AppRouter {
       GoRoute(
         path: OrderHistoryScreen.path,
         builder: (_, _) => const OrderHistoryScreen(),
+      ),
+      GoRoute(
+        path: OfflineScreen.path,
+        builder: (_, _) => const OfflineScreen(),
       ),
     ],
     redirect: (_, state) async {
