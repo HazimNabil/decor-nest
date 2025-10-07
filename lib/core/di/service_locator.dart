@@ -12,6 +12,7 @@ import 'package:decor_nest/features/profile/data/repos/profile_repo_impl.dart';
 import 'package:decor_nest/features/profile/data/services/profile_service.dart';
 import 'package:decor_nest/features/search/data/repos/search_repo_impl.dart';
 import 'package:get_it/get_it.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 final locator = GetIt.instance;
 
@@ -61,4 +62,6 @@ void setupServiceLocator() {
   locator.registerLazySingleton<OrdersRepoImpl>(
     () => OrdersRepoImpl(locator<DatabaseService>()),
   );
+
+  locator.registerSingleton(InternetConnection());
 }
