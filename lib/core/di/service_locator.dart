@@ -1,4 +1,3 @@
-import 'package:decor_nest/core/services/database_service.dart';
 import 'package:decor_nest/features/admin/data/repos/admin_repo_impl.dart';
 import 'package:decor_nest/features/admin/data/services/storage_service.dart';
 import 'package:decor_nest/features/auth/data/repos/auth_repo_impl.dart';
@@ -11,8 +10,15 @@ import 'package:decor_nest/features/orders/data/repos/orders_repo_impl.dart';
 import 'package:decor_nest/features/profile/data/repos/profile_repo_impl.dart';
 import 'package:decor_nest/features/profile/data/services/profile_service.dart';
 import 'package:decor_nest/features/search/data/repos/search_repo_impl.dart';
+import 'package:decor_nest/features/admin/data/services/admin_database_service.dart';
+import 'package:decor_nest/features/cart/data/services/cart_database_service.dart';
+import 'package:decor_nest/features/favorites/data/services/favorites_database_service.dart';
+import 'package:decor_nest/features/home/data/services/home_database_service.dart';
+import 'package:decor_nest/features/orders/data/services/orders_database_service.dart';
+import 'package:decor_nest/features/search/data/services/search_database_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 final locator = GetIt.instance;
 
@@ -23,28 +29,53 @@ void setupServiceLocator() {
     () => AuthRepoImpl(locator<AuthService>()),
   );
 
-  locator.registerLazySingleton<DatabaseService>(() => DatabaseService());
+  locator.registerLazySingleton<AdminDatabaseService>(
+    () => AdminDatabaseService(Supabase.instance.client),
+  );
+
+  locator.registerLazySingleton<HomeDatabaseService>(
+    () => HomeDatabaseService(Supabase.instance.client),
+  );
+
+  locator.registerLazySingleton<CartDatabaseService>(
+    () => CartDatabaseService(Supabase.instance.client),
+  );
+
+  locator.registerLazySingleton<FavoritesDatabaseService>(
+    () => FavoritesDatabaseService(Supabase.instance.client),
+  );
+
+  locator.registerLazySingleton<SearchDatabaseService>(
+    () => SearchDatabaseService(Supabase.instance.client),
+  );
+
+  locator.registerLazySingleton<OrdersDatabaseService>(
+    () => OrdersDatabaseService(Supabase.instance.client),
+  );
 
   locator.registerLazySingleton<StorageService>(() => StorageService());
 
   locator.registerLazySingleton<AdminRepoImpl>(
-    () => AdminRepoImpl(locator<DatabaseService>(), locator<StorageService>()),
+    () => AdminRepoImpl(
+      locator<AdminDatabaseService>(),
+      locator<StorageService>(),
+    ),
   );
 
   locator.registerLazySingleton<HomeRepoImpl>(
-    () => HomeRepoImpl(locator<DatabaseService>()),
+    () => HomeRepoImpl(locator<HomeDatabaseService>()),
   );
 
   locator.registerLazySingleton<FavoritesRepoImpl>(
-    () => FavoritesRepoImpl(locator<DatabaseService>()),
+    () => FavoritesRepoImpl(locator<FavoritesDatabaseService>()),
   );
 
   locator.registerLazySingleton<CartRepoImpl>(
-    () => CartRepoImpl(locator<DatabaseService>()),
+    () => CartRepoImpl(locator<CartDatabaseService>()),
   );
 
   locator.registerLazySingleton<SearchRepoImpl>(
-    () => SearchRepoImpl(locator<DatabaseService>()),
+    () => SearchRepoImpl(locator<SearchDatabaseService>()),
   );
 
   locator.registerLazySingleton<ProfileService>(() => ProfileService());
@@ -60,7 +91,7 @@ void setupServiceLocator() {
   });
 
   locator.registerLazySingleton<OrdersRepoImpl>(
-    () => OrdersRepoImpl(locator<DatabaseService>()),
+    () => OrdersRepoImpl(locator<OrdersDatabaseService>()),
   );
 
   locator.registerSingleton(InternetConnection());

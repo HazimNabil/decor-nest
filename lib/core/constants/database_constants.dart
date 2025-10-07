@@ -36,4 +36,5 @@ class TableConstants {
   static const quantity = 'quantity';
   static const woodType = 'wood_type';
   static const price = 'price';
+  static const pageSize = 10;
 }

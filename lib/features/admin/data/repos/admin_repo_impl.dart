@@ -5,16 +5,15 @@ import 'package:decor_nest/core/errors/database_failure.dart';
 import 'package:decor_nest/core/errors/storage_failure.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:decor_nest/core/models/product.dart';
-import 'package:decor_nest/core/services/database_service.dart';
+import 'package:decor_nest/features/admin/data/services/admin_database_service.dart';
 import 'package:decor_nest/features/admin/data/services/storage_service.dart';
 import 'package:decor_nest/features/admin/data/repos/admin_repo.dart';
-import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException, StorageException;
 
 class AdminRepoImpl implements AdminRepo {
-  final DatabaseService _databaseService;
+  final AdminDatabaseService _databaseService;
   final StorageService _storageService;
 
   const AdminRepoImpl(this._databaseService, this._storageService);
@@ -32,10 +31,7 @@ class AdminRepoImpl implements AdminRepo {
       product.imageUrl = _storageService.getImageUrl(filePath);
       product.imagePath = filePath;
 
-      await _databaseService.add(
-        tableName: TableConstants.products,
-        record: product,
-      );
+      await _databaseService.addProduct(product);
 
       return unit;
     });
@@ -44,10 +40,7 @@ class AdminRepoImpl implements AdminRepo {
   @override
   FutureEither<Unit> deleteProduct({required Product product}) async {
     return _guard(() async {
-      await _databaseService.delete(
-        tableName: TableConstants.products,
-        id: product.id!,
-      );
+      await _databaseService.deleteProduct(product.id!);
 
       await _storageService.deleteImage(product.imagePath!);
 
@@ -58,10 +51,7 @@ class AdminRepoImpl implements AdminRepo {
   @override
   FutureEither<List<Product>> readProducts({required int page}) async {
     return _guard(() async {
-      final jsonProducts = await _databaseService.read(
-        tableName: TableConstants.products,
-        page: page,
-      );
+      final jsonProducts = await _databaseService.readProducts(page: page);
 
       final products = jsonProducts
           .map((jsonProduct) => Product.fromJson(jsonProduct))
@@ -77,10 +67,9 @@ class AdminRepoImpl implements AdminRepo {
     required int page,
   }) async {
     return _guard(() async {
-      final jsonProducts = await _databaseService.search(
-        tableName: TableConstants.products,
+      final jsonProducts = await _databaseService.searchProducts(
         page: page,
-        filter: ProductFilter(searchQuery: query),
+        searchQuery: query,
       );
 
       final products = jsonProducts
@@ -106,11 +95,7 @@ class AdminRepoImpl implements AdminRepo {
         );
       }
 
-      await _databaseService.update(
-        tableName: TableConstants.products,
-        id: product.id!,
-        fields: fields,
-      );
+      await _databaseService.updateProduct(id: product.id!, fields: fields);
 
       return unit;
     });
