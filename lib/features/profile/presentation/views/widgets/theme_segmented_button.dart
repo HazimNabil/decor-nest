@@ -1,6 +1,6 @@
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
-import 'package:decor_nest/core/themes/theme_cubit.dart';
+import 'package:decor_nest/core/view_models/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

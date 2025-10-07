@@ -4,7 +4,7 @@ import 'package:decor_nest/core/themes/app_themes.dart';
 import 'package:decor_nest/core/router/app_router.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:decor_nest/core/themes/theme_cubit.dart';
+import 'package:decor_nest/core/view_models/theme_cubit.dart';
 import 'package:decor_nest/core/view_models/internet_connection_cubit.dart';
 
 class DecorNest extends StatefulWidget {

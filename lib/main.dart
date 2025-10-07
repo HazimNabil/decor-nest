@@ -2,7 +2,7 @@ import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:decor_nest/core/helper/app_secrets.dart';
 import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/core/helper/custom_bloc_observer.dart';
-import 'package:decor_nest/core/themes/theme_cubit.dart';
+import 'package:decor_nest/core/view_models/theme_cubit.dart';
 import 'package:decor_nest/core/view_models/internet_connection_cubit.dart';
 import 'package:decor_nest/decor_nest.dart';
 import 'package:decor_nest/features/cart/data/services/payment_service.dart';
