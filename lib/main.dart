@@ -34,9 +34,7 @@ Future<void> main() async {
           providers: [
             BlocProvider(create: (_) => ThemeCubit()),
             BlocProvider(
-              create: (_) {
-                return InternetConnectionCubit(locator<InternetConnection>());
-              },
+              create: (_) => InternetConnectionCubit(InternetConnection()),
             ),
           ],
           child: const DecorNest(),

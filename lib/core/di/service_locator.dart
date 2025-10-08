@@ -17,7 +17,6 @@ import 'package:decor_nest/features/home/data/services/home_database_service.dar
 import 'package:decor_nest/features/orders/data/services/orders_database_service.dart';
 import 'package:decor_nest/features/search/data/services/search_database_service.dart';
 import 'package:get_it/get_it.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final locator = GetIt.instance;
@@ -93,6 +92,4 @@ void setupServiceLocator() {
   locator.registerLazySingleton<OrdersRepoImpl>(
     () => OrdersRepoImpl(locator<OrdersDatabaseService>()),
   );
-
-  locator.registerSingleton(InternetConnection());
 }
