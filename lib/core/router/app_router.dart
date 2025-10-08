@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:decor_nest/core/models/product.dart';
 import 'package:decor_nest/core/widgets/custom_nav_bar.dart';
@@ -18,8 +21,6 @@ import 'package:decor_nest/features/orders/presentation/views/screens/order_hist
 import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:decor_nest/features/search/data/repos/search_repo_impl.dart';
 import 'package:decor_nest/features/search/presentation/view_models/search_bloc/search_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/features/search/presentation/views/screens/filter_screen.dart';
@@ -31,74 +32,86 @@ class AppRouter {
     routes: [
       GoRoute(
         path: OnboardingScreen.path,
-        builder: (_, _) => const OnboardingScreen(),
+        pageBuilder: (_, _) => const CupertinoPage(child: OnboardingScreen()),
       ),
-      GoRoute(path: LoginScreen.path, builder: (_, _) => const LoginScreen()),
-      GoRoute(path: SignUpScreen.path, builder: (_, _) => const SignUpScreen()),
+      GoRoute(
+        path: LoginScreen.path,
+        pageBuilder: (_, _) => const CupertinoPage(child: LoginScreen()),
+      ),
+      GoRoute(
+        path: SignUpScreen.path,
+        pageBuilder: (_, _) => const CupertinoPage(child: SignUpScreen()),
+      ),
       ShellRoute(
         builder: (_, _, child) {
           return BlocProvider(
-            create: (context) => SearchBloc(locator<SearchRepoImpl>()),
+            create: (_) => SearchBloc(locator<SearchRepoImpl>()),
             child: child,
           );
         },
         routes: [
           GoRoute(
             path: CustomNavBar.path,
-            builder: (_, _) => const CustomNavBar(),
+            pageBuilder: (_, _) => const CupertinoPage(child: CustomNavBar()),
           ),
           GoRoute(
             path: FilterScreen.path,
-            builder: (_, state) {
-              final filter = state.extra as ProductFilter;
-              return FilterScreen(filter: filter);
+            pageBuilder: (_, state) {
+              return CupertinoPage(
+                child: FilterScreen(filter: state.extra as ProductFilter),
+              );
             },
           ),
         ],
       ),
       GoRoute(
         path: DetailsScreen.path,
-        builder: (_, state) {
-          final product = state.extra as Product;
-          return DetailsScreen(product: product);
-        },
+        builder: (_, state) => DetailsScreen(product: state.extra as Product),
       ),
       GoRoute(
         path: CartScreen.path,
-        builder: (_, _) {
-          return BlocProvider(
-            create: (context) => CartCubit(locator<CartRepoImpl>()),
-            child: const CartScreen(),
+        pageBuilder: (_, _) {
+          return CupertinoPage(
+            child: BlocProvider(
+              create: (_) => CartCubit(locator<CartRepoImpl>()),
+              child: const CartScreen(),
+            ),
           );
         },
       ),
       GoRoute(
+        path: OrderHistoryScreen.path,
+        pageBuilder: (_, _) => const CupertinoPage(child: OrderHistoryScreen()),
+      ),
+      GoRoute(
+        path: OfflineScreen.path,
+        pageBuilder: (_, _) => const CupertinoPage(child: OfflineScreen()),
+      ),
+      GoRoute(
         path: AdminDashboardScreen.path,
-        builder: (_, _) => BlocProvider(
-          create: (context) {
-            final bloc = ProductsQueryBloc(locator<AdminRepoImpl>());
-            return bloc..add(const ProductsFetched());
-          },
-          child: const AdminDashboardScreen(),
-        ),
+        pageBuilder: (_, _) {
+          return CupertinoPage(
+            child: BlocProvider(
+              create: (_) {
+                final bloc = ProductsQueryBloc(locator<AdminRepoImpl>());
+                return bloc..add(const ProductsFetched());
+              },
+              child: const AdminDashboardScreen(),
+            ),
+          );
+        },
       ),
       GoRoute(
         path: EditProductScreen.path,
-        builder: (_, state) {
-          return EditProductScreen(product: state.extra as Product);
+        pageBuilder: (_, state) {
+          return CupertinoPage(
+            child: EditProductScreen(product: state.extra as Product),
+          );
         },
       ),
       GoRoute(
         path: AddProductScreen.path,
-        builder: (_, _) => const AddProductScreen(),
-      ),
-      GoRoute(
-        path: OrderHistoryScreen.path,
-        builder: (_, _) => const OrderHistoryScreen(),
-      ),
-      GoRoute(
-        path: OfflineScreen.path,
-        builder: (_, _) => const OfflineScreen(),
+        pageBuilder: (_, _) => const CupertinoPage(child: AddProductScreen()),
       ),
     ],
     redirect: (_, state) async {
