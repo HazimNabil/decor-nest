@@ -1,9 +1,8 @@
-import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/errors/database_failure.dart';
 import 'package:decor_nest/core/errors/failure.dart';
-import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:decor_nest/core/models/product.dart';
+import 'package:decor_nest/features/auth/data/services/auth_service.dart';
 import 'package:decor_nest/features/favorites/data/repos/favorites_repo.dart';
 import 'package:decor_nest/features/favorites/data/models/favorite_product.dart';
 import 'package:decor_nest/features/favorites/data/services/favorites_database_service.dart';
@@ -12,13 +11,14 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class FavoritesRepoImpl implements FavoritesRepo {
   final FavoritesDatabaseService _databaseService;
+  final AuthService _authService;
 
-  FavoritesRepoImpl(this._databaseService);
+  FavoritesRepoImpl(this._databaseService, this._authService);
 
   @override
   Future<bool> isFavorite(Product product) async {
     try {
-      final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+      final userId = _authService.currentUser!.id;
       return await _databaseService.isFavorite(
         userId: userId,
         productId: product.id!,
@@ -47,7 +47,7 @@ class FavoritesRepoImpl implements FavoritesRepo {
   @override
   FutureEither<bool> toggleFavorite(Product product) async {
     try {
-      final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+      final userId = _authService.currentUser!.id;
       final favorite = FavoriteProduct.fromProduct(product, userId);
 
       final isFavorite = await this.isFavorite(product);

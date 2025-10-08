@@ -1,9 +1,8 @@
-import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/errors/database_failure.dart';
 import 'package:decor_nest/core/errors/failure.dart';
-import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:decor_nest/core/models/product.dart';
+import 'package:decor_nest/features/auth/data/services/auth_service.dart';
 import 'package:decor_nest/features/cart/data/models/cart_product.dart';
 import 'package:decor_nest/features/cart/data/repos/cart_repo.dart';
 import 'package:decor_nest/features/cart/data/services/cart_database_service.dart';
@@ -12,13 +11,17 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CartRepoImpl implements CartRepo {
   final CartDatabaseService _databaseService;
+  final AuthService _authService;
 
-  CartRepoImpl(this._databaseService);
+  CartRepoImpl(
+    this._databaseService,
+    this._authService,
+  );
 
   @override
   FutureEither<Unit> addToCart(Product product, int quantity) async {
     try {
-      final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+      final userId = _authService.currentUser!.id;
       final cartProduct = CartProduct.fromProduct(
         product: product,
         quantity: quantity,
@@ -37,7 +40,7 @@ class CartRepoImpl implements CartRepo {
   @override
   Future<bool> isInCart(Product product) async {
     try {
-      final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+      final userId = _authService.currentUser!.id;
       return await _databaseService.isInCart(
         userId: userId,
         productId: product.id!,
@@ -65,7 +68,7 @@ class CartRepoImpl implements CartRepo {
   @override
   FutureEither<Unit> clearCart() async {
     try {
-      final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+      final userId = _authService.currentUser!.id;
       await _databaseService.clearCart(userId);
       return right(unit);
     } on PostgrestException catch (e) {

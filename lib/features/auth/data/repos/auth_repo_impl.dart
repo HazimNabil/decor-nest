@@ -1,7 +1,5 @@
 import 'package:decor_nest/core/constants/auth_constants.dart';
-import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/errors/auth_failure.dart';
-import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:decor_nest/features/auth/data/models/login_input_data.dart';
 import 'package:decor_nest/features/auth/data/models/sign_up_input_data.dart';
@@ -29,8 +27,7 @@ class AuthRepoImpl implements AuthRepo {
   @override
   FutureEither<bool> logIn(LoginInputData loginInputData) async {
     try {
-      final user = await _authService.logIn(loginInputData);
-      await CacheHelper.setSecureData(CacheConstants.userId, user!.id);
+      await _authService.logIn(loginInputData);
       return right(isAdmin);
     } on AuthException catch (e) {
       return left(AuthFailure.fromException(e));
@@ -54,8 +51,7 @@ class AuthRepoImpl implements AuthRepo {
   @override
   FutureEither<bool> logInWithGoogle() async {
     try {
-      final user = await _authService.logInWithGoogle();
-      await CacheHelper.setSecureData(CacheConstants.userId, user!.id);
+      await _authService.logInWithGoogle();
       return right(isAdmin);
     } on AuthException catch (e) {
       return left(AuthFailure.fromException(e));

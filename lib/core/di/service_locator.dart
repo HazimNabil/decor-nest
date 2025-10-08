@@ -66,11 +66,17 @@ void setupServiceLocator() {
   );
 
   locator.registerLazySingleton<FavoritesRepoImpl>(
-    () => FavoritesRepoImpl(locator<FavoritesDatabaseService>()),
+    () => FavoritesRepoImpl(
+      locator<FavoritesDatabaseService>(),
+      locator<AuthService>(),
+    ),
   );
 
   locator.registerLazySingleton<CartRepoImpl>(
-    () => CartRepoImpl(locator<CartDatabaseService>()),
+    () => CartRepoImpl(
+      locator<CartDatabaseService>(),
+      locator<AuthService>(),
+    ),
   );
 
   locator.registerLazySingleton<SearchRepoImpl>(
@@ -90,6 +96,9 @@ void setupServiceLocator() {
   });
 
   locator.registerLazySingleton<OrdersRepoImpl>(
-    () => OrdersRepoImpl(locator<OrdersDatabaseService>()),
+    () => OrdersRepoImpl(
+      locator<OrdersDatabaseService>(),
+      locator<AuthService>(),
+    ),
   );
 }

@@ -1,7 +1,6 @@
-import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/errors/database_failure.dart';
-import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
+import 'package:decor_nest/features/auth/data/services/auth_service.dart';
 import 'package:decor_nest/features/orders/data/models/order.dart';
 import 'package:decor_nest/features/orders/data/repos/orders_repo.dart';
 import 'package:decor_nest/features/orders/data/services/orders_database_service.dart';
@@ -10,12 +9,16 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class OrdersRepoImpl implements OrdersRepo {
   final OrdersDatabaseService _databaseService;
+  final AuthService _authService;
 
-  OrdersRepoImpl(this._databaseService);
+  OrdersRepoImpl(
+    this._databaseService,
+    this._authService,
+  );
 
   @override
   FutureEither<List<Order>> fetchOrders() async {
-    final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+    final userId = _authService.currentUser!.id;
     try {
       final jsonOrders = await _databaseService.readOrders(userId);
 
