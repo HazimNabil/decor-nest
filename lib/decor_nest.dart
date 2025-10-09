@@ -1,4 +1,4 @@
-import 'package:decor_nest/features/offline/presentation/views/screens/offline_screen.dart';
+import 'package:decor_nest/core/widgets/offline_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:decor_nest/core/themes/app_themes.dart';
 import 'package:decor_nest/core/router/app_router.dart';

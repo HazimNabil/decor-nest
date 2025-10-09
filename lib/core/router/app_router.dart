@@ -24,7 +24,7 @@ import 'package:decor_nest/features/search/presentation/view_models/search_bloc/
 import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/features/search/presentation/views/screens/filter_screen.dart';
-import 'package:decor_nest/features/offline/presentation/views/screens/offline_screen.dart';
+import 'package:decor_nest/core/widgets/offline_screen.dart';
 
 class AppRouter {
   static final router = GoRouter(
