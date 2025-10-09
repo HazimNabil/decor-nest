@@ -20,7 +20,7 @@ class _DecorNestState extends State<DecorNest> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<InternetConnectionCubit, bool?>(
-      listener: (context, isConnected) async {
+      listener: (context, isConnected) {
         if (isConnected == false) {
           _wasOffline = true;
           AppRouter.router.push(OfflineScreen.path);
@@ -28,7 +28,6 @@ class _DecorNestState extends State<DecorNest> {
           _wasOffline = false;
           AppRouter.router.pop();
         }
-        await Future.delayed(const Duration(seconds: 5));
       },
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {
