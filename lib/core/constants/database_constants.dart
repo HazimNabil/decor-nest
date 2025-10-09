@@ -23,6 +23,8 @@ class TableConstants {
   static const favorites = 'favorites';
   static const cart = 'cart';
   static const orders = 'orders';
+  static const categories = 'categories';
+  static const woodTypes = 'wood_types';
   static const category = 'category';
   static const id = 'id';
   static const isFavorite = 'is_favorite';
