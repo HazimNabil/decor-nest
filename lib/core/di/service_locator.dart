@@ -1,3 +1,4 @@
+import 'package:decor_nest/core/services/reference_data_service.dart';
 import 'package:decor_nest/features/admin/data/repos/admin_repo_impl.dart';
 import 'package:decor_nest/features/admin/data/services/storage_service.dart';
 import 'package:decor_nest/features/auth/data/repos/auth_repo_impl.dart';
@@ -73,10 +74,7 @@ void setupServiceLocator() {
   );
 
   locator.registerLazySingleton<CartRepoImpl>(
-    () => CartRepoImpl(
-      locator<CartDatabaseService>(),
-      locator<AuthService>(),
-    ),
+    () => CartRepoImpl(locator<CartDatabaseService>(), locator<AuthService>()),
   );
 
   locator.registerLazySingleton<SearchRepoImpl>(
@@ -101,4 +99,10 @@ void setupServiceLocator() {
       locator<AuthService>(),
     ),
   );
+
+  locator.registerSingletonAsync<ReferenceDataService>(() async {
+    final referenceDataService = ReferenceDataService(Supabase.instance.client);
+    await referenceDataService.preloadReferenceData();
+    return referenceDataService;
+  });
 }
