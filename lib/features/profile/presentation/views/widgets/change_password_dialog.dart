@@ -79,7 +79,12 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
                   context.read<ProfileEditCubit>().changePassword(_password);
                 }
               },
-              child: Text('Change', style: AppStyles.semiBold16(context)),
+              child: Text(
+                'Change',
+                style: AppStyles.semiBold16(
+                  context,
+                ).copyWith(color: Colors.white),
+              ),
             ),
           ],
         ),
