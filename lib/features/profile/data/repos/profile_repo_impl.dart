@@ -1,4 +1,5 @@
 import 'package:decor_nest/core/errors/auth_failure.dart';
+import 'package:decor_nest/core/errors/failure.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:decor_nest/features/profile/data/repos/profile_repo.dart';
 import 'package:decor_nest/features/profile/data/services/profile_service.dart';
@@ -15,36 +16,36 @@ class ProfileRepoImpl implements ProfileRepo {
 
   @override
   FutureEither<Unit> changeUsername(String username) async {
-    return await _guard(
+    return await _sendRequest(
       () async => await _profileService.changeUsername(username),
     );
   }
 
   @override
   FutureEither<Unit> changeEmail(String email) async {
-    return await _guard(() async => await _profileService.changeEmail(email));
+    return await _sendRequest(() async => await _profileService.changeEmail(email));
   }
 
   @override
   FutureEither<Unit> changePassword(String password) async {
-    return await _guard(
+    return await _sendRequest(
       () async => await _profileService.changePassword(password),
     );
   }
 
   @override
   FutureEither<Unit> logOut() async {
-    return await _guard(() async => await _profileService.logOut());
+    return await _sendRequest(() async => await _profileService.logOut());
   }
 
-  FutureEither<Unit> _guard(Future<void> Function() request) async {
+  FutureEither<Unit> _sendRequest(Future<void> Function() request) async {
     try {
       await request();
       return right(unit);
     } on AuthException catch (e) {
       return left(AuthFailure.fromException(e));
     } catch (e) {
-      return left(AuthFailure(e.toString()));
+      return left(Failure(e.toString()));
     }
   }
 }

@@ -13,10 +13,7 @@ class CartRepoImpl implements CartRepo {
   final CartDatabaseService _databaseService;
   final AuthService _authService;
 
-  CartRepoImpl(
-    this._databaseService,
-    this._authService,
-  );
+  CartRepoImpl(this._databaseService, this._authService);
 
   @override
   FutureEither<Unit> addToCart(Product product, int quantity) async {
@@ -33,7 +30,7 @@ class CartRepoImpl implements CartRepo {
     } on PostgrestException catch (e) {
       return left(DatabaseFailure.fromException(e));
     } catch (e) {
-      return left(DatabaseFailure(e.toString()));
+      return left(Failure(e.toString()));
     }
   }
 
@@ -61,7 +58,7 @@ class CartRepoImpl implements CartRepo {
     } on PostgrestException catch (e) {
       return left(DatabaseFailure.fromException(e));
     } catch (e) {
-      return left(DatabaseFailure(e.toString()));
+      return left(Failure(e.toString()));
     }
   }
 
@@ -74,7 +71,7 @@ class CartRepoImpl implements CartRepo {
     } on PostgrestException catch (e) {
       return left(DatabaseFailure.fromException(e));
     } catch (e) {
-      return left(DatabaseFailure(e.toString()));
+      return left(Failure(e.toString()));
     }
   }
 
@@ -85,7 +82,7 @@ class CartRepoImpl implements CartRepo {
     } on PostgrestException catch (e) {
       return Stream.value(left(DatabaseFailure.fromException(e)));
     } catch (e) {
-      return Stream.value(left(DatabaseFailure(e.toString())));
+      return Stream.value(left(Failure(e.toString())));
     }
   }
 
@@ -98,7 +95,7 @@ class CartRepoImpl implements CartRepo {
           .toList();
       return right(cartProducts);
     } catch (e) {
-      return left(DatabaseFailure(e.toString()));
+      return left(Failure(e.toString()));
     }
   }
 
@@ -110,7 +107,7 @@ class CartRepoImpl implements CartRepo {
     } on PostgrestException catch (e) {
       return left(DatabaseFailure.fromException(e));
     } catch (e) {
-      return left(DatabaseFailure(e.toString()));
+      return left(Failure(e.toString()));
     }
   }
 }

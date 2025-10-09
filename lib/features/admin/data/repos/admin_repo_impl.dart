@@ -2,6 +2,7 @@ import 'dart:io' show File;
 
 import 'package:decor_nest/core/constants/database_constants.dart';
 import 'package:decor_nest/core/errors/database_failure.dart';
+import 'package:decor_nest/core/errors/failure.dart';
 import 'package:decor_nest/core/errors/storage_failure.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:decor_nest/core/models/product.dart';
@@ -23,7 +24,7 @@ class AdminRepoImpl implements AdminRepo {
     required Product product,
     required File image,
   }) async {
-    return _guard<Unit>(() async {
+    return _sendRequest<Unit>(() async {
       final fileName = DateTime.now().millisecondsSinceEpoch.toString();
       final filePath = 'products/$fileName';
       await _storageService.uploadImage(filePath, image);
@@ -39,7 +40,7 @@ class AdminRepoImpl implements AdminRepo {
 
   @override
   FutureEither<Unit> deleteProduct({required Product product}) async {
-    return _guard(() async {
+    return _sendRequest(() async {
       await _databaseService.deleteProduct(product.id!);
 
       await _storageService.deleteImage(product.imagePath!);
@@ -50,7 +51,7 @@ class AdminRepoImpl implements AdminRepo {
 
   @override
   FutureEither<List<Product>> readProducts({required int page}) async {
-    return _guard(() async {
+    return _sendRequest(() async {
       final jsonProducts = await _databaseService.readProducts(page: page);
 
       final products = jsonProducts
@@ -66,7 +67,7 @@ class AdminRepoImpl implements AdminRepo {
     required String query,
     required int page,
   }) async {
-    return _guard(() async {
+    return _sendRequest(() async {
       final jsonProducts = await _databaseService.searchProducts(
         page: page,
         searchQuery: query,
@@ -86,7 +87,7 @@ class AdminRepoImpl implements AdminRepo {
     required Product product,
     File? image,
   }) async {
-    return _guard(() async {
+    return _sendRequest(() async {
       if (image != null) {
         await _storageService.updateImage(product.imagePath!, image);
         fields[TableConstants.imagePath] = product.imagePath;
@@ -101,7 +102,7 @@ class AdminRepoImpl implements AdminRepo {
     });
   }
 
-  FutureEither<T> _guard<T>(Future<T> Function() request) async {
+  FutureEither<T> _sendRequest<T>(Future<T> Function() request) async {
     try {
       final response = await request();
       return right(response);
@@ -110,7 +111,7 @@ class AdminRepoImpl implements AdminRepo {
     } on PostgrestException catch (e) {
       return left(DatabaseFailure.fromException(e));
     } catch (e) {
-      return left(DatabaseFailure(e.toString()));
+      return left(Failure(e.toString()));
     }
   }
 }

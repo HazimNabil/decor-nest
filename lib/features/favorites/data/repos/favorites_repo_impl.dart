@@ -40,7 +40,7 @@ class FavoritesRepoImpl implements FavoritesRepo {
     } on PostgrestException catch (e) {
       return left(DatabaseFailure.fromException(e));
     } catch (e) {
-      return left(DatabaseFailure(e.toString()));
+      return left(Failure(e.toString()));
     }
   }
 
@@ -64,7 +64,7 @@ class FavoritesRepoImpl implements FavoritesRepo {
     } on PostgrestException catch (e) {
       return left(DatabaseFailure.fromException(e));
     } catch (e) {
-      return left(DatabaseFailure(e.toString()));
+      return left(Failure(e.toString()));
     }
   }
 
@@ -75,7 +75,7 @@ class FavoritesRepoImpl implements FavoritesRepo {
     } on PostgrestException catch (e) {
       return Stream.value(left(DatabaseFailure.fromException(e)));
     } catch (e) {
-      return Stream.value(left(DatabaseFailure(e.toString())));
+      return Stream.value(left(Failure(e.toString())));
     }
   }
 
@@ -88,7 +88,7 @@ class FavoritesRepoImpl implements FavoritesRepo {
           .toList();
       return right(favorites);
     } catch (e) {
-      return left(DatabaseFailure(e.toString()));
+      return left(Failure(e.toString()));
     }
   }
 }
