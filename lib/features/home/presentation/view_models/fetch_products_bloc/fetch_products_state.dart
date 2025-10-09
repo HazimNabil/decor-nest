@@ -1,8 +1,11 @@
 part of 'fetch_products_bloc.dart';
 
-enum FetchProductsStatus { initial, loading, success, failure }
+enum FetchProductsStatus {
+  initial,
+  loading,
+  success,
+  failure;
 
-extension FetchProductsStatusExtension on FetchProductsStatus {
   bool get isLoading => this == FetchProductsStatus.loading;
   bool get isSuccess => this == FetchProductsStatus.success;
   bool get isFailure => this == FetchProductsStatus.failure;

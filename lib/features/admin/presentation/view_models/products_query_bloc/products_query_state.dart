@@ -1,8 +1,11 @@
 part of 'products_query_bloc.dart';
 
-enum ProductsQueryStatus { initial, loading, success, failure }
+enum ProductsQueryStatus {
+  initial,
+  loading,
+  success,
+  failure;
 
-extension ProductsQueryStatusExtension on ProductsQueryStatus {
   bool get isLoading => this == ProductsQueryStatus.loading;
   bool get isSuccess => this == ProductsQueryStatus.success;
   bool get isFailure => this == ProductsQueryStatus.failure;

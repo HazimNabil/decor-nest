@@ -1,8 +1,12 @@
 part of 'product_cart_cubit.dart';
 
-enum ProductCartStatus { initial, loading, success, failure, checked }
+enum ProductCartStatus {
+  initial,
+  loading,
+  success,
+  failure,
+  checked;
 
-extension ProductCartStatusExtension on ProductCartStatus {
   bool get isLoading => this == ProductCartStatus.loading;
   bool get isSuccess => this == ProductCartStatus.success;
   bool get isFailure => this == ProductCartStatus.failure;
