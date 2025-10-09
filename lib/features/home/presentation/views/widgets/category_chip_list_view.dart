@@ -1,3 +1,5 @@
+import 'package:decor_nest/core/di/service_locator.dart';
+import 'package:decor_nest/core/services/reference_data_service.dart';
 import 'package:decor_nest/features/home/presentation/view_models/fetch_products_bloc/fetch_products_bloc.dart';
 import 'package:decor_nest/features/home/presentation/views/widgets/category_chip.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ class CategoryChipListView extends StatefulWidget {
 }
 
 class _CategoryChipListViewState extends State<CategoryChipListView> {
+  final _categories = locator<ReferenceDataService>().categories;
   int _selectedIndex = -1;
 
   @override
@@ -18,17 +21,17 @@ class _CategoryChipListViewState extends State<CategoryChipListView> {
     return SizedBox(
       height: 32,
       child: ListView.separated(
-        itemCount: categories.length,
+        itemCount: _categories.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (_, index) {
           return CategoryChip(
-            category: categories[index],
+            category: _categories[index],
             selected: _selectedIndex == index,
             onSelected: (selected) {
               setState(() => _selectedIndex = selected ? index : -1);
               context.read<FetchProductsBloc>().add(
                 ProductsFetched(
-                  category: selected ? categories[_selectedIndex] : null,
+                  category: selected ? _categories[_selectedIndex] : null,
                 ),
               );
             },
@@ -39,9 +42,5 @@ class _CategoryChipListViewState extends State<CategoryChipListView> {
         },
       ),
     );
-  }
-
-  List<String> get categories {
-    return const ['chair', 'table', 'lamp', 'sofa', 'mirror', 'mattress'];
   }
 }

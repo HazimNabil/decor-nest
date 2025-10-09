@@ -1,4 +1,6 @@
+import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:decor_nest/core/services/reference_data_service.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,8 @@ class CategoryFilterChips extends StatefulWidget {
 }
 
 class _CategoryFilterChipsState extends State<CategoryFilterChips> {
+  final _categories = locator<ReferenceDataService>().categories;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,9 +60,5 @@ class _CategoryFilterChipsState extends State<CategoryFilterChips> {
         widget.filter.categories.remove(_categories[index]);
       }
     });
-  }
-
-  List<String> get _categories {
-    return const ['chair', 'table', 'lamp', 'sofa', 'mirror', 'mattress'];
   }
 }

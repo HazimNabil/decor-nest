@@ -1,6 +1,7 @@
 import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:decor_nest/core/helper/custom_bloc_observer.dart';
 import 'package:decor_nest/core/helper/cache_helper.dart';
+import 'package:decor_nest/core/services/reference_data_service.dart';
 import 'package:decor_nest/features/cart/data/services/payment_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,9 @@ Future<void> initApp() async {
     ),
   ]);
   setupServiceLocator();
-  await locator.isReady<PaymentService>();
+  await Future.wait([
+    locator.isReady<ReferenceDataService>(),
+    locator.isReady<PaymentService>(),
+  ]);
   Bloc.observer = CustomBlocObserver();
 }
