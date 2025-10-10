@@ -1,7 +1,7 @@
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
-import 'package:decor_nest/features/admin/presentation/views/widgets/search_field.dart';
+import 'package:decor_nest/core/widgets/search_field.dart';
 import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:decor_nest/features/search/presentation/view_models/search_bloc/search_bloc.dart';
 import 'package:decor_nest/features/search/presentation/views/screens/filter_screen.dart';

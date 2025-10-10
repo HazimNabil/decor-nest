@@ -6,7 +6,7 @@ import 'package:decor_nest/core/widgets/failure_indicator.dart';
 import 'package:decor_nest/features/admin/presentation/view_models/products_query_bloc/products_query_bloc.dart';
 import 'package:decor_nest/features/admin/presentation/views/screens/add_product_screen.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/admin_product_sliver_list.dart';
-import 'package:decor_nest/features/admin/presentation/views/widgets/search_field.dart';
+import 'package:decor_nest/core/widgets/search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
