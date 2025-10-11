@@ -67,11 +67,9 @@ class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
                   SearchField(
                     controller: _searchController,
                     onSubmitted: (query) {
-                      if (query.isNotEmpty) {
-                        context.read<ProductsQueryBloc>().add(
-                          ProductsSearched(query.trim()),
-                        );
-                      }
+                      context.read<ProductsQueryBloc>().add(
+                        ProductsSearched(query.trim()),
+                      );
                     },
                   ),
                   const SizedBox(height: 16),
