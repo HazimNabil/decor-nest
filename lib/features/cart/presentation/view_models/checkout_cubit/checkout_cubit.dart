@@ -1,4 +1,6 @@
+import 'package:decor_nest/features/cart/data/models/cart_product.dart';
 import 'package:decor_nest/features/cart/data/models/payment_request.dart';
+import 'package:decor_nest/features/cart/data/repos/cart_repo.dart';
 import 'package:decor_nest/features/cart/data/services/payment_service.dart';
 import 'package:decor_nest/features/orders/data/models/order.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,17 +11,21 @@ import 'package:flutter_paymob/paymob_response.dart';
 part 'checkout_state.dart';
 
 class CheckoutCubit extends Cubit<CheckoutState> {
-  final PaymentService _paymentService;
-  final OrdersRepo _ordersRepo;
+  final PaymentService paymentService;
+  final OrdersRepo ordersRepo;
+  final CartRepo cartRepo;
 
-  CheckoutCubit(this._paymentService, this._ordersRepo)
-    : super(const CheckoutInitial());
+  CheckoutCubit({
+    required this.paymentService,
+    required this.ordersRepo,
+    required this.cartRepo,
+  }) : super(const CheckoutInitial());
 
   Future<void> processPayment(PaymentRequest request) async {
     emit(const PaymentLoading());
 
     try {
-      await _paymentService.processPayment(
+      await paymentService.processPayment(
         request: request,
         onPayment: _handlePaymentResponse,
       );
@@ -37,10 +43,15 @@ class CheckoutCubit extends Cubit<CheckoutState> {
         : emit(PaymentFailure(response.message!));
   }
 
+  Future<void> decreaseStock(List<CartProduct> cartProducts) async {
+    final result = await cartRepo.decreaseStock(cartProducts);
+    result.fold((failure) => emit(CheckoutFailure(failure.message)), (_) {});
+  }
+
   Future<void> createOrder(Order order) async {
-    final result = await _ordersRepo.createOrder(order);
+    final result = await ordersRepo.createOrder(order);
     result.fold((failure) {
-      emit(CreateOrderFailure(failure.message));
+      emit(CheckoutFailure(failure.message));
     }, (_) => {});
   }
 }

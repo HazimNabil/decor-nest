@@ -37,6 +37,16 @@ class CartDatabaseService {
         .eq(TableConstants.id, id);
   }
 
+  Future<void> decreaseStock(List<CartProduct> cartProducts) async {
+    for (final cartProduct in cartProducts) {
+      final newStock = cartProduct.stock - cartProduct.quantity;
+      await _client
+          .from(TableConstants.products)
+          .update({TableConstants.stock: newStock})
+          .eq(TableConstants.id, cartProduct.productId);
+    }
+  }
+
   Future<bool> isInCart({
     required String userId,
     required int productId,

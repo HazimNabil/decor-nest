@@ -35,8 +35,9 @@ class CartCustomScrollView extends StatelessWidget {
                 providers: [
                   BlocProvider(
                     create: (_) => CheckoutCubit(
-                      locator<PaymentService>(),
-                      locator<OrdersRepoImpl>(),
+                      paymentService: locator<PaymentService>(),
+                      ordersRepo: locator<OrdersRepoImpl>(),
+                      cartRepo: locator<CartRepoImpl>(),
                     ),
                   ),
                   BlocProvider(
@@ -44,8 +45,8 @@ class CartCustomScrollView extends StatelessWidget {
                   ),
                 ],
                 child: CartActionBar(
+                  cartProducts: cartProducts,
                   totalPayment: totalPayment,
-                  itemCount: cartProducts.length,
                 ),
               ),
             ],

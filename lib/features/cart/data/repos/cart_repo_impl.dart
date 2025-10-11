@@ -110,4 +110,16 @@ class CartRepoImpl implements CartRepo {
       return left(Failure(e.toString()));
     }
   }
+
+  @override
+  FutureEither<Unit> decreaseStock(List<CartProduct> cartProducts) async {
+    try {
+      await _databaseService.decreaseStock(cartProducts);
+      return right(unit);
+    } on PostgrestException catch (e) {
+      return left(DatabaseFailure.fromException(e));
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
 }
