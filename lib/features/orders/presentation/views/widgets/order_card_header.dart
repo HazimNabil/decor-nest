@@ -19,7 +19,7 @@ class OrderCardHeader extends StatelessWidget {
           children: [
             Text('Order #${order.id}', style: AppStyles.medium16(context)),
             Text(
-              order.createdAt.toString(),
+              order.createdAt.formatted,
               style: AppStyles.regular14(context),
             ),
           ],

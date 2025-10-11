@@ -74,3 +74,7 @@ extension ValidationExtension on String? {
     return null;
   }
 }
+
+extension DateFormatExtension on DateTime {
+  String get formatted => '$day-$month-$year';
+}
