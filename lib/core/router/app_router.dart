@@ -1,3 +1,6 @@
+import 'package:decor_nest/features/home/data/repos/home_repo_impl.dart';
+import 'package:decor_nest/features/home/presentation/view_models/fetch_products_bloc/fetch_products_bloc.dart'
+    hide ProductsFetched;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -44,8 +47,15 @@ class AppRouter {
       ),
       ShellRoute(
         builder: (_, _, child) {
-          return BlocProvider(
-            create: (_) => SearchBloc(locator<SearchRepoImpl>()),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) => SearchBloc(locator<SearchRepoImpl>()),
+              ),
+              BlocProvider(
+                create: (context) => FetchProductsBloc(locator<HomeRepoImpl>()),
+              ),
+            ],
             child: child,
           );
         },
@@ -62,22 +72,22 @@ class AppRouter {
               );
             },
           ),
+          GoRoute(
+            path: CartScreen.path,
+            pageBuilder: (_, _) {
+              return CupertinoPage(
+                child: BlocProvider(
+                  create: (_) => CartCubit(locator<CartRepoImpl>()),
+                  child: const CartScreen(),
+                ),
+              );
+            },
+          ),
         ],
       ),
       GoRoute(
         path: DetailsScreen.path,
         builder: (_, state) => DetailsScreen(product: state.extra as Product),
-      ),
-      GoRoute(
-        path: CartScreen.path,
-        pageBuilder: (_, _) {
-          return CupertinoPage(
-            child: BlocProvider(
-              create: (_) => CartCubit(locator<CartRepoImpl>()),
-              child: const CartScreen(),
-            ),
-          );
-        },
       ),
       GoRoute(
         path: OrderHistoryScreen.path,

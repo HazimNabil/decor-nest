@@ -1,14 +1,10 @@
-import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:decor_nest/core/helper/assets.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/features/favorites/presentation/views/screens/favorites_screen.dart';
-import 'package:decor_nest/features/home/data/repos/home_repo_impl.dart';
-import 'package:decor_nest/features/home/presentation/view_models/fetch_products_bloc/fetch_products_bloc.dart';
 import 'package:decor_nest/features/home/presentation/views/screens/home_screen.dart';
 import 'package:decor_nest/features/profile/presentation/views/screens/profile_screen.dart';
 import 'package:decor_nest/features/search/presentation/views/screens/search_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
@@ -48,13 +44,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
   }
 
   List<Widget> get _screens => [
-    BlocProvider(
-      create: (context) {
-        final bloc = FetchProductsBloc(locator<HomeRepoImpl>());
-        return bloc..add(const ProductsFetched());
-      },
-      child: const HomeScreen(),
-    ),
+    const HomeScreen(),
     const FavoritesScreen(),
     const SearchScreen(),
     const ProfileScreen(),
