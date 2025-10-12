@@ -8,6 +8,7 @@ import 'package:decor_nest/features/cart/data/models/payment_request.dart';
 import 'package:decor_nest/features/cart/presentation/view_models/clear_cart_cubit/clear_cart_cubit.dart';
 import 'package:decor_nest/features/cart/presentation/view_models/checkout_cubit/checkout_cubit.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/payment_status_dialog.dart';
+import 'package:decor_nest/features/home/presentation/view_models/fetch_products_bloc/fetch_products_bloc.dart';
 import 'package:decor_nest/features/orders/data/models/order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -115,6 +116,9 @@ class CartActionBar extends StatelessWidget {
     }
     if (context.mounted) {
       await context.read<ClearCartCubit>().clearCart();
+    }
+    if (context.mounted) {
+      context.read<FetchProductsBloc>().add(const ProductsFetched());
     }
   }
 }
