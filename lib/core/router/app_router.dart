@@ -18,6 +18,7 @@ import 'package:decor_nest/features/auth/presentation/views/screens/sign_up_scre
 import 'package:decor_nest/features/cart/data/repos/cart_repo_impl.dart';
 import 'package:decor_nest/features/cart/presentation/views/screens/cart_screen.dart';
 import 'package:decor_nest/features/cart/presentation/view_models/cart_cubit/cart_cubit.dart';
+import 'package:decor_nest/features/cart/presentation/view_models/clear_cart_cubit/clear_cart_cubit.dart';
 import 'package:decor_nest/features/home/presentation/views/screens/details_screen.dart';
 import 'package:decor_nest/features/onboarding/presentation/views/screens/onboarding_screen.dart';
 import 'package:decor_nest/features/orders/presentation/views/screens/order_history_screen.dart';
@@ -76,8 +77,15 @@ class AppRouter {
             path: CartScreen.path,
             pageBuilder: (_, _) {
               return CupertinoPage(
-                child: BlocProvider(
-                  create: (_) => CartCubit(locator<CartRepoImpl>()),
+                child: MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                      create: (_) => CartCubit(locator<CartRepoImpl>()),
+                    ),
+                    BlocProvider(
+                      create: (_) => ClearCartCubit(locator<CartRepoImpl>()),
+                    ),
+                  ],
                   child: const CartScreen(),
                 ),
               );
