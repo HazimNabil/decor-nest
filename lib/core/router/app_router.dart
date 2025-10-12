@@ -83,11 +83,12 @@ class AppRouter {
               );
             },
           ),
+          GoRoute(
+            path: DetailsScreen.path,
+            builder: (_, state) =>
+                DetailsScreen(product: state.extra as Product),
+          ),
         ],
-      ),
-      GoRoute(
-        path: DetailsScreen.path,
-        builder: (_, state) => DetailsScreen(product: state.extra as Product),
       ),
       GoRoute(
         path: OrderHistoryScreen.path,
