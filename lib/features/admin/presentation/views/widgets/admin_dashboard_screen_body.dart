@@ -1,12 +1,15 @@
+import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/models/product.dart';
-import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
 import 'package:decor_nest/core/widgets/failure_indicator.dart';
 import 'package:decor_nest/features/admin/presentation/view_models/products_query_bloc/products_query_bloc.dart';
 import 'package:decor_nest/features/admin/presentation/views/screens/add_product_screen.dart';
+import 'package:decor_nest/features/admin/presentation/views/widgets/admin_dashboard_header.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/admin_product_sliver_list.dart';
-import 'package:decor_nest/features/admin/presentation/views/widgets/search_field.dart';
+import 'package:decor_nest/core/widgets/search_field.dart';
+import 'package:decor_nest/features/profile/data/repos/profile_repo_impl.dart';
+import 'package:decor_nest/features/profile/presentation/view_models/logout_cubit/logout_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -57,21 +60,17 @@ class _AdminDashboardScreenBodyState extends State<AdminDashboardScreenBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Products', style: AppStyles.semiBold32(context)),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Manage your products',
-                    style: AppStyles.regular16(context),
+                  BlocProvider(
+                    create: (_) => LogoutCubit(locator<ProfileRepoImpl>()),
+                    child: const AdminDashboardHeader(),
                   ),
                   const SizedBox(height: 24),
                   SearchField(
                     controller: _searchController,
                     onSubmitted: (query) {
-                      if (query.isNotEmpty) {
-                        context.read<ProductsQueryBloc>().add(
-                          ProductsSearched(query.trim()),
-                        );
-                      }
+                      context.read<ProductsQueryBloc>().add(
+                        ProductsSearched(query.trim()),
+                      );
                     },
                   ),
                   const SizedBox(height: 16),

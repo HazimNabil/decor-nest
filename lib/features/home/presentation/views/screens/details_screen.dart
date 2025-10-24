@@ -3,6 +3,7 @@ import 'package:decor_nest/features/home/presentation/views/widgets/product_deta
 import 'package:decor_nest/features/home/presentation/views/widgets/product_thumbnail.dart';
 import 'package:flutter/material.dart';
 import 'package:decor_nest/core/models/product.dart';
+import 'package:decor_nest/features/home/presentation/views/widgets/out_of_stock_indicator.dart';
 
 class DetailsScreen extends StatelessWidget {
   static const path = '/details';
@@ -25,7 +26,10 @@ class DetailsScreen extends StatelessWidget {
                 spacing: 24,
                 children: [
                   const Spacer(),
-                  ProductActionBar(product: product),
+                  if (product.stock <= 0)
+                    const OutOfStockIndicator()
+                  else
+                    ProductActionBar(product: product),
                 ],
               ),
             ),

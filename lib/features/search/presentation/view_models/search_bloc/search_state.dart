@@ -1,8 +1,11 @@
 part of 'search_bloc.dart';
 
-enum SearchStatus { initial, loading, success, failure }
+enum SearchStatus {
+  initial,
+  loading,
+  success,
+  failure;
 
-extension SearchStatusExtension on SearchStatus {
   bool get isLoading => this == SearchStatus.loading;
   bool get isSuccess => this == SearchStatus.success;
   bool get isFailure => this == SearchStatus.failure;

@@ -1,8 +1,11 @@
 part of 'favorite_status_cubit.dart';
 
-enum FavoriteStatus { initial, loading, success, failure }
+enum FavoriteStatus {
+  initial,
+  loading,
+  success,
+  failure;
 
-extension FavoriteStatusExtension on FavoriteStatus {
   bool get isLoading => this == FavoriteStatus.loading;
   bool get isSuccess => this == FavoriteStatus.success;
   bool get isFailure => this == FavoriteStatus.failure;

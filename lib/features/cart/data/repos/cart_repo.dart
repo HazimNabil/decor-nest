@@ -7,6 +7,7 @@ abstract interface class CartRepo {
   FutureEither<Unit> addToCart(Product product, int quantity);
   FutureEither<Unit> removeFromCart(CartProduct cartProduct);
   FutureEither<Unit> updateQuantity(int id, int newQuantity);
+  FutureEither<Unit> decreaseStock(List<CartProduct> cartProducts);
   FutureEither<Unit> clearCart();
   Future<bool> isInCart(Product product);
   StreamEither<List<CartProduct>> watchCart();

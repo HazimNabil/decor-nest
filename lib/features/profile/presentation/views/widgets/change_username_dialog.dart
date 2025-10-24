@@ -70,7 +70,12 @@ class _ChangeUsernameDialogState extends State<ChangeUsernameDialog> {
                   );
                 }
               },
-              child: Text('Change', style: AppStyles.semiBold16(context)),
+              child: Text(
+                'Change',
+                style: AppStyles.semiBold16(
+                  context,
+                ).copyWith(color: Colors.white),
+              ),
             ),
           ],
         ),

@@ -69,7 +69,12 @@ class _ChangeEmailDialogState extends State<ChangeEmailDialog> {
                   await context.read<ProfileEditCubit>().changeEmail(_email);
                 }
               },
-              child: Text('Change', style: AppStyles.semiBold16(context)),
+              child: Text(
+                'Change',
+                style: AppStyles.semiBold16(
+                  context,
+                ).copyWith(color: Colors.white),
+              ),
             ),
           ],
         ),

@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(_onScroll);
+    context.read<FetchProductsBloc>().add(const ProductsFetched());
   }
 
   @override

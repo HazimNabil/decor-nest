@@ -28,10 +28,10 @@ final class PaymentFailure extends CheckoutState {
   List<Object> get props => [message];
 }
 
-final class CreateOrderFailure extends CheckoutState {
+final class CheckoutFailure extends CheckoutState {
   final String message;
 
-  const CreateOrderFailure(this.message);
+  const CheckoutFailure(this.message);
 
   @override
   List<Object> get props => [message];

@@ -23,6 +23,8 @@ class TableConstants {
   static const favorites = 'favorites';
   static const cart = 'cart';
   static const orders = 'orders';
+  static const categories = 'categories';
+  static const woodTypes = 'wood_types';
   static const category = 'category';
   static const id = 'id';
   static const isFavorite = 'is_favorite';
@@ -33,7 +35,9 @@ class TableConstants {
   static const imageUrl = 'image_url';
   static const userId = 'user_id';
   static const productId = 'product_id';
+  static const stock = 'stock';
   static const quantity = 'quantity';
   static const woodType = 'wood_type';
   static const price = 'price';
+  static const pageSize = 10;
 }

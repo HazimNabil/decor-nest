@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class FavoriteCard extends StatelessWidget {
   final FavoriteProduct favorite;
@@ -35,18 +36,20 @@ class FavoriteCard extends StatelessWidget {
               Positioned(
                 top: 10,
                 right: 10,
-                child: CircleAvatar(
-                  radius: 15,
-                  backgroundColor: context.primaryColor,
-                  child: IconButton(
-                    icon: SvgPicture.asset(
-                      Assets.iconsUnselectedFavorites,
-                      colorFilter: const ColorFilter.mode(
-                        Colors.white,
-                        BlendMode.srcIn,
+                child: Skeleton.shade(
+                  child: CircleAvatar(
+                    radius: 15,
+                    backgroundColor: context.primaryColor,
+                    child: IconButton(
+                      icon: SvgPicture.asset(
+                        Assets.iconsUnselectedFavorites,
+                        colorFilter: const ColorFilter.mode(
+                          Colors.white,
+                          BlendMode.srcIn,
+                        ),
                       ),
+                      onPressed: () async => await removeFromFavorite(context),
                     ),
-                    onPressed: () async => await removeFromFavorite(context),
                   ),
                 ),
               ),

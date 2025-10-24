@@ -1,3 +1,5 @@
+import 'package:decor_nest/core/di/service_locator.dart';
+import 'package:decor_nest/core/services/reference_data_service.dart';
 import 'package:decor_nest/core/widgets/labeled_field.dart';
 import 'package:decor_nest/features/admin/data/models/product_input_data.dart';
 import 'package:decor_nest/features/admin/presentation/views/widgets/add_image_placeholder.dart';
@@ -17,6 +19,8 @@ class _AddProductScreenBodyState extends State<AddProductScreenBody> {
   late final GlobalKey<FormState> _formKey;
   late final ValueNotifier<AutovalidateMode> _autovalidateMode;
   late final ProductInputData _productInputData;
+  late final List<String> _categories;
+  late final List<String> _woodTypes;
 
   @override
   void initState() {
@@ -24,6 +28,8 @@ class _AddProductScreenBodyState extends State<AddProductScreenBody> {
     _formKey = GlobalKey<FormState>();
     _autovalidateMode = ValueNotifier(AutovalidateMode.disabled);
     _productInputData = ProductInputData();
+    _categories = locator<ReferenceDataService>().categories;
+    _woodTypes = locator<ReferenceDataService>().woodTypes;
   }
 
   @override
@@ -90,21 +96,5 @@ class _AddProductScreenBodyState extends State<AddProductScreenBody> {
         ),
       ),
     );
-  }
-
-  List<String> get _categories {
-    return const ['chair', 'table', 'lamp', 'sofa', 'mirror', 'mattress'];
-  }
-
-  List<String> get _woodTypes {
-    return const [
-      'eucalyptus',
-      'teak',
-      'oak',
-      'pine',
-      'maple',
-      'bamboo',
-      'walnut',
-    ];
   }
 }

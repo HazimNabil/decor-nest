@@ -1,25 +1,27 @@
-import 'package:decor_nest/core/constants/cache_constants.dart';
-import 'package:decor_nest/core/helper/cache_helper.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/core/widgets/custom_button.dart';
+import 'package:decor_nest/core/di/service_locator.dart';
+import 'package:decor_nest/features/auth/data/services/auth_service.dart';
+import 'package:decor_nest/features/cart/data/models/cart_product.dart';
 import 'package:decor_nest/features/cart/data/models/payment_request.dart';
 import 'package:decor_nest/features/cart/presentation/view_models/clear_cart_cubit/clear_cart_cubit.dart';
 import 'package:decor_nest/features/cart/presentation/view_models/checkout_cubit/checkout_cubit.dart';
 import 'package:decor_nest/features/cart/presentation/views/widgets/payment_status_dialog.dart';
+import 'package:decor_nest/features/home/presentation/view_models/fetch_products_bloc/fetch_products_bloc.dart';
 import 'package:decor_nest/features/orders/data/models/order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
 
 class CartActionBar extends StatelessWidget {
+  final List<CartProduct> cartProducts;
   final double totalPayment;
-  final int itemCount;
 
   const CartActionBar({
     super.key,
+    required this.cartProducts,
     required this.totalPayment,
-    required this.itemCount,
   });
 
   @override
@@ -56,7 +58,7 @@ class CartActionBar extends StatelessWidget {
                   context: context,
                   builder: (_) => PaymentStatusDialog(state: state),
                 );
-              } else if (state is CreateOrderFailure) {
+              } else if (state is CheckoutFailure) {
                 context.showToast(
                   message: state.message,
                   type: ToastificationType.error,
@@ -92,21 +94,31 @@ class CartActionBar extends StatelessWidget {
     await context.read<CheckoutCubit>().processPayment(paymentRequest);
   }
 
-  Future<void> _handlePaymentSuccess(BuildContext context, PaymentSuccess state) async {
+  Future<void> _handlePaymentSuccess(
+    BuildContext context,
+    PaymentSuccess state,
+  ) async {
     showDialog(
       context: context,
       builder: (_) => PaymentStatusDialog(state: state),
     );
-    await context.read<ClearCartCubit>().clearCart();
-    final userId = await CacheHelper.getSecureData(CacheConstants.userId);
+    await context.read<CheckoutCubit>().decreaseStock(cartProducts);
+
+    final userId = locator<AuthService>().currentUser!.id;
     final order = Order(
       userId: userId,
       createdAt: DateTime.now(),
       totalPrice: totalPayment,
-      itemCount: itemCount,
+      itemCount: cartProducts.length,
     );
     if (context.mounted) {
       await context.read<CheckoutCubit>().createOrder(order);
+    }
+    if (context.mounted) {
+      await context.read<ClearCartCubit>().clearCart();
+    }
+    if (context.mounted) {
+      context.read<FetchProductsBloc>().add(const ProductsFetched());
     }
   }
 }

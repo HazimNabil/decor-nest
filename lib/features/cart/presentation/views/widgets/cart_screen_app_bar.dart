@@ -37,7 +37,7 @@ class CartScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
             icon: SvgPicture.asset(
               Assets.iconsTrash,
-              colorFilter: ColorFilter.mode(context.textColor, BlendMode.srcIn),
+              colorFilter: const ColorFilter.mode(Colors.red, BlendMode.srcIn),
             ),
             onPressed: () => _showClearDialog(context),
             style: IconButton.styleFrom(

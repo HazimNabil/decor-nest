@@ -1,4 +1,6 @@
+import 'package:decor_nest/core/di/service_locator.dart';
 import 'package:decor_nest/core/helper/extensions.dart';
+import 'package:decor_nest/core/services/reference_data_service.dart';
 import 'package:decor_nest/core/themes/app_styles.dart';
 import 'package:decor_nest/features/search/data/models/product_filter.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,8 @@ class WoodTypeFilterChips extends StatefulWidget {
 }
 
 class _WoodTypeFilterChipsState extends State<WoodTypeFilterChips> {
+  final _woodTypes = locator<ReferenceDataService>().woodTypes;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,17 +60,5 @@ class _WoodTypeFilterChipsState extends State<WoodTypeFilterChips> {
         widget.filter.woodTypes.remove(_woodTypes[index]);
       }
     });
-  }
-
-  List<String> get _woodTypes {
-    return const [
-      'eucalyptus',
-      'teak',
-      'oak',
-      'pine',
-      'maple',
-      'bamboo',
-      'walnut',
-    ];
   }
 }

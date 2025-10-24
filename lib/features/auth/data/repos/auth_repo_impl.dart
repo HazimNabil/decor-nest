@@ -1,7 +1,6 @@
 import 'package:decor_nest/core/constants/auth_constants.dart';
-import 'package:decor_nest/core/constants/cache_constants.dart';
 import 'package:decor_nest/core/errors/auth_failure.dart';
-import 'package:decor_nest/core/helper/cache_helper.dart';
+import 'package:decor_nest/core/errors/failure.dart';
 import 'package:decor_nest/core/helper/typedefs.dart';
 import 'package:decor_nest/features/auth/data/models/login_input_data.dart';
 import 'package:decor_nest/features/auth/data/models/sign_up_input_data.dart';
@@ -28,39 +27,36 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   FutureEither<bool> logIn(LoginInputData loginInputData) async {
-    try {
-      final user = await _authService.logIn(loginInputData);
-      await CacheHelper.setSecureData(CacheConstants.userId, user!.id);
-      return right(isAdmin);
-    } on AuthException catch (e) {
-      return left(AuthFailure.fromException(e));
-    } catch (e) {
-      return left(AuthFailure(e.toString()));
-    }
+    return _sendRequest(() async {
+      await _authService.logIn(loginInputData);
+      return isAdmin;
+    });
   }
 
   @override
   FutureEither<Unit> signUp(SignUpInputData signUpInputData) async {
-    try {
+    return _sendRequest(() async {
       await _authService.signUp(signUpInputData);
-      return right(unit);
-    } on AuthException catch (e) {
-      return left(AuthFailure.fromException(e));
-    } catch (e) {
-      return left(AuthFailure(e.toString()));
-    }
+      return unit;
+    });
   }
 
   @override
   FutureEither<bool> logInWithGoogle() async {
+    return _sendRequest(() async {
+      await _authService.logInWithGoogle();
+      return isAdmin;
+    });
+  }
+
+  FutureEither<T> _sendRequest<T>(Future<T> Function() request) async {
     try {
-      final user = await _authService.logInWithGoogle();
-      await CacheHelper.setSecureData(CacheConstants.userId, user!.id);
-      return right(isAdmin);
+      final response = await request();
+      return right(response);
     } on AuthException catch (e) {
       return left(AuthFailure.fromException(e));
     } catch (e) {
-      return left(AuthFailure(e.toString()));
+      return left(Failure(e.toString()));
     }
   }
 }
